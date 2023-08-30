@@ -1,0 +1,344 @@
+
+/* sign up */
+.text-muted.signup {
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: -50px;
+}
+
+.col-sm-6.bg-signup {
+    padding-top: 0%;
+    padding-left: 80px;
+
+    margin-left: 749px;
+    margin-top: -767px;
+    width: 45%;
+    padding-right: 23px;
+    background-color: #f9f9f9;
+}
+
+.remember-signup {
+    text-align: left;
+    margin-top: 60px;
+    margin-bottom: 10px;
+    margin-left: 2px;
+}
+
+.fw-normal-signup {
+    color: black;
+    margin-top: 50px;
+
+}
+
+.foot-text.signup {
+    display: flex;
+    margin-top: 0px;
+    align-items: baseline;
+    justify-content: flex-start;
+}
+
+/* button */
+.btn.btn-success.submit {
+    background-color: #4E6844;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 29px;
+    color: #FFF;
+    width: 353px;
+    height: 48px;
+    margin-top: 10px;
+}
+
+.btn.btn-success.login {
+    background-color: #4E6844;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 29px;
+    color: #FFF;
+    height: 48px;
+}
+
+.head-1 {
+
+    color: black;
+    font-weight: bold;
+}
+
+.head-2 {
+    padding-top: 10px;
+}
+
+.btn.btn-primary.rounded.save {
+    color: white;
+    background-color: #4e6844;
+    padding-left: 110px;
+    padding-right: 110px;
+    margin-top: 100px;
+}
+
+/* .btn.btn-primary.rounded.save:hover {
+ 
+background-color: #e9ecef;
+color: grey;
+
+} */
+
+.btn.btn-primary.rounded.cancel {
+    color: grey;
+    background-color: #f8f9fa;
+    padding-left: 120px;
+    padding-right: 120px;
+    border: 1px solid grey;
+    margin-top: 100px;
+
+}
+
+
+
+@media (max-width: 600px) {
+
+    /* CSS rules specific to small screens */
+    .new-password {
+        text-align: center;
+        width: 89%;
+        margin-left: 10px;
+        font-size: 14px;
+        margin-top: -10px;
+    }
+}
+
+.my-leaf {
+
+    height: 100px;
+    position: absolute;
+    top: 0px;
+    right: -2px;
+    /* margin-top: -120px;
+    margin-left: -21px; */
+}
+
+
+/* @media (max-width: 320px) {
+    .my-leaf {
+        position: relative;
+        left: 199px;
+        top: 1px;
+        height: 57px;
+    
+
+    }
+} */
+/* Default styles for all screen sizes */
+
+/* Styles for screens with a maximum width of 600px */
+@media (max-width: 600px) {
+
+    /* CSS rules specific to small screens */
+    .my-leaf {
+        position: relative;
+        left: 208px;
+        top: 1px;
+        height: 74px;
+
+
+    }
+}
+
+
+/* Styles for screens with a width between 601px and 1024px */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+    /* CSS rules specific to medium screens */
+    .my-leaf {
+        position: relative;
+        left: 199px;
+        top: 1px;
+        height: 57px;
+
+
+    }
+}
+
+
+/* Styles for screens with a minimum width of 1025px */
+@media (min-width: 1025px) {
+
+    /* CSS rules specific to large screens */
+    .my-leaf {
+        height: 133px;
+        position: absolute;
+        top: 0px;
+        right: -2px;
+    }
+
+}
+
+@media (min-width: 1025px) {
+
+    /* CSS rules specific to large screens */
+    .my-leaf-sign {
+        height: 133px;
+        position: relative;
+        top: -1px;
+        left: 548px;
+    }
+
+}
+
+@media (min-width: 992px) and (max-width: 1020px) {
+    .my-leaf-sign {
+        display: block !important;
+        height: 75px;
+        margin-left: 293px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1389px) {
+    .my-leaf-sign {
+        display: block !important;
+        height: 114px;
+        margin-left: -259px;
+        margin-top: -51px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .my-leaf-sign {
+        display: block !important;
+        height: 114px;
+        margin-left: 30px;
+        margin-top: -7px;
+    }
+}
+
+.my-image-register {
+    height: 89px;
+    margin-left: 50px;
+    margin-top: 5px;
+}
+
+@media (min-width: 700px) and (max-width: 1023px) {
+
+    .my-image-register {
+        height: 93px;
+        margin-left: 50px;
+        margin-top: 8px;
+    }
+
+
+}
+
+.bg-logo.head {
+    /* position: absolute; */
+    /* width: 131.74px;
+    height: 89.52px;
+    left: 857.26px;
+    top: 138px; */
+}
+
+.sana-head {
+    position: absolute;
+    width: 181.73px;
+    height: 19.47px;
+    left: 903.27px;
+    top: 116.3px;
+    color: #4E6844;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.ancient-para {
+    position: absolute;
+    width: 146.21px;
+    height: 11.07px;
+    left: 907.55px;
+    top: 159.45px;
+    color: #94642E;
+    font-size: 12px;
+}
+
+.my-image-logo.sign {
+    position: absolute;
+    right: 521px;
+    top: 6.33%;
+    width: 123px;
+}
+
+.sana-head.sign {
+    position: absolute;
+    width: 181.73px;
+    height: 19.47px;
+    left: 903.27px;
+    top: 72.3px;
+    color: #4E6844;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.ancient-para.sign {
+
+    position: absolute;
+    width: 146.21px;
+    height: 11.07px;
+    left: 907.55px;
+    top: 114.45px;
+    color: #94642E;
+    font-size: 12px;
+}
+
+.fw-normal-signup {
+
+    color: black;
+    margin-top: 50px;
+    font-weight: 700;
+    font-size: 24px;
+}
+.my-logo {
+    height: 745px;
+    width: 102%;
+    margin-left: -12px;
+}
+
+/* @media (max-width: 320px) {
+    .my-logo {
+        height: 513px;
+        width: 108%;
+        margin-left: -12px;
+    }
+} */
+@media (max-width: 600px) {
+
+    /* CSS rules specific to small screens */
+    .my-logo {
+        height: 482px;
+        width: 105%;
+        margin-left: -12px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    .my-logo {
+        height: 100vw;
+        width: 100vw;
+        margin-left: -209px;
+    }
+}
+
+
+
+@media (min-width: 1024px) {
+
+    .my-logo {
+        height: 787px;
+
+    }
+}
+
+@media (min-width: 1400px) {
+
+    .my-logo {
+        height: 739px;
+
+    }
+}
