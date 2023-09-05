@@ -18,7 +18,7 @@ const SearchInput = ({
 
   return (
     <>
-      <div className="form-group">
+      <div className="col">
         <label for="name" className="cols-sm-2 control-label">
           {label}
         </label>

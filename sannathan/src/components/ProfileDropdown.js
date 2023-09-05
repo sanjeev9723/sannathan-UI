@@ -3,6 +3,8 @@ import profile from "../screens/images/profile.png"
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/reducer/authenticationReducer";
+import 'font-awesome/css/font-awesome.min.css';
+
 
 function ProfileDropdown() {
   const dispatch = useDispatch();
@@ -59,14 +61,19 @@ function ProfileDropdown() {
 
   return (
     <div className="profile-dropdown" ref={dropdownRef}>
-      <button className="profile-dropdown__button" onClick={toggleDropdown}>
-        <img src={profile} alt="Language" className="profile-icon"/>
-        <span className="profile-dropdown__name">{userRole}</span>
+      {/* <button className="profile-dropdown__button" onClick={toggleDropdown}> */}
+      <button className="btn dropdown-toggle btn_icons"onClick={toggleDropdown} type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+      <i className="fa fa-user-circle" aria-hidden="true"></i>
+        {/* <img src={profile} alt="Language" className="profile-icon"/> */}
+        {/* <span className="profile-dropdown__name">{userRole}</span> */}
       </button>
       {isOpen && (
         <ul className="profile-dropdown__menu">
           <li onClick={handleProfileClick}>Profile</li>
+          <div className="dropdown-divider"></div>
           <li onClick={handleSettingClick}>Setting</li>
+          <div className="dropdown-divider"></div>
           <li onClick={handleLogoutClick}>Logout</li>
         </ul>
       )}

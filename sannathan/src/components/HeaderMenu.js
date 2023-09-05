@@ -19,22 +19,60 @@ const HeaderMenu = () => {
   
   return (
     <>
-      <nav className="py-2 border-bottom">
-        <div className="d-flex">
-        {userRole === 'Admin' ? <SideNavAdmin /> : <SideNavUser />}
-          <div>
-          </div>
-          <div className="offset-xs-2 offset-sm-6   offset-md-4 offset-lg-8 offset-xl-9 d-flex align-items-center ">
-            <div className=" px-2 header-right">
+    {/* <header class="dash-toolbar">
+					<a href="#" class="img_dashboard"><img class="" src="images/logo_dashboard.png" alt="Sanaathan Jeevan"/></a>
+					<a href="#!" class="menu-toggle">
+						<i class="fa fa-bars" aria-hidden="true"></i>
+					</a>
+					<div class="tools">
+
+						<div class="dropdown open">
+						<button class="btn dropdown-toggle btn_icons" type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-language" aria-hidden="true"></i>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="#!">English</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#!">Telugu</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#!">Hindi</a>
+						</div>
+						</div>
+
+						<button href="#!" class="btn tools-item btn_icons">
+							<i class="fa fa-bell-o" aria-hidden="true"></i>
+							<i class="tools-item-count">4</i>
+						</button>
+
+						<div class="dropdown open">
+						<button class="btn dropdown-toggle btn_icons" type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-user-circle" aria-hidden="true"></i>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="#!">Profile</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#!">Setting</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#!">Logout</a>
+						</div>
+						</div>
+					</div>
+				</header> */}
+      <nav className="dash-toolbar">
+      {userRole === 'Admin' ? <SideNavAdmin /> : <SideNavUser />}
+
+        <div className="tools">
+         
+            <div className="header-right">
               <LanguageSelector />
             </div>
-            <div className=" px-1 header-left">
+            <div className="  header-left">
               <NotificationDropdown />
             </div>
-            <div className="ms-4 header-profile">
+            <div className=" header-profile">
               <ProfileDropdown />
             </div>
-          </div>
+          
           {/* <ul className="nav me-auto">
             <li className="nav-item"><a  className="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
           </ul> */}

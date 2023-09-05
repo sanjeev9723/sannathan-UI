@@ -12,9 +12,9 @@ const BookingList = ({ onPatientClick }) => {
   const axiosInst = useAxiosPost();
 
   const [checkedCount, setCheckedCount] = useState(0);
-  const [showAllPatients, setShowAllPatients] = useState(true); 
+  const [showAllPatients, setShowAllPatients] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [fetchedOrders, setFetchedOrders] = useState([]); 
+  const [fetchedOrders, setFetchedOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const handleSearch = (searchTerm) => {
@@ -29,19 +29,19 @@ const BookingList = ({ onPatientClick }) => {
     setShowAllPatients(true); // Set filtering to show all patients
   };
 
-
-  const getNewServerDate = ()=>{
-    const d= new Date();
-    return `${d.getFullYear()}-${d.getMonth() > 8 ? (d.getMonth()+1):'0'+(d.getMonth()+1)}-${d.getDate() > 9 ? d.getDate():'0'+d.getDate()}`
-
-  }
+  const getNewServerDate = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${
+      d.getMonth() > 8 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1)
+    }-${d.getDate() > 9 ? d.getDate() : "0" + d.getDate()}`;
+  };
 
   // Function to fetch appointments data
   const fetchAppointments = async () => {
     try {
       // Define the start and end date of the range
-      const fromDate = getNewServerDate()+" 00:00:00";
-      const toDate = getNewServerDate()+" 23:59:59";
+      const fromDate = getNewServerDate() + " 00:00:00";
+      const toDate = getNewServerDate() + " 23:59:59";
 
       // Construct the URL with the query parameters for the date range
       const url = `/appointment/getAppointments?fromDate=${encodeURIComponent(
@@ -83,10 +83,32 @@ const BookingList = ({ onPatientClick }) => {
   return (
     <>
       <div className="row count">
-        <h4 className="op-detail">OP Details</h4>
-        <h5 className="op-detail2">Patient Orders</h5>
+        {/* <h4 className="op-detail">OP Details</h4> */}
+        
 
-        <div className="row col-sm-6" onClick={handleTotalCountClick}>
+        <p class="mt-3 mb-4 font-weight-bold patient_size">Patient Orders</p>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+            <div>
+              <img class="iconDetails" src={countpng} alt="Logo" />
+            </div>
+            <div style={{ marginLeft: 60 }}>
+              <h2 className="mb-0">568</h2>
+              <p>Total Count</p>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0">
+            <div>
+              <img class="iconDetails" src={checkpng} alt="Logo" />
+            </div>
+            {/* <div style='margin-left:60px;'> */}
+            <div style={{ marginLeft: 60 }}>
+              <h2 class="mb-0">568</h2>
+              <p>Checked Count</p>
+            </div>
+          </div>
+        </div>
+        {/* <div className="row col-sm-6" onClick={handleTotalCountClick}>
           <div className="col-7 count" for="fname">
             <img src={countpng} alt="checkcount" className="count-icon" />
           </div>
@@ -94,8 +116,8 @@ const BookingList = ({ onPatientClick }) => {
             <div className="col-4 reg-count">{orders.length}</div>
             Total Count
           </div>
-        </div>
-        <div className="row col-sm-6" onClick={handleCheckedCountClick}>
+        </div> */}
+        {/* <div className="row col-sm-6" onClick={handleCheckedCountClick}>
           <div className="col-7 count" for="fname">
             <img src={checkpng} alt="checkcount" className="check-icon" />
           </div>
@@ -103,9 +125,9 @@ const BookingList = ({ onPatientClick }) => {
             <div className="col-4 check-count">{checkedCount}</div>
             Checked Count
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="search-box">
+      <div class="mt-2  mb-3  has-search">
         <SearchBar onSearch={handleSearch} />
       </div>
       {/* <UserTable orders={orders} checkedCount={checkedCount} setCheckedCount={setCheckedCount} showAllPatients={showAllPatients} searchTerm={searchTerm} /> */}

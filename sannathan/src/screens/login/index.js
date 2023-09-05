@@ -70,71 +70,71 @@ const Login = () => {
   //     alert("login failed")
   //   }
   // }
-  // const handleValidation = (e) => {
-  //   e.preventDefault();
-  //   if (!!userName && !!password) {
-  //     if (userName === "admin@gmail.com" && password === "admin123") {
-  //       setUserRole("Admin");
-  //       dispatch(loginSuccess("Admin"));
-  //       // Store the userRole in local storage
-  //       localStorage.setItem("userRole", "Admin");
-  //       gotoPage("adminacess");
-  //     } else {
-  //       setUserRole("user");
-  //       dispatch(loginSuccess("user"));
-  //       // Store the userRole in local storage
-  //       localStorage.setItem("userRole", "user");
-  //       gotoPage("appointments");
-  //     }
-  //   }
-  //   // If "Remember Me" is checked, store the flag in local storage
-  //   if (rememberMe) {
-  //     localStorage.setItem("rememberMe", "true");
-  //   } else {
-  //     // If "Remember Me" is unchecked, remove the flag from local storage
-  //     localStorage.removeItem("rememberMe");
-  //   }
-  // };
-
-  const handleValidation = async (e) => {
+  const handleValidation = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const queryParam = `${userName ? "email=" + userName : ""}${
-        password ? "&passward=" + password : ""
-      }`;
-      const { data } = await axiosInst.get(`/admin/login?${queryParam}`);
-
-      if (data?.data?.length > 0) {
-        const isDoctorFromServer = data.data[0].isDoctor; // Assuming the server provides the "isDoctor" field
-
-        // Handle doctor login
-        if (isDoctorFromServer === "true") {
-          setUserRole("Admin");
-          dispatch(loginSuccess("Admin"));
-          setIsLoading(false);
-
-          gotoPage("adminacess");
-        } else {
-          // Handle other user types (e.g., admin, staff, regular user)
-          setUserRole("user");
-          dispatch(loginSuccess("user"));
-          setIsLoading(false);
-
-          gotoPage("appointments");
-        }
+    if (!!userName && !!password) {
+      if (userName === "admin@gmail.com" && password === "admin") {
+        setUserRole("Admin");
+        dispatch(loginSuccess("Admin"));
+        // Store the userRole in local storage
+        localStorage.setItem("userRole", "Admin");
+        gotoPage("adminacess");
       } else {
-        alert("Login failed");
-        setIsLoading(false);
-
+        setUserRole("user");
+        dispatch(loginSuccess("user"));
+        // Store the userRole in local storage
+        localStorage.setItem("userRole", "user");
+        gotoPage("appointments");
       }
-    } catch (error) {
-      // console.error(error);
-      setIsLoading(false);
-      alert(error);
+    }
+    // If "Remember Me" is checked, store the flag in local storage
+    if (rememberMe) {
+      localStorage.setItem("rememberMe", "true");
+    } else {
+      // If "Remember Me" is unchecked, remove the flag from local storage
+      localStorage.removeItem("rememberMe");
     }
   };
+
+  // const handleValidation = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+
+  //   try {
+  //     const queryParam = `${userName ? "email=" + userName : ""}${
+  //       password ? "&passward=" + password : ""
+  //     }`;
+  //     const { data } = await axiosInst.get(`/admin/login?${queryParam}`);
+
+  //     if (data?.data?.length > 0) {
+  //       const isDoctorFromServer = data.data[0].isDoctor; // Assuming the server provides the "isDoctor" field
+
+  //       // Handle doctor login
+  //       if (isDoctorFromServer === "true") {
+  //         setUserRole("Admin");
+  //         dispatch(loginSuccess("Admin"));
+  //         setIsLoading(false);
+
+  //         gotoPage("adminacess");
+  //       } else {
+  //         // Handle other user types (e.g., admin, staff, regular user)
+  //         setUserRole("user");
+  //         dispatch(loginSuccess("user"));
+  //         setIsLoading(false);
+
+  //         gotoPage("appointments");
+  //       }
+  //     } else {
+  //       alert("Login failed");
+  //       setIsLoading(false);
+
+  //     }
+  //   } catch (error) {
+  //     // console.error(error);
+  //     setIsLoading(false);
+  //     alert(error);
+  //   }
+  // };
 
   const gotoPage = (page) => {
     navigate(`/${page}`);
@@ -178,7 +178,7 @@ const Login = () => {
                   <div className="mt-5 font-weight-bold">
                     <h2>Welcome Back!</h2>
                   </div>
-                  <p className="mt-4">
+                  <div className="">
                     {/* <input
                       type="email"
                       class="form-control"
@@ -198,8 +198,8 @@ const Login = () => {
                       required={true}
                       validationMsg="Please enter User Name"
                     />
-                  </p>
-                  <p className="mt-2">
+                  </div>
+                  <div className="mb-4">
                     {/* <input
                       type="password"
                       class="form-control"
@@ -223,7 +223,7 @@ const Login = () => {
                       validationMsg="Please enter User Password"
                       autoComplete="new-password"
                     />
-                  </p>
+                  </div>
                   <p className="text-center">
                     <button
                       className="form-control btn login_button shadow"
@@ -290,3 +290,4 @@ const Login = () => {
   );
 };
 export default Login;
+

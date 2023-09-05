@@ -7,9 +7,9 @@ const GenderInput = ({ value, onChange }) => {
   };
 
   return (
-    <div className="form-group gender">
+    <div className=" gender">
       <label>Gender</label>
-      <div className="Gender-radio">
+      <div className="form-check form-check-inline mx-2">
         <label className="male-radio">
           <input
             type="radio"
@@ -20,7 +20,7 @@ const GenderInput = ({ value, onChange }) => {
           />
           Male
         </label>
-        <label className="female-radio">
+        <label className="form-check form-check-inline mx-2">
           <input
             type="radio"
             name="gender"
@@ -31,6 +31,7 @@ const GenderInput = ({ value, onChange }) => {
           Female
         </label>
       </div>
+      
     </div>
   );
 };

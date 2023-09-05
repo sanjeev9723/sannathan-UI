@@ -32,14 +32,19 @@ function LanguageSelector() {
 
   return (
     <div className="language-selector" ref={dropdownRef}>
-      <button className="language-selector__button" onClick={toggleDropdown}>
+      {/* <button className="language-selector__button" onClick={toggleDropdown}>
         <img src={language} alt="Language" className="language-icon"/>
-      </button>
+      </button> */}
+      	<button class="btn dropdown-toggle btn_icons" onClick={toggleDropdown} type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-language" aria-hidden="true"></i>
+						</button>
       {isOpen && (
         <ul className="language-selector__dropdown">
-          <li onClick={() => handleLanguageSelect('English')}>English</li>
-          <li onClick={() => handleLanguageSelect('Telugu')}>Telugu</li>
-          <li onClick={() => handleLanguageSelect('Hindi')}>Hindi</li>
+          <a onClick={() => handleLanguageSelect('English')}>English</a>
+          <div className="dropdown-divider"></div>
+          <a onClick={() => handleLanguageSelect('Telugu')}>Telugu</a>
+          <div className="dropdown-divider"></div>
+          <a onClick={() => handleLanguageSelect('Hindi')}>Hindi</a>
           {/* Add more language options as needed */}
         </ul>
       )}

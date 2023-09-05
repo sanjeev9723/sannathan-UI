@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
-
+import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 function SearchBar({ onSearch }) {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -11,22 +10,23 @@ function SearchBar({ onSearch }) {
   };
 
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       onSearch(searchTerm);
     }
   };
 
   return (
     <div className="search-bar">
-         <FaSearch className="search-bar__icon" />
+     
+      <span class="fa fa-search form-control-feedback"></span>
       <input
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
-        placeholder="Search For Patient"
+        class="form-control"
+        placeholder="Search for Patient"
       />
-     
     </div>
   );
 }

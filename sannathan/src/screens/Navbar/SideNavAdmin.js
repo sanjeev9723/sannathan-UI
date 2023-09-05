@@ -4,6 +4,8 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import sannathan2 from "../images/sannathan2.png";
 import leafHeader from "../images/leaf-header.png";
 import { useNavigate, Link } from "react-router-dom";
+import 'font-awesome/css/font-awesome.min.css';
+
 
 function SideNavAdmin() {
   const navigate = useNavigate();
@@ -23,25 +25,40 @@ function SideNavAdmin() {
   return (
     <>
       <div className="menu-button" onClick={handleShow}>
-        <Button variant="primary">
-          <div className="bar" />
-          <div className="bar" />
-          <div className="bar" />
-        </Button>
+      <a href="#!" class="menu-toggle">
+						<i class="fa fa-bars" aria-hidden="true"></i>
+					</a>
       </div>
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <img src={sannathan2} alt="My Image" className="my-image-nav" />
+            <img src={sannathan2} alt="My Image" className="img_dashboard" />
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
+        {/* <div className="dash-nav dash-nav-dark">
+            <header>
+                <a href="index.html" className=""><img className="sanatha-nav" src={sannathan2} alt="Sanaathan Jeevan"/></a>
+            </header>
+			<nav className="dash-nav-list">
+                <a href="opdetails.html" className="dash-nav-item nav-link active"> 
+                    <i className="fa fa-th-list" aria-hidden="true"></i> OP Details</a>
+                <a href="appointment.html" className="dash-nav-item nav-link">
+                    <i className="fa fa-calendar-o" aria-hidden="true"></i> Appointment </a>
+                <a href="training.html" className="dash-nav-item nav-link">
+                    <i className="fa fa-user-o" aria-hidden="true"></i> Training Registrations </a>
+                <a href="reports.html" className="dash-nav-item nav-link">
+                    <i className="fa fa-clock-o" aria-hidden="true"></i> Reports </a>
+            </nav>
+			
+			
+        </div> */}
           <div>
             <div className="nav-content ">
               <ul className="nav">
                 <li
-                  className={`nav-item ${activeItem === 0 ? "active" : ""}`}
+                  className={`nav-item" ${activeItem === 0 ? "active" : ""}`}
                   onMouseEnter={() => handleItemHover(0)}
                   onMouseLeave={() => handleItemHover(null)}
                 >
@@ -50,7 +67,7 @@ function SideNavAdmin() {
                       activeItem === 1 ? "active" : ""
                     }`}
                   >
-                    <div className="	fas fa-th-large"></div>
+                    <div className="fa fa-th-list"></div>
                   <Link to="/adminpage">OP Details</Link>
                   </div>
                 </li>
@@ -65,7 +82,7 @@ function SideNavAdmin() {
                       activeItem === 1 ? "active" : ""
                     }`}
                   >
-                    <div className="far fa-calendar"></div>
+                    <div className="fa fa-calendar"></div>
                     <Link to="/adminacess">Appointment</Link>
                   </div>
                 </li>
@@ -80,7 +97,7 @@ function SideNavAdmin() {
                       activeItem === 1 ? "active" : ""
                     }`}
                   >
-                    <div className="far fa-clock"></div>
+                    <div className="fa fa-clock-o"></div>
                     <Link to="">Report</Link>
                   </div>
                   
@@ -142,9 +159,7 @@ function SideNavAdmin() {
 
                         <Link to="/preference">Preference</Link>
                       </li>
-                      {/* <li>
-                        <Link to="/"></Link>
-                      </li> */}
+                    
                     </ul>
                   )}
                 </li>

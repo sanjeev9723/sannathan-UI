@@ -1,5 +1,5 @@
 import InputControl from "../../components/InputControl";
-import  styles from './SignUp.css';
+import styles from "./SignUp.css";
 import Select from "../../components/Select.js";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -57,24 +57,24 @@ const Register = ({ onTextChange }) => {
 
   const handleValidation = async (e) => {
     e.preventDefault();
-  
+
     try {
       if (!!userName && !!newPassword && newPassword === confirmPassword) {
         // Construct user object based on selected user type
         const userRole = selectUser === "Junior Doctor" ? "Admin" : "user";
         const user = {
-          "name": userName,
-          "email": email,
-          "password": newPassword,
-          "isDoctor":"true",
-          "id": 0,
-          "isActive":"1" ,
-          "contactnumber": 0,
-                  };
-  console.log(user);
+          name: userName,
+          email: email,
+          password: newPassword,
+          isDoctor: "true",
+          id: 0,
+          isActive: "1",
+          contactnumber: 0,
+        };
+        console.log(user);
         // Perform API call to create user
         const response = await axiosInst.post("/admin/createuser", user);
-  
+
         if (response.status === 200) {
           // User creation successful
           gotoPage("login");
@@ -82,155 +82,214 @@ const Register = ({ onTextChange }) => {
           setError("Failed to create user");
         }
       } else {
-        setError("Please fill in all required fields and make sure passwords match.");
+        setError(
+          "Please fill in all required fields and make sure passwords match."
+        );
       }
     } catch (error) {
       console.error(error);
       setError("An error occurred while creating user.");
     }
   };
-  
-
- 
 
   return (
-    <section
-      className="vh-100"
-      style={{ overflow: "auto", backgroundColor: "#F9F9F9" }}
-    >
-      <div className="container-fluid h-custom">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-md-6 col-lg-7 col-xl-6">
-            <Carousel >
-              <Carousel.Item>
-                <img src={logo} alt="My Image" className="my-logo" />
-              </Carousel.Item>
-              <Carousel.Item>
-                <img src={flowers} alt="My Image" className="my-logo" />
-              </Carousel.Item>
-              <Carousel.Item>
-                <img src={bowl} alt="My Image" className="my-logo" />
-              </Carousel.Item>
-            </Carousel>
+    <section className="login">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="imgbox text-center">
+              <img
+                className="center-fit small_images card-img-top"
+                src={logo}
+                alt="Background"
+              />
+            </div>
           </div>
-          <div className="col-md-6 col-lg-5 col-xl-6">
-            <div class="col-md-2  ">
-              <div className="bg-leaf">{/* <img src={leaf} alt="My Image" className="d-none d-lg-block my-leaf-sign  " /> */}</div>
+          {/* <!-- form --> */}
+          <div className="col-md-6 callbacks_container form-w3l-agil3">
+            <div className="row">
+              <div className="col-md-3 offset-md-1">
+                <div className="float-start image_signup">
+                  <img className="" src={sannathan} alt="Sanaathan Jeevan" />
+                </div>
+              </div>
+              <div className="col-md-8">
+                <div className="float-end">
+                  <img className="" src={leaf} alt="Logo" />
+                </div>
+              </div>
             </div>
-            <div className="bg-logo head">
-              <img src={sannathan} alt="My Image" className="my-image-register" />
-            </div>
+            <div className="clearfix"> </div>
+            <div className="">
+              <div className="col-md-8 col-sm-8 offset-md-1 offset-sm-2">
+                <form className="" onSubmit={handleValidation}>
+                  <div className="mt-1 font-weight-bold">
+                    <h2>Sign Up</h2>
+                  </div>
+                  <p className="mt-3">Enter details to create your account</p>
+                  <div className="row ">
+                    <div className="">
+                      <Select
+                        label={"Select User"}
+                        inputArry={[
+                          { label: "Junior Doctor", value: "Junior Doctor" },
+                          { label: "Staff", value: "Staff" },
+                        ]}
+                        onChange={handleSelectUser}
+                      />
+                      {/* {showValidation ? <small id="inputHelp" className="form-text text-muted">{validationMsg}</small>:""} */}
+                    </div>
+                  </div>
+                  <div className="row ">
+                    <div className="col-md-6 col-sm-12">
+                      <InputControl
+                        name={"username"}
+                        type={"text"}
+                        placeholder={"First Name"}
+                        className="		fas fa-user-alt"
+                        onChange={handleUserNameInput}
+                        required={true}
+                        validationMsg="Please enter User Name"
+                      />{" "}
+                    </div>
+                    <div className="col-md-6 col-sm-12">
+                      <InputControl
+                        name={"Lastname"}
+                        type={"text"}
+                        placeholder={"Last Name"}
+                        className="		fas fa-user-alt"
+                        onChange={handleUserNameInput}
+                        required={true}
+                        validationMsg="Please enter Last Name"
+                      />{" "}
+                    </div>
+                  </div>
+                  <div className="">
+                    <InputControl
+                      type={"email"}
+                      name={"email"}
+                      placeholder={"Enter your email"}
+                      className="		fa fa-envelope"
+                      onChange={handleEmail}
+                      required={true}
+                      validationMsg="Please enter User E-mail"
+                    />{" "}
+                  </div>
+                  <div className="">
+                    <InputControl
+                      type={showPassword ? "text" : "password"}
+                      backgroundColor="#f9f9f9"
+                      placeholder={"Create Password"}
+                      className={`fas fa-key ${
+                        newPassword !== confirmPassword ? "error" : ""
+                      }`}
+                      onChange={handleNewPasswordChange}
+                    />
+                    {/* <div
+                      className="password-toggle-sign"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <BsEyeSlash /> : <BsEye />}
+                    </div> */}
+                  </div>
+                  <div className="">
+                    <InputControl
+                      type={showPassword ? "text" : "password"}
+                      backgroundColor="#f9f9f9"
+                      placeholder={"Confirm Password"}
+                      className={`fas fa-key ${
+                        newPassword !== confirmPassword ? "error" : ""
+                      }`}
+                      onChange={handleConfirmPasswordChange}
+                    />
+                    {/* <div
+                      className="password-toggle-sign"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <BsEyeSlash /> : <BsEye />}
+                    </div>{" "} */}
+                  </div>
 
-            <form className="form" onSubmit={handleValidation}>
-              <h3 className="fw-normal-signup">Sign Up</h3>
-              <p className="text-muted signup">Enter the details to create your account</p>
-              <div className="phone-select">
-                <Select
-                  label={"User"}
-                  inputArry={[
-                    { label: "Junior Doctor", value: "Junior Doctor" },
-                    { label: "Staff", value: "Staff" },
-                  ]}
-                  onChange={handleSelectUser}
-                />
-                {/* {showValidation ? <small id="inputHelp" className="form-text text-muted">{validationMsg}</small>:""} */}
-              </div>
-              <div className="d-flex phone">
-                <div className="userName">
-                  <InputControl
-                    name={"username"}
-                    type={"text"}
-                    placeholder={"First Name"}
-                    className="		fas fa-user-alt"
-                    onChange={handleUserNameInput}
-                    required={true}
-                    validationMsg="Please enter User Name"
-                  />
-                </div>
-                <div className="userName">
-                  <InputControl
-                    name={"Lastname"}
-                    type={"text"}
-                    placeholder={"Last Name"}
-                    className="		fas fa-user-alt"
-                    onChange={handleUserNameInput}
-                    required={true}
-                    validationMsg="Please enter Last Name"
-                  />
-                </div>
-                {/* {showValidation ? <small id="inputHelp" className="form-text text-muted">{validationMsg}</small>:""} */}
-              </div>
-              <div className="phone">
-                <InputControl
-                  type={"email"}
-                  name={"email"}
-                  placeholder={"Enter your email"}
-                  className="		fa fa-envelope"
-                  onChange={handleEmail}
-                  required={true}
-                  validationMsg="Please enter User E-mail"
-                />
-              </div>
-              <div className="phone">
-                <InputControl
-                  type={showPassword ? "text" : "password"}
-                  backgroundColor="#f9f9f9"
-                  placeholder={"Create Password"}
-                  className={`fas fa-key ${newPassword !== confirmPassword ? "error" : ""}`}
-                  onChange={handleNewPasswordChange}
-                />
-                <div className="password-toggle-sign" onClick={togglePasswordVisibility}>
-                  {showPassword ? <BsEyeSlash /> : <BsEye />}
-                </div>
-              </div>
-              <div className="phone">
-                <InputControl
-                  type={showPassword ? "text" : "password"}
-                  backgroundColor="#f9f9f9"
-                  placeholder={"Confirm Password"}
-                  className={`fas fa-key ${newPassword !== confirmPassword ? "error" : ""}`}
-                  onChange={handleConfirmPasswordChange}
-                />
-                <div className="password-toggle-sign" onClick={togglePasswordVisibility}>
-                  {showPassword ? <BsEyeSlash /> : <BsEye />}
-                </div>
-              </div>
-              <div className=" phone">
-                <InputControl
-                  country={"in"}
-                  onChange={handleMobileInput}
-                  className="mobile-no"
-                  placeholder={"Contact no"}
-                  validationMsg="Please enter Mob no"
-                />
-              </div>
-              <div className="text-muted remember-signup">
-                <label>
-                  <input type="checkbox" />
-                  By sign up I agree with{" "}
-                  <span className="terms-link" onClick={() => { gotoPage("pdf-sample"); }}>
-                    Terms and conditions
-                  </span>
-                </label>
-              </div>
-
-              <div className="d-grid gap-2">
-                <button className="btn btn-primary rounded w-100 theme-btn mx-auto" type="submit">
-                  SIGN IN
-                </button>
-              </div>
-
-              <p className="small mb-5 pb-lg-">
-                <div className="foot-text signup">
-                  <p className="text-muted sign">You have an account already?</p>{" "}
-                  <p className="text-log" onClick={() => { gotoPage("login"); }}>
-                    Log In
+                  <div className="row mobile-select mb-4">
+                    <div className="col-md-3 col-sm-3 mt-4">
+                      {/* <div class="input-group mb-3"> */}
+                      <Select
+                        label={"+91"}
+                        inputArry={[
+                          { label: "+00", value: "+00" },
+                          { label: "+01", value: "+01" },
+                        ]}
+                        onChange={handleSelectUser}
+                      />
+                      {/* <select
+                          class="custom-select"
+                          id="inputGroupSelect03"
+                          aria-label="Example select with button addon"
+                        >
+                          <option selected value="1">
+                            +91
+                          </option>
+                          <option value="2">+00</option>
+                          <option value="3">+01</option>
+                        </select> */}
+                      {/* </div> */}
+                    </div>
+                    <div className="col-md-9 col-sm-9">
+                      <InputControl
+                        country={"in"}
+                        onChange={handleMobileInput}
+                        className="mobile-no"
+                        placeholder={"Contact no"}
+                        validationMsg="Please enter Mob no"
+                      />
+                      {/* <input
+                        class="form-control mb-2 mr-sm-2"
+                        type="tel"
+                        value=""
+                        placeholder="Phone number"
+                        id="example-tel-input"
+                      /> */}
+                    </div>
+                  </div>
+                  <div className="form-check mb-2 mr-sm-2">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="inlineFormCheck"
+                    />
+                    <label className="form-check-label" for="inlineFormCheck">
+                      By sign up I agree with Termes and condition
+                    </label>
+                  </div>
+                  <p className="text-center">
+                    <button
+                      className="form-control btn login_button shadow"
+                      type="submit"
+                    >
+                      Sign Up
+                    </button>
                   </p>
-                </div>
-              </p>
-            </form>
+
+                  <p className="mt-2">
+                    <label className="" for="">
+                      You have account already?{" "}
+                      <span
+                        className="sign_text"
+                        onClick={() => {
+                          gotoPage("login");
+                        }}
+                      >
+                        Sign In
+                      </span>
+                    </label>
+                  </p>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
+        <div className="clearfix"> </div>
+        {/* <!-- //form --> */}
       </div>
     </section>
   );

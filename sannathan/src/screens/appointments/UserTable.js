@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Table, Modal } from "react-bootstrap";
-import profile from "../images/profile.png";
+import countpng from "../images/count.png";
 import { useReactToPrint } from "react-to-print";
 import Button from "react-bootstrap/Button";
 
@@ -112,71 +112,25 @@ const UserTable = ({
   });
 
   return (
-    <div className="user-table">
-      <div className="table-responsive">
-        <Table hover>
-          {/* Table headers */}
-          <thead>
-            {/* <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                {showAllPatients && <th>Visited</th>}
-              </tr> */}
-          </thead>
-          <tbody>
-            {filteredOrders.length > 0 ? (
-              filteredOrders.map((ele, index) => (
-                <tr
-                  key={ele.PatientId}
-                  onClick={() => handleRowClick(ele, index)}
-                  className={getVisitedStatus(ele) ? "visited-row" : ""}
-                >
-                  <td>
-                    <img
-                      src={profile}
-                      alt="Profile Icon"
-                      className="profile-icon2"
-                    />
-                  </td>
-                  <td>
-                    <h6 className="user-name">{ele.name}</h6>
-                    <p className="user-id">ID: {ele.message}</p>
-                  </td>
-                  <td>
-                    {/* <div className="token-wrapper">
-                      <p
-                        className={
-                          getVisitedStatus(ele)
-                            ? "token-number visited"
-                            : "token-number"
-                        }
-                      >
-                        Token: {ele.id}
-                      </p>
-                    </div> */}
-                  </td>
-                  {/* {showAllPatients && (
-                    <td>
-                      {getVisitedStatus(ele) ? (
-                        <h6 className="visited-row"></h6>
-                      ) : (
-                        <span className="not-visited"></span>
-                      )}
-                    </td>
-                  )} */}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={3}>No Patients available</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-
-        {/* Modal to display selected order details */}
+    
+    <div >
+  <div className="user-table">
+  {orders.map((order) => (
+    <div className="card mb-2 hover-card" key={order.PatientId}>
+      <div className="card-body">
+        <div className="media-box">
+          <img className="idimages" src={countpng} alt="Logo" />
+          <div className="media-body">
+            <p className="id_name mt-0 pl-2 mb-0">{order.name}</p>
+            <p className="pl-2 mb-0">ID: {order.PatientId}</p>
+          </div>
+        </div>
       </div>
+    </div>
+  ))}
+</div>
+
+     
     </div>
   );
 };

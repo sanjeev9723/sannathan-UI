@@ -31,14 +31,18 @@ function NotificationDropdown() {
 
   return (
     <div className="notification-dropdown" ref={dropdownRef}>
-      <button className="notification-dropdown__button" onClick={toggleDropdown}>
+      {/* <button className="notification-dropdown__button" onClick={toggleDropdown}>
         <img src={notification} alt="Notifications" className="language-icon"/>
         {notifications.length > 0 && (
           <span className="notification-dropdown__count">
             {notifications.length}
           </span>
         )}
-      </button>
+      </button> */}
+      <button href="#!" class="btn tools-item btn_icons">
+							<i class="fa fa-bell-o" aria-hidden="true"></i>
+							<i class="tools-item-count">4</i>
+						</button>
       {isOpen && (
         <ul className="notification-dropdown__list">
           {notifications.map((notification) => (

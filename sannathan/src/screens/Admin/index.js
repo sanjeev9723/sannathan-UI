@@ -126,10 +126,33 @@ const AdminPage = (props) => {
     gotoPage("adminacess"); // Navigate to the specified page
   };
   return (
-    <div className="admin-page overflow-auto">
+    <div className=" overflow-auto">
       <HeaderMenu />
+      <div className="admin-accordion">
       <AdminNavbar />
-      <div className="d-flex justify-content-end mx-3">
+      </div>
+   
+      <div class="row mt-2">
+        <div class=" col-md-2 offset-md-8 mb-2">
+          <button
+            type="button"
+            class="float-end search_width btn btn_clear"
+            onClick={handlePrintModalOpen}
+          >
+            Print
+          </button>
+        </div>
+        <div class="col-md-2 mb-2">
+          <button
+            type="button"
+            class="float-end search_width btn btn_save"
+            onClick={handleBack}
+          >
+            Back
+          </button>
+        </div>
+      </div>
+      {/* <div className="d-flex justify-content-end mx-3">
         <button
           type="button"
           className="btn btn-primary rounded save-button px-5 my-2"
@@ -144,9 +167,9 @@ const AdminPage = (props) => {
         >
           Back
         </button>
-      </div>
+      </div> */}
 
-      <div className="container">
+      <div className="patient-container">
         <div className="admin-content">
           <div className="patient-details">
             {printData.patientData && (
@@ -266,10 +289,10 @@ const AdminPage = (props) => {
                           />
                         </Col>
 
-                        <Col md={3} className="mb-3">
+                        <Col md={6} className="mb-3">
                           <InputControl
                             name="displayNoOfConsultations"
-                            label="No Of Consultations"
+                            // label="No Of Consultations"
                             type="text"
                             placeholder="No Of Consultations"
                             className="fas fa-user-alt"
@@ -282,14 +305,17 @@ const AdminPage = (props) => {
                         </Col>
                       </Row>
 
-                      <div className="d-flex justify-content-end">
-                        <button
-                          type="button"
-                          className="btn btn-primary rounded save-button px-5"
-                          onClick={onSave}
-                        >
-                          Save
-                        </button>
+                      
+                      <div class="row">
+                        <div class="col-md-2 offset-md-10 mb-1">
+                          <button
+                            type="button"
+                            class="btn btn_save search_width"
+                            onClick={onSave}
+                          >
+                            Save
+                          </button>
+                        </div>
                       </div>
                     </form>
                   ),

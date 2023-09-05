@@ -77,75 +77,36 @@ function ChangePassword() {
 };
 
   return (
-    <div className="form-gap for-box">
-      <div className="container d-flex justify-content-center align-items-center  ">
-        <div className="col-md-4 col-lg-4 password-box">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <div className="text-center">
-              {success ? (
-                  <div className="success-message">
-                    <BsCheckCircle className="success-icon" />
-                    <div>Password reset successfully.</div>
-                  </div>
-                ) : (
-                <form className="form" onSubmit={handleSubmit}>
-                  <h4 className="fw-normal-forgot">New Password</h4>
-                  <div className="new-password-box">
-                    <p className="new-password">
-                      Please create a new password that you don’t use on any
-                      other site
-                    </p>
-                  </div>
-
-                  <div className="password-input-container">
-                    <PasswordInput
-                      type={showPassword ? "text" : "password"}
-                      backgroundColor="white"
-                      className={`fas fa-key ${
-                        newPassword !== confirmPassword ? "error" : ""
-                      }`}
-                      onChange={handleNewPasswordChange}
-                    />
-                    <div
-                      className="password-toggle-pass"
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? <BsEyeSlash /> : <BsEye />}
-                    </div>
-                  </div>
-                  <div className="password-input-container">
-                    <PasswordInput
-                      type={showPassword ? "text" : "password"}
-                      backgroundColor="white"
-                      className={`fas fa-key ${
-                        newPassword !== confirmPassword ? "error" : ""
-                      }`}
-                      onChange={handleConfirmPasswordChange}
-                    />
-                    <div
-                      className="password-toggle-pass"
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? <BsEyeSlash /> : <BsEye />}
-                    </div>
-                  </div>
-                  {error && <p className="error-message">{error}</p>}
-
-                  <div className="d-grid gap-2">
-                    <button className="btn btn-success newpassword" type="submit">
-                      Change
-                    </button>
-                  </div>
-                </form>
-              
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <section class="login">
+        <div class="container-fluid">
+				<div class="row">
+					{/* <!-- form --> */}
+					<div class="col-md-4 offset-md-0 offset-sm-0 text-center shadow forgot_bg">
+						<form class="form-group">
+							
+							<div class="mt-5 font-weight-bold">
+								<h2>New Password</h2>
+							</div>
+							<p class="mt-4 new_para">
+								Please create a new password that you don’t use on any other site
+							</p>
+							<p class="mt-2">
+								<input type="password" class="form-control" id="inputEmail3" placeholder="Create password"/><a class="att_icon" href=""><i class="fa fa-eye"></i></a>
+							</p>
+							<p class="mt-2">
+								<input type="password" class="form-control" id="inputEmail3" placeholder="Confirm password"/><a class="att_icon" href=""><i class="fa fa-eye"></i></a>
+							</p>
+							<p class="mb-5 text-center">
+							  <button class="form-control btn login_button shadow" type="submit">Change</button>
+							</p>
+							
+						</form>
+					</div>
+				</div>				
+				<div class="clearfix"> </div>
+				{/* <!-- //form --> */}
+			</div>
+    </section>
   );
 }
 

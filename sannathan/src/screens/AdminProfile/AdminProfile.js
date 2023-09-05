@@ -340,8 +340,10 @@ const AdminProfile = ({ selectedPatientData }) => {
   };
 
   return (
-    <div className="bookOrder  ">
-      <h4 className="head-1">Add Patient Details</h4>
+    <>
+      <p className="mt-3 mb-4 font-weight-bold patient_size">
+        Add Patient Details
+      </p>
       {/* spinner for loading */}
       {isLoading && (
         <div class="d-flex justify-content-end">
@@ -354,38 +356,43 @@ const AdminProfile = ({ selectedPatientData }) => {
       <div>
         <ToastContainer position="top-center" />
       </div>
-      <Row style={{ alignItems: "end" }}>
-        <Col md={6}>
-          <SearchInput
-            name="searchInput"
-            value={patientId}
-            onChange={(e) => setPatientId(e.target.value)}
-            placeholder="Patient Id"
-          />
-        </Col>
-        <Col md={4}>
-          <button
-            type="button"
-            className="btn btn-primary rounded w-50 px-2"
-            onClick={onSearch}
-          >
-            Search
-          </button>
-        </Col>
-        <Col md={2}>
-          {/* Update button visibility is controlled by isUpdateVisible state */}
-          {isUpdateVisible && (
-            <button
-              type="button"
-              className="btn btn-primary rounded"
-              onClick={() => onUpdate(selectedPatient)}
-            >
-              Update
-            </button>
-          )}
-        </Col>
-      </Row>
-      <hr />
+      <div className=" row mb-4">
+        <div className="row">
+          <div className=" col-md-9">
+            <input
+              className="form-control mr-sm-2"
+              type="search"
+              name="searchInput"
+              value={patientId}
+              onChange={(e) => setPatientId(e.target.value)}
+              placeholder="Patient Id"
+              aria-label="Search"
+            />
+          </div>
+          <div className=" col-md-3">
+            {/* Update button visibility is controlled by isUpdateVisible state */}
+            {!isUpdateVisible && (
+              <button
+                className="btn btn-outline-success search_width my-2 my-sm-0"
+                type="submit"
+                onClick={onSearch}
+              >
+                Search
+              </button>
+            )}
+            {isUpdateVisible && (
+              <button
+                className="btn btn-success search_width my-2 my-sm-0"
+                type="submit"
+                onClick={() => onUpdate(selectedPatient)}
+              >
+                Update
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* <hr /> */}
       <MyVerticallyCenteredModal
         show={modalShow}
         data={modalData}
@@ -397,10 +404,8 @@ const AdminProfile = ({ selectedPatientData }) => {
         show={printModalVisible}
         onHide={() => setPrintModalVisible(false)}
       />
-      <div className="main-login main-center">
-        <form className="form-horizontal" method="post" action="#">
-          <div className="row">
-            <Row>
+      <form class="row g-3">
+        <Row>
               {bookingFields?.length > 0 &&
                 bookingFields.map((ele, index) => {
                   if (ele.optional) return "";
@@ -414,52 +419,48 @@ const AdminProfile = ({ selectedPatientData }) => {
                       .getDate()
                       .toString()
                       .padStart(2, "0");
-                    return (
-                      <div
-                        key={ele.field}
-                        className={`${!ele.newline ? "col date" : ""}`}
-                      >
-                        <label>{`${ele.displayName}: ${day}-${month}-${year}`}</label>
-                      </div>
-                    );
                   }
                   if (ele.optional) return "";
                   if (ele.field === "location") {
                     const currentLocation = "Chirala";
-                    return (
-                      <div
-                        key={ele.field}
-                        className={`${!ele.newline ? "col location" : ""}`}
-                      >
-                        <label>{`${ele.displayName}: ${currentLocation}`}</label>
-                      </div>
-                    );
                   }
                   if (ele.inputType === "inputbox") {
                     return (
                       <div
                         style={
-                          ele.field === "name"
+                          ele.field === "date"
                             ? {
                                 width: "396px",
                                 paddingRight: "0px",
                                 display: "inline-block",
                               }
+                            : ele.field === "location"
+                            ? {
+                                width: "386px",
+                                paddingRight: "10px",
+                                paddingLeft: "20px",
+
+                                display: "inline-block",
+                              }
+                            : ele.field === "name"
+                            ? {
+                                width: "338px",
+                                paddingRight: "0px",
+                                display: "inline-block",
+                              }
                             : ele.field === "age"
                             ? {
-                                paddingRight: "10px",
-                              
+                                // paddingRight: "10px",
                               }
                             : ele.field === "weight"
                             ? {
-                             
-                              paddingLeft: "7px",
-                              paddingRight: "0px",
+                                // paddingLeft: "7px",
+                                // paddingRight: "0px",
                               }
                             : ele.field === "contactNumber"
                             ? {
-                                width: "394px",
-                                paddingLeft: "26px",
+                                width: "383px",
+                                paddingLeft: "20px",
                                 display: "inline-block",
                               }
                             : {}
@@ -501,7 +502,7 @@ const AdminProfile = ({ selectedPatientData }) => {
                         style={
                           ele.field === "gender"
                             ? {
-                                width: "350px",
+                                width: "338px",
                                 marginTop: "1px",
                                 display: " inline-block",
                                 paddingLeft: "23px",
@@ -554,44 +555,21 @@ const AdminProfile = ({ selectedPatientData }) => {
                   return null;
                 })}
             </Row>
-          </div>
-          <div class="d-grid gap-2 ">
-            <button
-              class="btn btn-primary additional"
-              type="button"
-              onClick={() => {
-                gotoPage("centeredmodal");
-              }}
-            >
-              Additional Details
-            </button>
-          </div>
-          {/* <div class="d-grid gap-2 ">
-            <BasicAccordion
-              items={[
-                {
-                  title: "Additional Details",
-                  content: (
-                    
-                  <CenteredModal/>
-                  ),
-                },
-              ]}
-            />
-            </div> */}
-          <div className="d-flex justify-content-center  save-flex">
+        <div className="row">
+          <div className=" col-md-6 my-4">
             <button
               type="button"
-              className="btn btn-primary rounded cancel "
+              className="btn btn_clear search_width"
               onClick={resetForm}
             >
               Clear
             </button>
-            {/* Show the Save button if isPrintButtonVisible is false */}
+          </div>
+          <div className="col-md-6 my-4">
             {!isPrintButtonVisible && (
               <button
                 type="button"
-                className="btn btn-primary rounded save "
+                className="btn btn_save search_width"
                 onClick={onSave}
               >
                 Save
@@ -601,16 +579,16 @@ const AdminProfile = ({ selectedPatientData }) => {
             {isPrintButtonVisible && (
               <button
                 type="button"
-                className="btn btn-primary rounded save"
+                className="btn btn_save search_width"
                 onClick={handlePrintModalOpen}
               >
                 Print
               </button>
             )}
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </form>
+    </>
   );
 };
 

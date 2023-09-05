@@ -18,7 +18,7 @@ function Select({
   };
   return (
     <div>
-     <div className="form-group">
+     <div className="form">
         {/* <label for="name" className="cols-sm-2 control-label">
           {label}
         </label> */}
@@ -31,13 +31,13 @@ function Select({
         name={name}
         className="form-select select-check"
         value={value}
-        style={{ backgroundColor: "#f9f9f9" }} 
+        // style={{ backgroundColor: "#f9f9f9" }} 
          onClick={() => {
           setIsFocused(true);
         }}
         onChange={(e) => onSelectChange(e.target.value)}
         >
-        <option value={inputArry[0]}>Select User</option>
+        <option value={inputArry[0]}>{label}</option>
         {inputArry.map((option) => (
           <option value={option.value}>
             {option.label}

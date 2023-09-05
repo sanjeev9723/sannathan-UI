@@ -36,11 +36,11 @@ const InputControl = ({
 
   return (
     <>
-      <div className="form-group">
-        <label htmlFor={name} className="cols-sm-2 control-label">
+      <div className="form">
+        <label htmlFor={name} className="col-sm-6 mt-3 control-label">
           {label}
         </label>
-        <div className="cols-sm-10">
+        <div >
           <div className="input-group">
             <input
               type={type}

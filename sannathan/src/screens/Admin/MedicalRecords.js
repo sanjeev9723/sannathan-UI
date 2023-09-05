@@ -690,7 +690,7 @@ function MedicalRecords({ prescriptionData, patientData }) {
                                       prescription.prescriptionCode,
                                       prescription.usage
                                     )
-                                  } 
+                                  }
                                 />
                                 {prescription.prescriptionTitle}
                               </label>
@@ -839,7 +839,7 @@ function MedicalRecords({ prescriptionData, patientData }) {
             <Col md={6}>
               <InputButton
                 label={"ORIGINAL MEDICAL CATEGORY"}
-                placeholder={patientData[0].originalMedicalCategory}
+                // placeholder={patientData[0].originalMedicalCategory}
                 // value={selectedPrescriptions.join(", ")}
                 // onClick={() => setAddShow(true)}
               />
@@ -902,14 +902,17 @@ function MedicalRecords({ prescriptionData, patientData }) {
             </Col>
           </Row>
 
-          <div className="d-flex justify-content-center">
-            <button
-              type="button"
-              className="btn btn-primary rounded save-button px-5 "
-              onClick={handleMedicalSave}
-            >
-              Save
-            </button>
+         
+          <div class="row">
+            <div class=" col-md-2 offset-md-10 mb-1">
+              <button
+                type="button"
+                class="btn btn_save search_width"
+                onClick={handleMedicalSave}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </form>
       </div>
