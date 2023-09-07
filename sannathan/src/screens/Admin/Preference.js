@@ -13,7 +13,7 @@ function Preference() {
   const gotoPage = (page) => {
     navigate(`/${page}`);
   };
-
+  let rowNumber = 1;
   //   const [email, setEmail] = useState("");
   const preferenceList = [
     { label: "Shirt", value: "shirt", isChecked: false },
@@ -40,7 +40,7 @@ function Preference() {
   };
 
   const handleAddItem = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const updatedPreferences = [...preferences, newItem];
     setPreferences(updatedPreferences);
@@ -84,78 +84,90 @@ function Preference() {
 
   return (
     <div style={{ overflow: "auto" }}>
-      <HeaderMenu/>
+      <HeaderMenu />
+
+      <div className="dash-content ">
       <AdminNavbar />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4 col-lg-6 ">
-            <div>
-              <h5 className="text-center patient-id">Preference List</h5>
-              <div className="search-box">
+
+        <div className="container ">
+          <div className="">
+          </div>
+          <div>
+            <div className=" row mt-4">
+              <div className="col-md-4 col-lg-6 div_border">
+                <div>
+                  <h3 class="text-center ">Preference List</h3>{" "}
+                  {/* <div className="search-box">
                 <SearchBar onSearch={handleSearch} />
-              </div>
-              <div style={{ maxHeight: "450px", overflow: "auto" }}>
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Label</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredPreferences.map((item) => (
-                      <tr key={item.value}>
-                        <td>{item.label}</td>
-                        <td>
-                        <FaTrash
-                            onClick={() => handleDeleteItem(item.value)}
-                          />
-                          {/* <button onClick={() => handleUpdateItem(item.value)}>
+              </div> */}
+                  <div class="mt-2 form-group has-search mb-3">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <SearchBar onSearch={handleSearch} />
+                  </div>
+                  <div style={{ maxHeight: "450px", overflow: "auto" }}>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Label</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredPreferences.map((item) => (
+                          <tr key={item.value}>
+                            <td className="fw-bold">{rowNumber++}</td>
+                            <td>{item.label}</td>
+                            <td>
+                              <FaTrash
+                                onClick={() => handleDeleteItem(item.value)}
+                              />
+                              {/* <button onClick={() => handleUpdateItem(item.value)}>
               Toggle Check
             </button> */}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="col-md-4 col-lg-6 ">
-            <div className="panel panel-default">
-              <div className="panel-body">
-                <div className="text-center">
-                  <form className="form">
-                    <h5 className="text-center patient-id">Preference</h5>
-                    {/* <p className="text-muted forgot">
+              <div className="col-md-4 col-lg-6 ">
+                <div className="panel panel-default">
+                  <div className="panel-body">
+                    <div className="text-center">
+                      <form className="form">
+                        <h3 className="text-center patient-id">Preference</h3>
+                        {/* <p className="text-muted forgot">
                       Enter your registered email address.
                     </p> */}
-                    <div className="panel-body">
-                      <div className="form-group">
-                        <div className="mb-3 input-group">
-                          <input
-                            type="text"
-                            name="label"
-                            placeholder="Code ID"
-                            className="form-control"
-                            value={newItem.label}
-                            onChange={handleInputChange}
-                            style={{ backgroundColor: "white" }}
-                          />
-                        </div>
-                        <div className="mb-3 input-group">
-                          <input
-                            type="text"
-                            name="value"
-                            placeholder=" Name"
-                            className="form-control"
-                            value={newItem.value}
-                            onChange={handleInputChange}
-                            style={{ backgroundColor: "white" }}
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group forgot-submit">
+                        <div className="panel-body">
+                          <div className="form-group">
+                            <div className="mb-3 input-group">
+                              <input
+                                type="text"
+                                name="label"
+                                placeholder="Code ID"
+                                className="form-control"
+                                value={newItem.label}
+                                onChange={handleInputChange}
+                                style={{ backgroundColor: "white" }}
+                              />
+                            </div>
+                            <div className="mb-3 input-group">
+                              <input
+                                type="text"
+                                name="value"
+                                placeholder=" Name"
+                                className="form-control"
+                                value={newItem.value}
+                                onChange={handleInputChange}
+                                style={{ backgroundColor: "white" }}
+                              />
+                            </div>
+                          </div>
+                          {/* <div className="form-group forgot-submit">
                         <button
                           className="btn btn-primary rounded w-100 theme-btn mx-auto"
                           type="submit"
@@ -163,20 +175,33 @@ function Preference() {
                         >
                           save
                         </button>
-                      </div>
-                      <input
-                        type="hidden"
-                        className="hide"
-                        name="token"
-                        id="token"
-                        value=""
-                      />
+                      </div> */}
+                          <div class="form-row">
+                            <div class="form-group col-md-2 offset-md-10 mb-1">
+                              <button
+                                type="button"
+                                class="btn btn_save search_width"
+                                onClick={handleAddItem}
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                          <input
+                            type="hidden"
+                            className="hide"
+                            name="token"
+                            id="token"
+                            value=""
+                          />
+                        </div>
+                      </form>
                     </div>
-                  </form>
+                  </div>
                 </div>
+                {/* </div> */}
               </div>
             </div>
-            {/* </div> */}
           </div>
         </div>
       </div>

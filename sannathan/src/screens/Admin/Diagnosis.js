@@ -16,7 +16,6 @@ function Diagnosis() {
     navigate(`/${page}`);
   };
 
-
   const [searchTerm, setSearchTerm] = useState("");
   const [diagnosis, setDiagnosis] = useState([]);
   const [newItem, setNewItem] = useState({
@@ -24,6 +23,7 @@ function Diagnosis() {
     value: "",
     isChecked: false,
   });
+  let rowNumber = 1;
 
   // const [initialDiagnosis, setInitialDiagnosis] = useState([]);  // Initialize with an empty array
 
@@ -31,13 +31,13 @@ function Diagnosis() {
     const fetchDiagnosisData = async () => {
       try {
         const response = await axiosInst.get("/master/diagnosis");
-        if ( Array.isArray(response.data.data)) {
+        if (Array.isArray(response.data.data)) {
           const formattedData = response.data.data.map((item) => ({
             label: item.diagnosisName, // Make sure this property matches the API response
-            value: item.diagnosisId,   // You can add other properties here if needed
+            value: item.diagnosisId, // You can add other properties here if needed
             // isChecked: false,
           }));
-          
+
           setDiagnosis(formattedData);
           // localStorage.setItem(
           //   "diagnosisList",
@@ -60,7 +60,7 @@ function Diagnosis() {
   };
 
   const handleAddItem = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const updatedDiagnosis = [...diagnosis, newItem];
     setDiagnosis(updatedDiagnosis);
     setNewItem({ label: "", value: "", isChecked: false });
@@ -80,9 +80,8 @@ function Diagnosis() {
   };
 
   const filteredDiagnosis = diagnosis.filter((item) =>
-  item.label.toLowerCase().includes(searchTerm.toLowerCase())
-);
-
+    item.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // useEffect(() => {
   //   const storedDiagnosisList = localStorage.getItem("diagnosisList");
@@ -94,19 +93,27 @@ function Diagnosis() {
   return (
     <div style={{ overflow: "auto" }}>
       <HeaderMenu />
+      <div className="dash-content">
       <AdminNavbar />
+
       <div className="container">
-        <div className="row">
-          <div className="col-md-4 col-lg-6">
+
+        <div className="row mt-4">
+          <div className="col-md-4 col-lg-6 div_border">
             <div>
-              <h5 className="text-center patient-id">Diagnosis List</h5>
-              <div className="search-box">
+              <h3 className="text-center patient-id">Diagnosis List</h3>
+              {/* <div className="search-box">
+                <SearchBar onSearch={handleSearch} />
+              </div> */}
+              <div class="mt-2 form-group has-search mb-3">
+                <span class="fa fa-search form-control-feedback"></span>
                 <SearchBar onSearch={handleSearch} />
               </div>
               <div style={{ maxHeight: "450px", overflow: "auto" }}>
                 <Table>
                   <thead>
                     <tr>
+                      <th>No</th>
                       <th>Label</th>
                       <th>Action</th>
                     </tr>
@@ -114,10 +121,11 @@ function Diagnosis() {
                   <tbody>
                     {filteredDiagnosis.map((item) => (
                       <tr key={item.value}>
+                        <td className="fw-bold">{rowNumber++}</td>
                         <td>{item.label}</td>
                         <td>
                           <FaTrash
-                            // onClick={() => handleDeleteItem(item.value)}
+                          // onClick={() => handleDeleteItem(item.value)}
                           />{" "}
                         </td>
                       </tr>
@@ -127,12 +135,12 @@ function Diagnosis() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 col-lg-6">
+          <div className="col-md-4 col-lg-5">
             <div className="panel panel-default">
               <div className="panel-body">
                 <div className="text-center">
                   <form className="form">
-                    <h5 className="text-center patient-id">Add Diagnosis</h5>
+                    <h3 className="text-center patient-id">Add Diagnosis</h3>
                     <div className="panel-body">
                       <div className="form-group">
                         <div className="mb-3 input-group">
@@ -158,15 +166,17 @@ function Diagnosis() {
                           />
                         </div>
                       </div>
-                      <div className="form-group forgot-submit">
-                        <button
-                          className="btn btn-primary rounded w-100 theme-btn mx-auto"
-                          type="submit"
-                          onClick={handleAddItem}
-                        >
-                          Add
-                        </button>
-                      </div>
+                      <div class="form-row">
+                            <div class="form-group col-md-2 offset-md-10 mb-1">
+                              <button
+                                type="button"
+                                class="btn btn_save search_width"
+                                onClick={handleAddItem}
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
                       <input
                         type="hidden"
                         className="hide"
@@ -181,6 +191,7 @@ function Diagnosis() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

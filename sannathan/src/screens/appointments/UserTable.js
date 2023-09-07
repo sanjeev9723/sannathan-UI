@@ -112,25 +112,25 @@ const UserTable = ({
   });
 
   return (
-    
-    <div >
-  <div className="user-table">
-  {orders.map((order) => (
-    <div className="card mb-2 hover-card" key={order.PatientId}>
-      <div className="card-body">
-        <div className="media-box">
-          <img className="idimages" src={countpng} alt="Logo" />
-          <div className="media-body">
-            <p className="id_name mt-0 pl-2 mb-0">{order.name}</p>
-            <p className="pl-2 mb-0">ID: {order.PatientId}</p>
+    <div className="overflow-auto">
+      <div className="user-table ">
+      {filteredOrders.map((order) => (
+          <div className="card mb-2 hover-card" key={order.PatientId}>
+            <div className="card-body">
+              <div className="media-box">
+                <img className="idimages" src={countpng} alt="Logo" />
+                <div
+                  className="media-body"
+                  onClick={() => handleRowClick(order)}
+                >
+                  <p className="id_name mt-0 pl-2 mb-0">{order.name}</p>
+                  <p className="pl-2 mb-0">ID: {order.message}</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
-
-     
     </div>
   );
 };

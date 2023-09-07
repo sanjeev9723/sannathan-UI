@@ -37,18 +37,19 @@ function MedicalCategory() {
     value: "",
     isChecked: false,
   });
+  let rowNumber = 1;
 
   useEffect(() => {
     const fetchDiagnosisData = async () => {
       try {
         const response = await axiosInst.get("/master/medicalcategory");
-        if ( Array.isArray(response.data.data)) {
+        if (Array.isArray(response.data.data)) {
           const formattedData = response.data.data.map((item) => ({
-            label: item.medicalCategoryName, 
-            value: item.medicalCategoryId,   
+            label: item.medicalCategoryName,
+            value: item.medicalCategoryId,
             // isChecked: false,
           }));
-          
+
           setCurrent(formattedData);
           // localStorage.setItem(
           //   "diagnosisList",
@@ -71,7 +72,7 @@ function MedicalCategory() {
   };
 
   const handleAddItem = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     const updatedCurrent = [...current, newItem];
     setCurrent(updatedCurrent);
     setNewItem({ label: "", value: "", isChecked: false });
@@ -113,19 +114,26 @@ function MedicalCategory() {
   return (
     <div style={{ overflow: "auto" }}>
       <HeaderMenu />
+      <div className="dash-content">
       <AdminNavbar />
+
       <div className="container">
-        <div className="row">
-          <div className="col-md-4 col-lg-6 ">
+        <div className="row mt-4">
+          <div className="col-md-4 col-lg-6 div_border ">
             <div>
-              <h5 className="text-center patient-id">Medical Category List</h5>
-              <div className="search-box">
+              <h3 className="text-center patient-id">Medical Category List</h3>
+              {/* <div className="search-box">
+                <SearchBar onSearch={handleSearch} />
+              </div> */}
+              <div class="mt-2 form-group has-search mb-3">
+                <span class="fa fa-search form-control-feedback"></span>
                 <SearchBar onSearch={handleSearch} />
               </div>
               <div style={{ maxHeight: "450px", overflow: "auto" }}>
                 <Table>
                   <thead>
                     <tr>
+                      <th>No</th>
                       <th>Label</th>
                       <th>Action</th>
                     </tr>
@@ -133,10 +141,11 @@ function MedicalCategory() {
                   <tbody>
                     {filteredCurrent.map((item) => (
                       <tr key={item.value}>
+                        <td className="fw-bold">{rowNumber++}</td>
                         <td>{item.label}</td>
                         <td>
-                        <FaTrash
-                            // onClick={() => handleDeleteItem(item.value)}
+                          <FaTrash
+                          // onClick={() => handleDeleteItem(item.value)}
                           />
                           {/* <button onClick={() => handleUpdateItem(item.value)}>
               Toggle Check
@@ -149,7 +158,7 @@ function MedicalCategory() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 col-lg-6 ">
+          <div className="col-md-4 col-lg-5 ">
             <div className="panel panel-default">
               <div className="panel-body">
                 <div className="text-center">
@@ -183,14 +192,16 @@ function MedicalCategory() {
                           />
                         </div>
                       </div>
-                      <div className="form-group forgot-submit">
-                        <button
-                          className="btn btn-primary rounded w-100 theme-btn mx-auto"
-                          type="submit"
-                          onClick={handleAddItem}
-                        >
-                          save
-                        </button>
+                      <div class="form-row">
+                        <div class="form-group col-md-2 offset-md-10 mb-1">
+                          <button
+                            type="button"
+                            class="btn btn_save search_width"
+                            onClick={handleAddItem}
+                          >
+                            Save
+                          </button>
+                        </div>
                       </div>
                       <input
                         type="hidden"
@@ -206,6 +217,7 @@ function MedicalCategory() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

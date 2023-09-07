@@ -110,7 +110,7 @@ const Report = () => {
       const formattedToDate = toDate.toISOString().split("T")[0];
       console.log(formattedFromDate, formattedToDate);
       // Construct the URL with the date range parameters
-      const url = `https://myserver.loca.lt/appointment/getAppointments?fromDate=${formattedFromDate}&toDate=${formattedToDate}`;
+      const url = `/appointment/getAppointments?fromDate=${formattedFromDate}&toDate=${formattedToDate}`;
       console.log(formattedFromDate);
       // Make the Axios GET request to fetch data
       const response = await axiosInst.get(url);
@@ -165,15 +165,56 @@ const Report = () => {
                       action="#"
                     >
                       <Row>
-                        <Col md={4} className="form-group">
-                          <label htmlFor="fromDate">From Date:</label>
-                          <DatePicker
-                            selected={fromDate}
+                        <div class="row mb-3 text-center">
+                        <div class="col-md-6 d-flex">
+                          <label
+                            for="inputEmail3"
+                            class="col-sm-2 col-form-label"
+                          >
+                           From Date:
+                          </label>
+                          <div class="col-sm-6">
+                          <input
+                            type="date"
+                            name="Startdate"
+                            class="form-control"
+                            id="inputDate"
+                            placeholder="Full Name"
+                            value={fromDate.toISOString().split("T")[0]}
                             onChange={handleFromDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            id="fromDate"
-                            name="fromDate"
-                            customInput={<CustomDatePickerInput />}
+                          />
+                          </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                          <label
+                            for="inputEmail3"
+                            class="col-sm-2 col-form-label"
+                          >
+                           To Date:
+                          </label>
+                          <div class="col-sm-6">
+                          <input
+                            type="date"
+                            name="todate"
+                            class="form-control"
+                            id="inputDate"
+                            placeholder="Full Name"
+                            value={toDate.toISOString().split("T")[0]}
+                            onChange={handleToDateChange}
+                          />
+                          </div>
+                        </div>
+                        </div>
+                        {/* <Col md={4} className="form-group">
+                          <label htmlFor="fromDate">From Date:</label>
+                          <input
+                            type="date"
+                            name="Startdate"
+                            class="form-control"
+                            id="inputDate"
+                            placeholder="Full Name"
+                            value={fromDate.toISOString().split("T")[0]}
+                            onChange={handleFromDateChange}
                           />
                         </Col>
 
@@ -188,11 +229,11 @@ const Report = () => {
                             maxDate={new Date()}
                             customInput={<CustomDatePickerInput />}
                           />
-                        </Col>
-                        <Col className="d-flex justify-content-end">
+                        </Col> */}
+                        <Col className="d-flex justify-content-center">
                           <button
                             type="submit"
-                            className="btn btn-secondary rounded save-button px-5"
+                            className="btn btn-primary rounded save-button px-5 me-4"
                             onClick={handleSearch}
                           >
                             Search
@@ -201,7 +242,7 @@ const Report = () => {
                           <Col md={2} > */}
                           <button
                             type="button"
-                            className="btn btn-secondary rounded clear px-5 ml-2"
+                            className="btn btn-primary rounded clear px-5 ml-2"
                             onClick={handleClear}
                           >
                             Clear
@@ -225,7 +266,7 @@ const Report = () => {
           style={{ height: 400, width: 810 }}
           ref={componentRef}
         >
-          <h5 className="hidden-element">Sanathan Jeevan Trust</h5>
+          <h3 className="hidden-element">Sanathan Jeevan Trust</h3>
 
           <AgGridReact
             ref={gridRef} // Ref for accessing Grid's API

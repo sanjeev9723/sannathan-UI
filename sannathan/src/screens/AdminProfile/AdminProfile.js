@@ -21,7 +21,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Modal, Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import Print from "../appointments/print";
-// import Styles from "./"
 
 const AdminProfile = ({ selectedPatientData }) => {
   const axiosInst = useAxiosPost();
@@ -87,18 +86,18 @@ const AdminProfile = ({ selectedPatientData }) => {
   // console.log(selectedPatientData);
 
   useEffect(() => {
-    // console.log(selectedPatientData);
+    console.log(selectedPatientData);
     setPatientId(selectedPatientData.message || "");
 
     // Create a mapping object to map field names in bookingFields to selectedPatientData keys
     const fieldToDataMap = {
       date: "appointmentDate",
       address: "address",
-      name: "name",
+      patientName: "name",
       gender: "gender",
       age: "age",
       weight: "weight",
-      contactNumber: "phoneNumber",
+      contactnumber: "phoneNumber",
     };
 
     // Check if selectedPatientData is not null or undefined
@@ -224,19 +223,16 @@ const AdminProfile = ({ selectedPatientData }) => {
     }
 
     try {
-      const { data } = await axiosInst.get(`/admin/getPatientDetails`, {
+      const { data } = await axiosInst.get(`/appointment/getPatientId`, {
         params: {
-          // pId: patientId,
-          patientId: patientId,
-
-          // pContact: patientId,
+          pID: patientId,
         },
       });
+
       setIsLoading(false);
       setPatientData(data.data[0]);
       setGender(data.data[0].gender || "");
-      // setPhoneNumber(data.data[0].phoneNumber || "");
-      console.log(data.data[0]);
+      console.log(data.data);
       // Update the bookingOrder state with fetched data
       const updatedOrder = bookingOrder.map((order) => {
         if (data.data[0].hasOwnProperty(order.field)) {
@@ -245,6 +241,7 @@ const AdminProfile = ({ selectedPatientData }) => {
         return order;
       });
       setBookingOrder(updatedOrder);
+
       // If patient data is found, set the selectedPatient state with the fetched data
       // and show the "Update" button
       setSelectedPatient(data.data[0]);
@@ -252,20 +249,35 @@ const AdminProfile = ({ selectedPatientData }) => {
     } catch (error) {
       setIsLoading(false);
       setIsUpdateVisible(false);
-
       toast.error("No patient details found.");
-
       console.error("Error fetching data:", error);
     }
   };
-  // patient details in modal
-  const onUpdate = (patientData) => {
-    navigate(`/adminpage`, {
-      state: {
-        patientData: [patientData],
-      },
-    });
+
+  const onUpdate = async () => {
+    if (!patientId) {
+      toast.error("Please enter a patient ID");
+      return;
+    }
+
+    try {
+      const { data } = await axiosInst.get(`/admin/getPatientDetails`, {
+        params: {
+          patientId: patientId,
+        },
+      });
+
+      navigate(`/adminpage`, {
+        state: {
+          patientData: data.data,
+        },
+      });
+    } catch (error) {
+      toast.error("Error fetching complete patient details.");
+      console.error("Error fetching data:", error);
+    }
   };
+
   //  console.log(patientData);
   const onSave = (e) => {
     e.preventDefault();
@@ -290,19 +302,18 @@ const AdminProfile = ({ selectedPatientData }) => {
       (async () => {
         try {
           // Create the appointment object with the required data
-          let formData = patientData || {};
-          formData = { ...order, ...formData };
           const appointmentData = {
-            address: formData.address || "",
-            name: formData.name || "",
+            address: patientData?.address || "",
+            name: patientData?.name || "",
             date: "2023-07-29",
-            patientId: formData.patientId || 0,
-            age: formData.age || 0,
-            gender: formData.gender || "",
-            weight: formData.weight || 0,
-            contactNumber: formData.contactNumber || 0,
+            patientId: patientData?.patientId || 0,
+            age: patientData?.age || 0,
+            gender: patientData?.gender || "",
+            weight: patientData?.weight || 0,
+            contactNumber: patientData?.contactnumber || 0,
           };
-          // console.log(appointmentData);
+
+          console.log("Appointment Data:", appointmentData); // Add this line for debugging
 
           let response;
           // Make the API call
@@ -341,9 +352,7 @@ const AdminProfile = ({ selectedPatientData }) => {
 
   return (
     <>
-      <p className="mt-3 mb-4 font-weight-bold patient_size">
-        Add Patient Details
-      </p>
+      <p className="mt-3 mb-4 fw-bold">Add Patient Details</p>
       {/* spinner for loading */}
       {isLoading && (
         <div class="d-flex justify-content-end">
@@ -406,155 +415,107 @@ const AdminProfile = ({ selectedPatientData }) => {
       />
       <form class="row g-3">
         <Row>
-              {bookingFields?.length > 0 &&
-                bookingFields.map((ele, index) => {
-                  if (ele.optional) return "";
-                  if (ele.field === "date") {
-                    const currentDate = new Date();
-                    const year = currentDate.getFullYear();
-                    const month = (currentDate.getMonth() + 1)
-                      .toString()
-                      .padStart(2, "0");
-                    const day = currentDate
-                      .getDate()
-                      .toString()
-                      .padStart(2, "0");
-                  }
-                  if (ele.optional) return "";
-                  if (ele.field === "location") {
-                    const currentLocation = "Chirala";
-                  }
-                  if (ele.inputType === "inputbox") {
-                    return (
-                      <div
-                        style={
-                          ele.field === "date"
-                            ? {
-                                width: "396px",
-                                paddingRight: "0px",
-                                display: "inline-block",
-                              }
-                            : ele.field === "location"
-                            ? {
-                                width: "386px",
-                                paddingRight: "10px",
-                                paddingLeft: "20px",
+          {bookingFields?.length > 0 &&
+            bookingFields.map((ele, index) => {
+              if (ele.optional) return "";
+              if (ele.field === "date") {
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                const month = (currentDate.getMonth() + 1)
+                  .toString()
+                  .padStart(2, "0");
+                const day = currentDate.getDate().toString().padStart(2, "0");
+              }
+              if (ele.optional) return "";
+              if (ele.field === "location") {
+                const currentLocation = "Chirala";
+              }
+              if (ele.inputType === "inputbox") {
+                return (
+                  <div
+                    key={ele.field}
+                    className={`${
+                      ele.field === "age"
+                        ? "col-md-3"
+                        : ele.field === "address"
+                        ? "col"
+                        : "col-md-6"
+                    }`}
+                  >
+                    <InputControl
+                      name={ele.field}
+                      reset={resetFields}
+                      label={ele.displayName}
+                      className={ele.className}
+                      type={ele.type}
+                      disabled={ele.disabled}
+                      placeholder={ele.placeholder}
+                      required={ele.required}
+                      // value={ele.value || patientData[ele.field] || ""}
+                      value={
+                        ele.value ||
+                        patientData?.[ele.field] ||
+                        selectedSingleData[ele.field] ||
+                        ""
+                      }
+                      onChange={(txt) => {
+                        onFieldChange(txt, ele.field);
+                      }}
+                      validationMsg={errors[ele.field]}
+                    />
+                    {errors[ele.field] && (
+                      <small className="error">{errors[ele.field]}</small>
+                    )}
+                  </div>
+                );
+              }
 
-                                display: "inline-block",
-                              }
-                            : ele.field === "name"
-                            ? {
-                                width: "338px",
-                                paddingRight: "0px",
-                                display: "inline-block",
-                              }
-                            : ele.field === "age"
-                            ? {
-                                // paddingRight: "10px",
-                              }
-                            : ele.field === "weight"
-                            ? {
-                                // paddingLeft: "7px",
-                                // paddingRight: "0px",
-                              }
-                            : ele.field === "contactNumber"
-                            ? {
-                                width: "383px",
-                                paddingLeft: "20px",
-                                display: "inline-block",
-                              }
-                            : {}
-                        }
-                        key={ele.field}
-                        className={`${!ele.newline ? "col" : ""}`}
-                      >
-                        <InputControl
-                          name={ele.field}
-                          reset={resetFields}
-                          label={ele.displayName}
-                          className={ele.className}
-                          type={ele.type}
-                          disabled={ele.disabled}
-                          placeholder={ele.placeholder}
-                          required={ele.required}
-                          // value={ele.value || patientData[ele.field] || ""}
-                          value={
-                            ele.value ||
-                            patientData?.[ele.field] ||
-                            selectedSingleData[ele.field] ||
-                            ""
-                          }
-                          onChange={(txt) => {
-                            onFieldChange(txt, ele.field);
-                          }}
-                          validationMsg={errors[ele.field]}
-                        />
-                        {errors[ele.field] && (
-                          <small className="error">{errors[ele.field]}</small>
-                        )}
-                      </div>
-                    );
-                  }
-
-                  if (ele.inputType === "selectbox") {
-                    return (
-                      <div
-                        style={
-                          ele.field === "gender"
-                            ? {
-                                width: "338px",
-                                marginTop: "1px",
-                                display: " inline-block",
-                                paddingLeft: "23px",
-                              }
-                            : {}
-                        }
-                        key={ele.field}
-                        // className={`${!ele.newline ? "col" : ""}`}
-                      >
-                        <GenderInput
-                          label={ele.displayName}
-                          value={
-                            gender || (patientData && patientData.gender) || ""
-                          }
-                          onChange={(txt) => {
-                            onFieldChange(txt, ele.field);
-                          }}
-                          validationMsg={errors.gender}
-                        />
-                        {errors.gender && (
-                          <small className="error">{errors.gender}</small>
-                        )}
-                      </div>
-                    );
-                  }
-                  // if (ele.inputType === "mobileNo") {
-                  //   return (
-                  //     <div key={ele.field}>
-                  //       <label className={ele.className}>
-                  //         {ele.displayName}
-                  //       </label>
-                  //       <PhoneInput
-                  //         country={"in"}
-                  //         value={phoneNumber}
-                  //         onChange={(value) =>
-                  //           onFieldChange(value, "phoneNumber")
-                  //         }
-                  //         inputProps={{
-                  //           name: ele.field,
-                  //           required: true,
-                  //         }}
-                  //         validationMsg={errors.phoneNumber}
-                  //       />
-                  //       {errors.phoneNumber && (
-                  //         <small className="error">{errors.phoneNumber}</small>
-                  //       )}
-                  //     </div>
-                  //   );
-                  // }
-                  return null;
-                })}
-            </Row>
+              if (ele.inputType === "selectbox") {
+                return (
+                  <div key={ele.field} className="col-md-3">
+                    <GenderInput
+                      label={ele.displayName}
+                      value={
+                        gender || (patientData && patientData.gender) || ""
+                      }
+                      onChange={(txt) => {
+                        onFieldChange(txt, ele.field);
+                      }}
+                      validationMsg={errors.gender}
+                    />
+                    {errors.gender && (
+                      <small className="error">{errors.gender}</small>
+                    )}
+                  </div>
+                );
+              }
+              // if (ele.inputType === "mobileNo") {
+              //   return (
+              //     <div key={ele.field}>
+              //       <label className={ele.className}>
+              //         {ele.displayName}
+              //       </label>
+              //       <PhoneInput
+              //         country={"in"}
+              //         value={phoneNumber}
+              //         onChange={(value) =>
+              //           onFieldChange(value, "phoneNumber")
+              //         }
+              //         inputProps={{
+              //           name: ele.field,
+              //           required: true,
+              //         }}
+              //         validationMsg={errors.phoneNumber}
+              //       />
+              //       {errors.phoneNumber && (
+              //         <small className="error">{errors.phoneNumber}</small>
+              //       )}
+              //     </div>
+              //   );
+              // }
+              return null;
+            })}
+        </Row>
         <div className="row">
           <div className=" col-md-6 my-4">
             <button

@@ -15,6 +15,8 @@ function Suggestion() {
   const gotoPage = (page) => {
     navigate(`/${page}`);
   };
+  let rowNumber = 1;
+
   useEffect(() => {
     const fetchSuggestionData = async () => {
       try {
@@ -90,19 +92,22 @@ function Suggestion() {
   return (
     <div style={{ overflow: "auto" }}>
       <HeaderMenu />
-      <AdminNavbar />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4 col-lg-6">
+      <div className="dash-content ">
+        <AdminNavbar />
+
+        <div className="row mt-4">
+          <div className="col-md-4 col-lg-7 div_border">
             <div>
-              <h5 className="text-center patient-id">Suggestion List</h5>
-              <div className="search-box">
+              <h3 className="text-center patient-id">Suggestion List</h3>
+              <div class="mt-2 form-group has-search mb-3">
+                <span class="fa fa-search form-control-feedback"></span>
                 <SearchBar onSearch={handleSearch} />
               </div>
               <div style={{ maxHeight: "450px", overflow: "auto" }}>
                 <Table>
                   <thead>
                     <tr>
+                      <th>No</th>
                       <th>Id</th>
                       <th>Description</th>
                       <th>Action</th>
@@ -111,6 +116,8 @@ function Suggestion() {
                   <tbody>
                     {filteredSuggestion.map((item) => (
                       <tr key={item.value}>
+                        <td className="fw-bold">{rowNumber++}</td>
+
                         {/* <td>{item.value}</td> */}
                         <td>{item.label}</td>
                         <td>{item.suggestionDesc}</td>
@@ -126,12 +133,12 @@ function Suggestion() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 col-lg-6">
+          <div className="col-md-4 col-lg-5 ">
             <div className="panel panel-default">
               <div className="panel-body">
                 <div className="text-center">
                   <form className="form">
-                    <h5 className="text-center patient-id">Add Suggestion</h5>
+                    <h3 className="text-center patient-id">Add Suggestion</h3>
                     <div className="panel-body">
                       <div className="form-group">
                         <div className="mb-3 input-group">
@@ -157,14 +164,16 @@ function Suggestion() {
                           />
                         </div>
                       </div>
-                      <div className="form-group forgot-submit">
-                        <button
-                          className="btn btn-primary rounded w-100 theme-btn mx-auto"
-                          type="submit"
-                          onClick={handleAddItem}
-                        >
-                          Add
-                        </button>
+                      <div class="form-row">
+                        <div class="form-group col-md-2 offset-md-10 mb-1">
+                          <button
+                            type="button"
+                            class="btn btn_save search_width"
+                            onClick={handleAddItem}
+                          >
+                            Save
+                          </button>
+                        </div>
                       </div>
                       <input
                         type="hidden"

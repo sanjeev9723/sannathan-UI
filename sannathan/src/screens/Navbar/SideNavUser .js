@@ -23,7 +23,7 @@ function SideNavUser () {
   return (
     <>
       <div className="menu-button" onClick={handleShow}>
-        <Button variant="primary">
+        <Button variant="link">
           <div className="bar" />
           <div className="bar" />
           <div className="bar" />
@@ -32,8 +32,9 @@ function SideNavUser () {
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
+        <img src={sannathan2} alt="My Image" className="sanatha-nav"  />
+
           <Offcanvas.Title>
-            <img src={sannathan2} alt="My Image" className="my-image-nav" />
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
@@ -50,7 +51,7 @@ function SideNavUser () {
                       activeItem === 1 ? "active" : ""
                     }`}
                   >
-                    <div className="	fas fa-th-large"></div>
+                    <div className="fa fa-th-list"></div>
                     <Link to="/appointments" onClick={() => gotoPage("appointments")}>
                     OP Details
                   </Link>
@@ -68,7 +69,7 @@ function SideNavUser () {
                       activeItem === 1 ? "active" : ""
                     }`}
                   >
-                    <div className="far fa-calendar"></div>
+                    <div className="fa fa-calendar"></div>
                     <Link to="/bookings">Appointments</Link>
                   </div>
                  
@@ -83,7 +84,7 @@ function SideNavUser () {
                       activeItem === 1 ? "active" : ""
                     }`}
                   >
-                    <div className="far fa-clock"></div>
+                    <div className="fa fa-clock-o"></div>
                     <Link to="">Report</Link>
                   </div>
                   

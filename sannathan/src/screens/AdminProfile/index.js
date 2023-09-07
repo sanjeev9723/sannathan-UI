@@ -13,7 +13,7 @@ const AdminAcess = () => {
   const handlePatientClick = (patientData) => {
     setSelectedPatientData(patientData);
   };
-  // console.log(selectedPatientData);
+  console.log(selectedPatientData);
 
   return (
     <>

@@ -4,8 +4,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import sannathan2 from "../images/sannathan2.png";
 import leafHeader from "../images/leaf-header.png";
 import { useNavigate, Link } from "react-router-dom";
-import 'font-awesome/css/font-awesome.min.css';
-
+import "font-awesome/css/font-awesome.min.css";
 
 function SideNavAdmin() {
   const navigate = useNavigate();
@@ -25,19 +24,23 @@ function SideNavAdmin() {
   return (
     <>
       <div className="menu-button" onClick={handleShow}>
-      <a href="#!" class="menu-toggle">
-						<i class="fa fa-bars" aria-hidden="true"></i>
-					</a>
+        <Button variant="link">
+          <div className="bar" />
+          <div className="bar" />
+          <div className="bar" />
+        </Button>
       </div>
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
+          <img src={sannathan2} alt="My Image" className="sanatha-nav" />
+
           <Offcanvas.Title>
-            <img src={sannathan2} alt="My Image" className="img_dashboard" />
+            {/* <img src={sannathan2} alt="My Image" className="img_dashboard" /> */}
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-        {/* <div className="dash-nav dash-nav-dark">
+          {/* <div className="dash-nav dash-nav-dark">
             <header>
                 <a href="index.html" className=""><img className="sanatha-nav" src={sannathan2} alt="Sanaathan Jeevan"/></a>
             </header>
@@ -55,116 +58,49 @@ function SideNavAdmin() {
 			
         </div> */}
           <div>
-            <div className="nav-content ">
-              <ul className="nav">
-                <li
-                  className={`nav-item" ${activeItem === 0 ? "active" : ""}`}
-                  onMouseEnter={() => handleItemHover(0)}
-                  onMouseLeave={() => handleItemHover(null)}
-                >
-                   <div
-                    className={`nav-item-content ${
-                      activeItem === 1 ? "active" : ""
-                    }`}
+            <nav className="dash-nav-list">
+              <a
+                href="opdetails.html"
+                className="dash-nav-item nav-link active"
+              >
+                <i className="fa fa-th-list" aria-hidden="true"></i> OP Details
+              </a>
+              <a href="appointment.html" className="dash-nav-item nav-link">
+                <i className="fa fa-calendar-o" aria-hidden="true"></i>{" "}
+                Appointment{" "}
+              </a>
+              <a href="training.html" className="dash-nav-item nav-link">
+                <i className="fa fa-user-o" aria-hidden="true"></i> Training
+                Registrations{" "}
+              </a>
+              <a href="reports.html" className="dash-nav-item nav-link">
+                <div class="dropdown open">
+                  <button
+                    class="btn dropdown-toggle btn_icons"
+                    type="button"
+                    id="dropdownMenu5"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                   >
-                    <div className="fa fa-th-list"></div>
-                  <Link to="/adminpage">OP Details</Link>
+                    <i className="fa fa-clock-o" aria-hidden="true"></i> Reports
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#!">
+                      Profile
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#!">
+                      Setting
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#!">
+                      Logout
+                    </a>
                   </div>
-                </li>
-                
-                <li
-                  className={`nav-item ${activeItem === 1 ? "active" : ""}`}
-                  onMouseEnter={() => handleItemHover(1)}
-                  onMouseLeave={() => handleItemHover(null)}
-                >
-                  <div
-                    className={`nav-item-content ${
-                      activeItem === 1 ? "active" : ""
-                    }`}
-                  >
-                    <div className="fa fa-calendar"></div>
-                    <Link to="/adminacess">Appointment</Link>
-                  </div>
-                </li>
-
-                <li
-                  className={`nav-item ${activeItem === 2 ? "active" : ""}`}
-                  onMouseEnter={() => handleItemHover(2)}
-                  onMouseLeave={() => handleItemHover(null)}
-                >
-                  <div
-                    className={`nav-item-content ${
-                      activeItem === 1 ? "active" : ""
-                    }`}
-                  >
-                    <div className="fa fa-clock-o"></div>
-                    <Link to="">Report</Link>
-                  </div>
-                  
-
-                  {activeItem === 2 && (
-                    <ul className="sub-nav">
-                      <li>
-                        <span className="bullet">➤</span>
-
-                        <Link to="/report">Patients Report</Link>
-                      </li>
-                      <li>
-                        <span className="bullet">➤</span>
-
-                        <Link to="/appointmentreport">Appointment Report</Link>
-                      </li>
-                    </ul>
-                  )}
-                </li>
-                <li
-                  className={`nav-item ${activeItem === 3 ? "active" : ""}`}
-                  onMouseEnter={() => handleItemHover(3)}
-                  onMouseLeave={() => handleItemHover(null)}
-                >
-                     <div
-                    className={`nav-item-content ${
-                      activeItem === 1 ? "active" : ""
-                    }`}
-                  >
-                    <div className="fa fa-user"></div>
-                    <Link to="">Administrator</Link>
-                  </div>
-                 
-
-                  {activeItem === 3 && (
-                    <ul className="sub-nav">
-                      <li>
-                        <span className="bullet">➤</span>
-
-                        <Link to="/medicalcategory">MedicalCategory</Link>
-                      </li>
-                      <li>
-                        <span className="bullet">➤</span>
-
-                        <Link to="/diagnosis">Diagnosis</Link>
-                      </li>
-                      <li>
-                        <span className="bullet">➤</span>
-
-                        <Link to="/prescription">Prescription</Link>
-                      </li>
-                      <li>
-                        <span className="bullet">➤</span>
-
-                        <Link to="/suggestion">Suggestion</Link>
-                      </li>
-                      <li>
-                        <span className="bullet">➤</span>
-
-                        <Link to="/preference">Preference</Link>
-                      </li>
-                    
-                    </ul>
-                  )}
-                </li>
-              </ul>
-            </div>
+                </div>
+              </a>
+            </nav>
           </div>
         </Offcanvas.Body>
       </Offcanvas>

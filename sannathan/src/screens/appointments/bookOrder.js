@@ -255,6 +255,7 @@ const BookOrder = ({ selectedPatientData }) => {
       console.log("Updated bookingOrder:", updatedOrder);
 
       setBookingOrder(updatedOrder);
+      
     } catch (error) {
       setIsLoading(false);
       toast.error("No patient details found.");
@@ -289,8 +290,8 @@ const BookOrder = ({ selectedPatientData }) => {
           let formData = patientData || {};
           formData = { ...order, ...formData };
           const appointmentData = {
-            address: patientName || formData.address || "",
-            name: formData.name || "",
+            address: formData.address || "",
+            patientName: formData.patientName || "",
             date: "2023-07-29",
             patientId: formData.patientId || 0,
             age: formData.age || 0,
@@ -335,8 +336,8 @@ const BookOrder = ({ selectedPatientData }) => {
   };
 
   return (
-    <div className="bookOrder  ">
-      <h4 className="head-1">Add Patient Details</h4>
+    <div>
+      <p className="mt-3 mb-4 fw-bold">Add Patient Details</p>
       {/* spinner for loading */}
       {isLoading && (
         <div class="d-flex justify-content-end">
@@ -349,25 +350,32 @@ const BookOrder = ({ selectedPatientData }) => {
       <div>
         <ToastContainer position="top-center" />
       </div>
-      <Row style={{ alignItems: "end" }}>
-        <div className={"col"}>
-          <SearchInput
-            name="searchInput"
-            value={patientId}
-            onChange={(e) => setPatientId(e.target.value)}
-            placeholder="Patient Id"
-          />
+      <div className=" row mb-4">
+        <div className="row">
+          <div className=" col-md-9">
+            <input
+              className="form-control mr-sm-2"
+              type="search"
+              name="searchInput"
+              value={patientId}
+              onChange={(e) => setPatientId(e.target.value)}
+              placeholder="Patient Id"
+              aria-label="Search"
+            />
+          </div>
+          <div className=" col-md-3">
+            {/* Update button visibility is controlled by isUpdateVisible state */}
+
+            <button
+              className="btn btn-outline-success search_width my-2 my-sm-0"
+              type="submit"
+              onClick={onSearch}
+            >
+              Search
+            </button>
+          </div>
         </div>
-        <div className={"col"}>
-          <button
-            type="button"
-            className="btn btn-primary rounded w-50 px-2"
-            onClick={onSearch}
-          >
-            Search
-          </button>
-        </div>
-      </Row>
+      </div>
       <hr />
       <MyVerticallyCenteredModal
         show={modalShow}
@@ -380,130 +388,116 @@ const BookOrder = ({ selectedPatientData }) => {
         show={printModalVisible}
         onHide={() => setPrintModalVisible(false)}
       />
-      <div className="main-login main-center">
-        <form className="form-horizontal" method="post" action="#">
-          <div className="row">
-            <Row>
-              {bookingFields?.length > 0 &&
-                bookingFields.map((ele, index) => {
-                  if (ele.optional) return "";
-                  if (ele.field === "date") {
-                    const currentDate = new Date();
-                    const year = currentDate.getFullYear();
-                    const month = (currentDate.getMonth() + 1)
-                      .toString()
-                      .padStart(2, "0");
-                    const day = currentDate
-                      .getDate()
-                      .toString()
-                      .padStart(2, "0");
-                    return (
-                      <div
-                        key={ele.field}
-                        className={`${!ele.newline ? "col date" : ""}`}
-                      >
-                        <label>{`${ele.displayName}: ${day}-${month}-${year}`}</label>
-                      </div>
-                    );
-                  }
-                  if (ele.optional) return "";
-                  if (ele.field === "location") {
-                    const currentLocation = "Chirala";
-                    return (
-                      <div
-                        key={ele.field}
-                        className={`${!ele.newline ? "col date" : ""}`}
-                      >
-                        <label>{`${ele.displayName}: ${currentLocation}`}</label>
-                      </div>
-                    );
-                  }
-                  const patientDataProperty = patientDataToFieldMap[ele.field];
+      <form className="row g-3">
+        <Row>
+          {bookingFields?.length > 0 &&
+            bookingFields.map((ele, index) => {
+              if (ele.optional) return "";
+              if (ele.field === "date") {
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                const month = (currentDate.getMonth() + 1)
+                  .toString()
+                  .padStart(2, "0");
+                const day = currentDate.getDate().toString().padStart(2, "0");
+              }
+              if (ele.optional) return "";
+              if (ele.field === "location") {
+                const currentLocation = "Chirala";
+              }
+              // const patientDataProperty = patientDataToFieldMap[ele.field];
 
-                  if (ele.inputType === "inputbox") {
-                    return (
-                      <div
-                        key={ele.field}
-                        className={`${!ele.newline ? "col" : ""}`}
-                      >
-                        <InputControl
-                          name={ele.field}
-                          reset={resetFields}
-                          label={ele.displayName}
-                          className={ele.className}
-                          type={ele.type}
-                          disabled={ele.disabled}
-                          placeholder={ele.placeholder}
-                          required={ele.required}
-                          // value={ele.value || patientData[ele.field] || ""}
-                          value={
-                            ele.value ||
-                            patientData?.[patientDataProperty] ||
-                            selectedSingleData[ele.field] ||
-                            ""
-                          }
-                          onChange={(txt) => {
-                            onFieldChange(txt, ele.field);
-                          }}
-                          validationMsg={errors[ele.field]}
-                        />
-                        {errors[ele.field] && (
-                          <small className="error">{errors[ele.field]}</small>
-                        )}
-                      </div>
-                    );
-                  }
+              if (ele.inputType === "inputbox") {
+                return (
+                  <div
+                    key={ele.field}
+                    className={`${
+                      ele.field === "age"
+                        ? " col-md-3"
+                        : ele.field === "address"
+                        ? "col"
+                        : "col-md-6"
+                    }`}
+                  >
+                    <InputControl
+                      name={ele.field}
+                      reset={resetFields}
+                      label={ele.displayName}
+                      className={ele.className}
+                      type={ele.type}
+                      disabled={ele.disabled}
+                      placeholder={ele.placeholder}
+                      required={ele.required}
+                      value={ele.value || patientData[ele.field] || ""}
+                      // value={
+                      //   ele.value ||
+                      //   patientData?.[patientDataProperty] ||
+                      //   selectedSingleData[ele.field] ||
+                      //   ""
+                      // }
+                      onChange={(txt) => {
+                        onFieldChange(txt, ele.field);
+                      }}
+                      validationMsg={errors[ele.field]}
+                    />
+                    {errors[ele.field] && (
+                      <small className="error">{errors[ele.field]}</small>
+                    )}
+                  </div>
+                );
+              }
 
-                  if (ele.inputType === "selectbox") {
-                    return (
-                      <div
-                        key={ele.field}
-                        className={`${!ele.newline ? "col" : ""}`}
-                      >
-                        <GenderInput
-                          value={
-                            gender || (patientData && patientData.gender) || ""
-                          }
-                          onChange={(txt) => {
-                            onFieldChange(txt, ele.field);
-                          }}
-                          validationMsg={errors.gender}
-                        />
-                        {errors.gender && (
-                          <small className="error">{errors.gender}</small>
-                        )}
-                      </div>
-                    );
-                  }
-                  // if (ele.inputType === "mobileNo") {
-                  //   return (
-                  //     <div key={ele.field}>
-                  //       <label className={ele.className}>
-                  //         {ele.displayName}
-                  //       </label>
-                  //       <PhoneInput
-                  //         country={"in"}
-                  //         value={phoneNumber}
-                  //         onChange={(value) =>
-                  //           onFieldChange(value, "phoneNumber")
-                  //         }
-                  //         inputProps={{
-                  //           name: ele.field,
-                  //           required: true,
-                  //         }}
-                  //         validationMsg={errors.phoneNumber}
-                  //       />
-                  //       {errors.phoneNumber && (
-                  //         <small className="error">{errors.phoneNumber}</small>
-                  //       )}
-                  //     </div>
-                  //   );
-                  // }
-                  return null;
-                })}
-            </Row>
-          </div>
-          <div class="d-grid gap-2 ">
+              if (ele.inputType === "selectbox") {
+                return (
+                  <div
+                    className=" col-md-3"
+                    key={ele.field}
+                    // className={`${!ele.newline ? "col" : ""}`}
+                  >
+                    <GenderInput
+                      value={
+                        gender || (patientData && patientData.gender) || ""
+                      }
+                      onChange={(txt) => {
+                        onFieldChange(txt, ele.field);
+                      }}
+                      validationMsg={errors.gender}
+                    />
+                    {errors.gender && (
+                      <small className="error">{errors.gender}</small>
+                    )}
+                  </div>
+                );
+              }
+              // if (ele.inputType === "mobileNo") {
+              //   return (
+              //     <div key={ele.field}>
+              //       <label className={ele.className}>
+              //         {ele.displayName}
+              //       </label>
+              //       <PhoneInput
+              //         country={"in"}
+              //         value={phoneNumber}
+              //         onChange={(value) =>
+              //           onFieldChange(value, "phoneNumber")
+              //         }
+              //         inputProps={{
+              //           name: ele.field,
+              //           required: true,
+              //         }}
+              //         validationMsg={errors.phoneNumber}
+              //       />
+              //       {errors.phoneNumber && (
+              //         <small className="error">{errors.phoneNumber}</small>
+              //       )}
+              //     </div>
+              //   );
+              // }
+              return null;
+            })}
+        </Row>
+
+        {/* <div class="d-grid gap-2 ">
             <button
               class="btn btn-primary additional"
               type="button"
@@ -513,8 +507,8 @@ const BookOrder = ({ selectedPatientData }) => {
             >
               Additional Details
             </button>
-          </div>
-          {/* <div class="d-grid gap-2 ">
+          </div> */}
+        {/* <div class="d-grid gap-2 ">
             <BasicAccordion
               items={[
                 {
@@ -527,19 +521,21 @@ const BookOrder = ({ selectedPatientData }) => {
               ]}
             />
             </div> */}
-          <div className="d-flex justify-content-center  save-flex">
+        <div className="row">
+          <div className=" col-md-6 my-4">
             <button
               type="button"
-              className="btn btn-primary rounded cancel w-50 px-2"
+              className="btn btn_clear search_width"
               onClick={resetForm}
             >
               Clear
             </button>
-            {/* Show the Save button if isPrintButtonVisible is false */}
+          </div>
+          <div className="col-md-6 my-4">
             {!isPrintButtonVisible && (
               <button
                 type="button"
-                className="btn btn-primary rounded save w-50 px-2"
+                className="btn btn_save search_width"
                 onClick={onSave}
               >
                 Save
@@ -549,15 +545,15 @@ const BookOrder = ({ selectedPatientData }) => {
             {isPrintButtonVisible && (
               <button
                 type="button"
-                className="btn btn-primary rounded save w-50 px-2"
+                className="btn btn_save search_width"
                 onClick={handlePrintModalOpen}
               >
                 Print
               </button>
             )}
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };

@@ -127,8 +127,11 @@ const AdminPage = (props) => {
   };
   return (
     <div className=" overflow-auto">
-      <HeaderMenu />
-      <div className="admin-accordion">
+          <HeaderMenu />
+    <div className=" dash-content">
+    <div className=" container-fluid">
+  
+      <div className="admin-accordion ">
       <AdminNavbar />
       </div>
    
@@ -344,6 +347,8 @@ const AdminPage = (props) => {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };

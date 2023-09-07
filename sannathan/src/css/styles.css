@@ -70,6 +70,30 @@ h2 {
 h3 {}
 
 
+.btn-primary {
+  border-radius: 0;
+  border-color: transparent;
+  background-color: #4e6844
+}
+
+.btn-primary .text {
+  color: #fff
+}
+
+.btn-primary .icon {
+  color: #fff
+}
+
+.btn-primary:focus,
+.btn-primary.active,
+.btn-primary:hover {
+  background-color: #4d4d4d;
+  border-color: transparent
+}
+
+.btn:hover {
+  background-color: #4E6844;
+}
 
 
 
@@ -159,11 +183,24 @@ h3 {}
 /*************************
 *******Op Details/Appointment/Training Registrations/Reports ******
 **************************/
+
 h2.op-detail2 {
-  margin-top: 62px;
   font-size: 29px;
-  font-weight: 900;
+  /* font-weight: 900; */
 }
+
+@media screen and (min-width: 778px) and (max-width: 1203px) {
+  label.female-radio.ms-2 {
+    margin-left: 0 !important;
+  }
+}
+
+/* @media screen and (min-width: 113px) and (min-height: 712px) {
+  label.female-radio.mx-3 {
+    margin-left: 0;
+  }
+} */
+
 
 .btn_icons {
   display: inline-block;
@@ -260,17 +297,8 @@ h2.op-detail2 {
   margin: 0;
 }
 
-.nav-item {
-  display: inline-block;
-  margin-right: 50px;
-  margin-left: 0px;
-  cursor: pointer;
-}
 
-.nav-item a {
-  text-decoration: none;
-  color: #333;
-}
+
 
 /* .nav-item.active a,
 .nav-item:hover a {
@@ -379,10 +407,23 @@ h2.op-detail2 {
   margin-left: -38px;
 }
 
-.nav-item-content .fa.fa-user {
+.nav-item-content .fa.fa-user-o {
   width: 36px;
   font-size: 19px;
   margin-left: -40px;
+}
+
+.nav-content a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-item{
+  background: #4E6844;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0px 0px 5px #000;
+  padding: 10px;
 }
 
 .dash-nav {
@@ -510,6 +551,10 @@ h2.op-detail2 {
   background: #4E6844 !important;
   color: #fff !important;
 }
+.dash-nav-item:hover {
+  background: #4E6844 !important;
+  color: #fff !important;
+}
 
 .dash-nav-dark.show {
   background: #4E6844;
@@ -607,11 +652,11 @@ img.sanatha-nav {
   -ms-flex-align: center;
   align-items: center;
   padding: 3px 15px 3px 0px;
-  position: fixed;
+  /* position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1000; */
 }
 
 /* @media (min-width: 992px) {
@@ -948,6 +993,108 @@ img.sanatha-nav {
   /* border-bottom: 1px solid rgba(0,0,0,.125); */
   color: #fff;
 }
-.admin-accordion{
+
+/* .admin-accordion{
   margin-top: 70px;
+} */
+
+
+/* ***** adminNavbar***** */
+.nav-items a {
+  text-decoration: none;
+  color: #333;
+}
+
+/************************************ side Nav ********************* */
+.bar {
+  background-color: white;
+}
+
+/* ********************MODAL****************************** */
+
+.modalOverFlow {
+  overflow: inherit !important
+}
+
+.modal-content {
+  background-color: #f8f9fa
+}
+
+.modal-header {
+  border: solid 1px transparent
+}
+
+.modal-header .btn-close {
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  position: relative;
+  top: 0;
+  right: 10px;
+  padding: 0
+}
+
+.modal-header .btn-close:hover {
+  background-color: #dae0e5
+}
+
+.modal-title {
+  color: #000
+}
+
+.modal-body {
+  background-color: #f8f9fa;
+  overflow-y: scroll;
+
+}
+
+.modal-height {
+  height: 350px;
+}
+
+.modal-backdrop {
+  z-index: 1055
+}
+
+.fullscreen-modal.modal-dialog {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+
+}
+
+.fullscreen-modal .modal-content {
+  position: fixed;
+  top: 50px;
+  left: 10px;
+  right: 50px;
+  bottom: 50px;
+
+}
+
+/* print heading hidden for all print  */
+.hidden-element {
+  text-align: center;
+  font-weight: bold;
+  visibility: hidden;
+  margin-top: -29px;
+}
+
+@media print {
+  .hidden-element {
+    visibility: visible;
+    padding-bottom: 10px;
+    margin-top: 30px;
+  }
+}
+
+/* **************user table */
+.user-table {
+  max-height: 365px;
+  overflow: auto;
 }

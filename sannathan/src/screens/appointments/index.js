@@ -19,8 +19,31 @@ const Appointments = () => {
   
     return (
       <>
-        <div style={{ overflow: "auto" }}>
-          {/* <SideNav /> */}
+      <div className="dash ">
+        {/* <SideNav /> */}
+        <div>
+          <HeaderMenu />
+
+          <main className="dash-content">
+            <div className="container-fluid">
+            <h2 className="op-detail2 ">OP Details</h2>
+          
+              <hr className="mt-0 mb-0" />
+              <div className="row">
+                <div className="col-xl-4 col-lg-5 col-md-5 col-sm-6 col-12">
+                  <BookingList onPatientClick={handlePatientClick} />
+                </div>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 offset-xl-1 offset-lg-1 offset-md-1 offset-sm-0">
+                <BookOrder selectedPatientData={selectedPatientData} />
+                </div>
+              </div>
+            </div>
+          </main>
+
+       
+        </div>
+      </div>
+      {/* <div style={{ overflow: "auto" }}>
           <div>
             <HeaderMenu />
   
@@ -40,8 +63,8 @@ const Appointments = () => {
               </div>
             </div>
           </div>
-        </div>
-      </>
+        </div> */}
+    </>
     );
   };
   
