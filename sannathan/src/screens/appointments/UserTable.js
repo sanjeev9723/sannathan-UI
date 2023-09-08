@@ -83,8 +83,9 @@ const UserTable = ({
     const orderTokenNumber = order.TokenNumber
       ? order.TokenNumber.toString().toLowerCase()
       : "";
-    const orderPatientId = order.PatientId
-      ? order.PatientId.toString().toLowerCase()
+      // message is used instead of patientID
+    const orderPatientId = order.message    
+      ? order.message.toString().toLowerCase()
       : "";
 
     if (showAllPatients && searchTerm) {
@@ -110,12 +111,14 @@ const UserTable = ({
       return visitedStatus;
     }
   });
+  console.log(orders);
 
   return (
     <div className="overflow-auto">
       <div className="user-table ">
       {filteredOrders.map((order) => (
-          <div className="card mb-2 hover-card" key={order.PatientId}>
+          // <div className="card mb-2 hover-card" key={order.PatientId}>
+          <div className="card mb-2 hover-card" key={order.name}>
             <div className="card-body">
               <div className="media-box">
                 <img className="idimages" src={countpng} alt="Logo" />

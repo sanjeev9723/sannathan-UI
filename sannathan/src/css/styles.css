@@ -30,16 +30,16 @@ a {
   color: #000;
 }
 
-a:hover {
+/* a:hover {
   outline: none;
   text-decoration: none;
   color: #C03035;
-}
+} */
 
-a:focus {
+/* a:focus {
   outline: none;
   outline-offset: 0;
-}
+} */
 
 
 
@@ -107,9 +107,14 @@ h3 {}
 
 .center-fit {
   width: 100%;
-  max-height: 100vh;
+  height: 100vh;
   margin: auto;
 }
+/* @media screen and (min-width: 778px) and (max-width: 1103px) {
+  img.center-fit.small_images.card-img-top {
+    height: 655px;
+  }
+} */
 
 .image_sana {
   width: 77%;
@@ -146,6 +151,30 @@ h3 {}
 /*************************
 *******Forgot******
 **************************/
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #1F5E06;
+  margin-top: 50px;
+  font-size: larger;
+  margin-bottom: 25px;
+}
+
+.success-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+.success-message-forgot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #1F5E06;
+  margin-top: 50px;
+  font-size: larger;
+  margin-bottom: 25px;
+
+}
 .forgot_bg {
   background: #fff;
   padding-left: 60px;
@@ -309,122 +338,7 @@ h2.op-detail2 {
   color: white;
 } */
 
-.side-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: white;
-  transition: transform 0.3s ease;
-  z-index: 999;
-  transform: translateX(-100%);
-}
 
-.side-nav.open {
-  transform: translateX(0);
-}
-
-.toggle-button {
-  background: none;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.bar {
-  width: 25px;
-  height: 3px;
-  background-color: #333;
-  margin: 5px 0;
-}
-
-.menu-button {
-  position: relative;
-  top: 0px;
-  left: 14px;
-}
-
-
-.nav-content {
-
-  padding-right: 57px;
-  padding-left: 27px;
-
-
-}
-
-.nav-content ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-content li {
-  padding: 10px;
-}
-
-.nav-content a {
-  text-decoration: none;
-  color: #333;
-}
-
-.nav-content a:hover {
-  border-radius: 5px;
-  padding: 10px 20px 10px 10px;
-  margin: -10px;
-  background-color: #4E6844;
-  color: white;
-}
-
-/* Apply these styles when the .nav-item-content is hovered or active */
-.nav-item.active .nav-item-content:hover,
-.nav-item.active .nav-item-content {
-  /* Your shared styles here */
-  border-radius: 5px;
-  padding: 10px 20px 10px 10px;
-  margin: -10px;
-  background-color: #4E6844;
-  color: white;
-}
-
-/* Styles for the icon */
-.nav-item-content .fa.fa-calendar {
-  width: 36px;
-  font-size: 19px;
-  margin-left: -40px;
-}
-
-.nav-item-content .fa.fa-th-list {
-  width: 36px;
-  font-size: 19px;
-  margin-left: -40px;
-}
-
-.nav-item-content .fa.fa-clock-o {
-  width: 36px;
-  font-size: 19px;
-  margin-left: -38px;
-}
-
-.nav-item-content .fa.fa-user-o {
-  width: 36px;
-  font-size: 19px;
-  margin-left: -40px;
-}
-
-.nav-content a {
-  text-decoration: none;
-  color: #fff;
-}
-
-.nav-item{
-  background: #4E6844;
-  color: #fff;
-  font-weight: bold;
-  box-shadow: 0px 0px 5px #000;
-  padding: 10px;
-}
 
 .dash-nav {
   min-width: 238px;
@@ -509,7 +423,7 @@ h2.op-detail2 {
 }
 
 
-
+/* 
 .dash-nav-list {
   display: -webkit-box;
   display: -webkit-flex;
@@ -558,7 +472,7 @@ h2.op-detail2 {
 
 .dash-nav-dark.show {
   background: #4E6844;
-}
+} */
 
 /* ***** sana logo navbar */
 img.sanatha-nav {
@@ -1098,3 +1012,160 @@ img.sanatha-nav {
   max-height: 365px;
   overflow: auto;
 }
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+}
+
+.menu-button {
+  position: relative;
+  top: 0px;
+  left: 14px;
+}
+
+.dash-nav-list  {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.dash-nav-item  {
+  min-height: 56px;
+  padding: 8px 20px 8px 70px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  letter-spacing: .02em;
+}
+
+.dash-nav-item i {
+  width: 36px;
+  font-size: 19px;
+  margin-left: -40px;
+}
+
+.dash-nav-dark .dash-nav-item:hover {
+  background: #4E6844;
+  color: white;
+}
+.dash-nav-item:active {
+  background: #4E6844 !important;
+  color: #fff !important;
+  
+}
+.dash-nav-item:hover {
+  background: #4E6844 !important;
+  color: #fff !important;
+}
+
+.dash-nav-dark.show {
+  background: #4E6844;
+}
+
+/*************************
+*******eample Training Registrations and Reports******
+**************************/
+
+/* .dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+} */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  /* position: absolute; */
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width:100%;
+}
+
+/* .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+} */
+
+/* .dropdown-content a:hover {background-color: #ddd;} */
+
+/* .dropdown:hover .dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+} */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  /* position: absolute; */
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width:100%;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+/* This will make parent hover still */
+.dropdown.active > a {
+  background-color: #4E6844; 
+}
+
+
+.dropdown-content a:hover {background-color: #578645;
+  color: white !important;
+  /* font-weight: bold !important; */
+  
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+
+
+
+/*************************
+*******eample Dropdown******
+**************************/
+
+ul.nav li.dropdown:hover ul.dropdown-menu{ display: block; }

@@ -30,6 +30,7 @@ const Register = ({ onTextChange }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -49,6 +50,7 @@ const Register = ({ onTextChange }) => {
 
   const handleConfirmPasswordChange = (value) => {
     setConfirmPassword(value);
+    setPasswordsMatch(newPassword === value);
   };
 
   const handleMobileInput = (value) => {
@@ -180,11 +182,17 @@ const Register = ({ onTextChange }) => {
                       type={showPassword ? "text" : "password"}
                       backgroundColor="#f9f9f9"
                       placeholder={"Create Password"}
-                      className={`fas fa-key ${
-                        newPassword !== confirmPassword ? "error" : ""
-                      }`}
+                      // className="form-control"
                       onChange={handleNewPasswordChange}
                     />
+                    <a class="att_icon">
+                      <i
+                        className={`fa ${
+                          showPassword ? "fa-eye-slash" : "fa-eye"
+                        }`}
+                        onClick={togglePasswordVisibility}
+                      ></i>
+                    </a>
                     {/* <div
                       className="password-toggle-sign"
                       onClick={togglePasswordVisibility}
@@ -192,16 +200,25 @@ const Register = ({ onTextChange }) => {
                       {showPassword ? <BsEyeSlash /> : <BsEye />}
                     </div> */}
                   </div>
+
                   <div className="">
                     <InputControl
                       type={showPassword ? "text" : "password"}
                       backgroundColor="#f9f9f9"
                       placeholder={"Confirm Password"}
-                      className={`fas fa-key ${
-                        newPassword !== confirmPassword ? "error" : ""
-                      }`}
                       onChange={handleConfirmPasswordChange}
                     />
+                    <a class="att_icon">
+                      <i
+                        className={`fa ${
+                          showPassword ? "fa-eye-slash" : "fa-eye"
+                        }`}
+                        onClick={togglePasswordVisibility}
+                      ></i>
+                    </a>
+                    {!passwordsMatch && (
+                      <div className="text-danger">Passwords do not match.</div>
+                    )}
                     {/* <div
                       className="password-toggle-sign"
                       onClick={togglePasswordVisibility}

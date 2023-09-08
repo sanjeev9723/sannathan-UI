@@ -64,9 +64,9 @@ function ProfileDropdown() {
       {/* <button className="profile-dropdown__button" onClick={toggleDropdown}> */}
       <button className="btn dropdown-toggle btn_icons"onClick={toggleDropdown} type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-      <i className="fa fa-user-circle" aria-hidden="true"></i>
+      <i className="fa fa-user-circle " aria-hidden="true"></i>
         {/* <img src={profile} alt="Language" className="profile-icon"/> */}
-        {/* <span className="profile-dropdown__name">{userRole}</span> */}
+        <span className="profile-dropdown__name me-2">{userRole}</span>
       </button>
       {isOpen && (
         <ul className="profile-dropdown__menu">

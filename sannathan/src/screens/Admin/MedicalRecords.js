@@ -607,10 +607,11 @@ function MedicalRecords({ prescriptionData, patientData }) {
         onHide={() => setAddShow(false)}
         onSave={onSavePrescriptions}
         dialogClassName="fullscreen-modal"
+        title="Prescription"
       >
-        <div className="modal-height">
+        <div className="modal-height modal-xl	">
           <div className="main-login main-center">
-            <div className="">
+            <div className="mb-2">
               <div class="input-group">
                 <input
                   label="select"
@@ -709,9 +710,10 @@ function MedicalRecords({ prescriptionData, patientData }) {
         show={medicalCategoryModalShow}
         onHide={() => setMedicalCategoryModalShow(false)}
         // onSave={onSaveDiagnosis}
+        // title="Current Medical Category"
       >
         <div className="modal-height-lg">
-          <div className="main-login main-center">
+          <div className="">
             <div className="">
               <div class="input-group">
                 <input
@@ -902,7 +904,6 @@ function MedicalRecords({ prescriptionData, patientData }) {
             </Col>
           </Row>
 
-         
           <div class="row">
             <div class=" col-md-2 offset-md-10 mb-1">
               <button

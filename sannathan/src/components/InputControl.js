@@ -8,7 +8,7 @@ const InputControl = ({
   validationMsg = "",
   value = "",
   type,
-  autocomplete,
+  autComplete,
   required = false,
   onChange,
   disabled,
@@ -41,7 +41,7 @@ const InputControl = ({
           {label}
         </label>
         <div >
-          <div className="input-group">
+          <div className="">
             <input
               type={type}
               className="form-control"
@@ -53,7 +53,7 @@ const InputControl = ({
                 setIsFocused(true);
               }}
               onChange={handleChange}
-              autocomplete={autocomplete}
+              autoComplete={autComplete}
             />
             {/* {showValidation ? (
               <small id="inputHelp" className="form-text text-muted">

@@ -18,13 +18,13 @@ function SearchBar({ onSearch }) {
   return (
     <div className="search-bar">
      
-      <span class="fa fa-search form-control-feedback"></span>
+      <span className="fa fa-search form-control-feedback"></span>
       <input
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
-        class="form-control"
+        className="form-control"
         placeholder="Search for Patient"
       />
     </div>

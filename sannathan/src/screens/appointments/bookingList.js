@@ -16,6 +16,8 @@ const BookingList = ({ onPatientClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [fetchedOrders, setFetchedOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [fetchedOrdersCount, setFetchedOrdersCount] = useState(0);
 
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
@@ -39,6 +41,8 @@ const BookingList = ({ onPatientClick }) => {
   // Function to fetch appointments data
   const fetchAppointments = async () => {
     try {
+      setIsLoading(true);
+
       // Define the start and end date of the range
       const fromDate = getNewServerDate() + " 00:00:00";
       const toDate = getNewServerDate() + " 23:59:59";
@@ -53,20 +57,21 @@ const BookingList = ({ onPatientClick }) => {
 
       // Extract the appointments data from the response
       const appointments = response.data;
+      // It counts the data
+      setFetchedOrdersCount(appointments.data.length); 
 
       // Handle the fetched appointments data as needed
       console.log("Appointments for the specified date range:", appointments);
 
-      // Set the fetched data to the state variable
       setFetchedOrders(appointments.data);
+      setIsLoading(false);
 
       // Return the appointments data
       // return Array.isArray(appointments) ? appointments : [];
     } catch (error) {
-      // Handle errors if the API call fails
       console.error("Error fetching appointments:", error);
+      setIsLoading(false);
 
-      // Return an empty array or handle the error accordingly
       return [];
     }
   };
@@ -75,10 +80,9 @@ const BookingList = ({ onPatientClick }) => {
   useEffect(() => {
     const getAppointments = async () => {
       const fetchedAppointments = await fetchAppointments();
-      // You can use the fetched appointments data here as needed
     };
     getAppointments();
-  }, [orders]); // Empty dependency array ensures the effect runs only once when the component mounts
+  }, [orders]);
 
   return (
     <>
@@ -86,24 +90,24 @@ const BookingList = ({ onPatientClick }) => {
         {/* <h4 className="op-detail">OP Details</h4> */}
         
 
-        <p class="mt-3 mb-4 font-weight-bold patient_size">Patient Orders</p>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+        <p className="mt-3 mb-4 font-weight-bold patient_size">Patient Orders</p>
+        <div className="row">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
             <div>
-              <img class="iconDetails" src={countpng} alt="Logo" />
+              <img className="iconDetails" src={countpng} alt="Logo" />
             </div>
             <div style={{ marginLeft: 60 }}>
-              <h2 className="mb-0">568</h2>
+              <h2 className="mb-0">{fetchedOrdersCount}</h2>
               <p>Total Count</p>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 pl-0">
             <div>
-              <img class="iconDetails" src={checkpng} alt="Logo" />
+              <img className="iconDetails" src={checkpng} alt="Logo" />
             </div>
             {/* <div style='margin-left:60px;'> */}
             <div style={{ marginLeft: 60 }}>
-              <h2 class="mb-0">568</h2>
+              <h2 className="mb-0">568</h2>
               <p>Checked Count</p>
             </div>
           </div>
@@ -127,9 +131,17 @@ const BookingList = ({ onPatientClick }) => {
           </div>
         </div> */}
       </div>
-      <div class="mt-2  mb-3  has-search">
+
+      <div className="mt-2  mb-3  has-search">
         <SearchBar onSearch={handleSearch} />
       </div>
+      {isLoading && (
+                    <div className="d-flex justify-content-center">
+                      <div className="spinner-border text-info" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  )}
       {/* <UserTable orders={orders} checkedCount={checkedCount} setCheckedCount={setCheckedCount} showAllPatients={showAllPatients} searchTerm={searchTerm} /> */}
       <UserTable
         orders={fetchedOrders} // Assuming orders is the Redux state data

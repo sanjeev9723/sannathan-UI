@@ -28,6 +28,11 @@ const Login = () => {
   const [userRole, setUserRole] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
   useEffect(() => {
     // Check if userRole exists in local storage
     const storedUserRole = localStorage.getItem("userRole");
@@ -70,71 +75,71 @@ const Login = () => {
   //     alert("login failed")
   //   }
   // }
-  const handleValidation = (e) => {
-    e.preventDefault();
-    if (!!userName && !!password) {
-      if (userName === "admin@gmail.com" && password === "admin") {
-        setUserRole("Admin");
-        dispatch(loginSuccess("Admin"));
-        // Store the userRole in local storage
-        localStorage.setItem("userRole", "Admin");
-        gotoPage("adminacess");
-      } else {
-        setUserRole("user");
-        dispatch(loginSuccess("user"));
-        // Store the userRole in local storage
-        localStorage.setItem("userRole", "user");
-        gotoPage("appointments");
-      }
-    }
-    // If "Remember Me" is checked, store the flag in local storage
-    if (rememberMe) {
-      localStorage.setItem("rememberMe", "true");
-    } else {
-      // If "Remember Me" is unchecked, remove the flag from local storage
-      localStorage.removeItem("rememberMe");
-    }
-  };
-
-  // const handleValidation = async (e) => {
+  // const handleValidation = (e) => {
   //   e.preventDefault();
-  //   setIsLoading(true);
-
-  //   try {
-  //     const queryParam = `${userName ? "email=" + userName : ""}${
-  //       password ? "&passward=" + password : ""
-  //     }`;
-  //     const { data } = await axiosInst.get(`/admin/login?${queryParam}`);
-
-  //     if (data?.data?.length > 0) {
-  //       const isDoctorFromServer = data.data[0].isDoctor; // Assuming the server provides the "isDoctor" field
-
-  //       // Handle doctor login
-  //       if (isDoctorFromServer === "true") {
-  //         setUserRole("Admin");
-  //         dispatch(loginSuccess("Admin"));
-  //         setIsLoading(false);
-
-  //         gotoPage("adminacess");
-  //       } else {
-  //         // Handle other user types (e.g., admin, staff, regular user)
-  //         setUserRole("user");
-  //         dispatch(loginSuccess("user"));
-  //         setIsLoading(false);
-
-  //         gotoPage("appointments");
-  //       }
+  //   if (!!userName && !!password) {
+  //     if (userName === "admin@gmail.com" && password === "admin") {
+  //       setUserRole("Admin");
+  //       dispatch(loginSuccess("Admin"));
+  //       // Store the userRole in local storage
+  //       localStorage.setItem("userRole", "Admin");
+  //       gotoPage("adminacess");
   //     } else {
-  //       alert("Login failed");
-  //       setIsLoading(false);
-
+  //       setUserRole("user");
+  //       dispatch(loginSuccess("user"));
+  //       // Store the userRole in local storage
+  //       localStorage.setItem("userRole", "user");
+  //       gotoPage("appointments");
   //     }
-  //   } catch (error) {
-  //     // console.error(error);
-  //     setIsLoading(false);
-  //     alert(error);
+  //   }
+  //   // If "Remember Me" is checked, store the flag in local storage
+  //   if (rememberMe) {
+  //     localStorage.setItem("rememberMe", "true");
+  //   } else {
+  //     // If "Remember Me" is unchecked, remove the flag from local storage
+  //     localStorage.removeItem("rememberMe");
   //   }
   // };
+
+  const handleValidation = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const queryParam = `${userName ? "email=" + userName : ""}${
+        password ? "&passward=" + password : ""
+      }`;
+      const { data } = await axiosInst.get(`/admin/login?${queryParam}`);
+
+      if (data?.data?.length > 0) {
+        const isDoctorFromServer = data.data[0].isDoctor; // Assuming the server provides the "isDoctor" field
+
+        // Handle doctor login
+        if (isDoctorFromServer === "true") {
+          setUserRole("Admin");
+          dispatch(loginSuccess("Admin"));
+          setIsLoading(false);
+
+          gotoPage("adminacess");
+        } else {
+          // Handle other user types (e.g., admin, staff, regular user)
+          setUserRole("user");
+          dispatch(loginSuccess("user"));
+          setIsLoading(false);
+
+          gotoPage("appointments");
+        }
+      } else {
+        alert("Login failed");
+        setIsLoading(false);
+
+      }
+    } catch (error) {
+      // console.error(error);
+      setIsLoading(false);
+      alert(error);
+    }
+  };
 
   const gotoPage = (page) => {
     navigate(`/${page}`);
@@ -165,9 +170,9 @@ const Login = () => {
               <div className="col-md-7 col-sm-7 offset-md-1 offset-sm-1">
                 <form className="form-group" onSubmit={handleValidation}>
                   {isLoading && (
-                    <div class="d-flex justify-content-end">
-                      <div class="spinner-border text-info" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div className="d-flex justify-content-end">
+                      <div className="spinner-border text-info" role="status">
+                        <span className="visually-hidden">Loading...</span>
                       </div>
                     </div>
                   )}{" "}
@@ -213,7 +218,7 @@ const Login = () => {
                     </a> */}
 
                     <InputControl
-                      type={"password"}
+                      type={showPassword ? "text" : "password"}
                       name={"password"}
                       placeholder={"Password"}
                       className="	fas fa-key"
@@ -223,6 +228,15 @@ const Login = () => {
                       validationMsg="Please enter User Password"
                       autoComplete="new-password"
                     />
+                    <a className="att_icon">
+                      <i
+                      // className='fa fa-eye'
+                        className={`fa ${
+                          showPassword ? "fa-eye-slash" : "fa-eye"
+                        }`}
+                        onClick={togglePasswordVisibility}
+                      ></i>
+                    </a>
                   </div>
                   <p className="text-center">
                     <button
@@ -244,7 +258,7 @@ const Login = () => {
                         />
                         <label
                           className="form-check-label"
-                          for="inlineFormCheck"
+                          htmlFor="inlineFormCheck"
                         >
                           Remember me
                         </label>
@@ -253,7 +267,7 @@ const Login = () => {
                     <div className="col-md-6 col-sm-6 offset-md-0 offset-sm-0">
                       <label
                         className="form-check-label float-end forgot_text"
-                        for="inlineCheckbox1"
+                        htmlFor="inlineCheckbox1"
                       >
                         <a
                           onClick={() => {
@@ -266,7 +280,7 @@ const Login = () => {
                     </div>
                   </div>
                   <p className="mt-2">
-                    <label className="" for="">
+                    <label className="" htmlFor="">
                       Don't have an account?{" "}
                       <span
                         className="sign_text"

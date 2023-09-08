@@ -5,7 +5,7 @@ import sannathan2 from "../images/sannathan2.png";
 import leafHeader from "../images/leaf-header.png";
 import { useNavigate, Link } from "react-router-dom";
 
-function SideNavUser () {
+function SideNavUser() {
   const navigate = useNavigate();
   const gotoPage = (page) => {
     navigate(`/${page}`);
@@ -32,14 +32,55 @@ function SideNavUser () {
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-        <img src={sannathan2} alt="My Image" className="sanatha-nav"  />
+          <img src={sannathan2} alt="My Image" className="sanatha-nav" />
 
-          <Offcanvas.Title>
-          </Offcanvas.Title>
+          <Offcanvas.Title></Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div>
-            <div className="nav-content ">
+            <nav className="dash-nav-list">
+              <a
+                onClick={() => {
+                  gotoPage("appointments");
+                }}
+                className="dash-nav-item nav-link active"
+              >
+                <i className="fa fa-th-list" aria-hidden="true"></i> OP Details
+              </a>
+              <a
+                onClick={() => {
+                  gotoPage("bookings");
+                }}
+                className="dash-nav-item nav-link"
+              >
+                <i className="fa fa-calendar-o" aria-hidden="true"></i>{" "}
+                Appointment{" "}
+              </a>
+
+              <div class="dropdown">
+                <a class="dash-nav-item nav-link">
+                  <i class="fa fa-clock-o" aria-hidden="true"></i> Report
+                </a>
+                <div class="dropdown-content">
+                  <a
+                    onClick={() => {
+                      gotoPage("report");
+                    }}
+                  >
+                    Patients Report
+                  </a>
+                  <a
+                    onClick={() => {
+                      gotoPage("appointmentreport");
+                    }}
+                  >
+                    Appointment Report
+                  </a>
+                </div>
+              </div>
+              
+            </nav>
+            {/* <div className="nav-content ">
               <ul className="nav">
                 <li
                   className={`nav-item ${activeItem === 0 ? "active" : ""}`}
@@ -105,7 +146,7 @@ function SideNavUser () {
                   )}
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </Offcanvas.Body>
       </Offcanvas>
@@ -113,4 +154,4 @@ function SideNavUser () {
   );
 }
 
-export default SideNavUser ;
+export default SideNavUser;

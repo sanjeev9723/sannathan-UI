@@ -39,9 +39,9 @@ function NotificationDropdown() {
           </span>
         )}
       </button> */}
-      <button href="#!" class="btn tools-item btn_icons">
-							<i class="fa fa-bell-o" aria-hidden="true"></i>
-							<i class="tools-item-count">4</i>
+      <button href="#!" className="btn tools-item btn_icons">
+							<i className="fa fa-bell-o" aria-hidden="true"></i>
+							<i className="tools-item-count">4</i>
 						</button>
       {isOpen && (
         <ul className="notification-dropdown__list">

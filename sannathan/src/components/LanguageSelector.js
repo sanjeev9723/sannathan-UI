@@ -35,8 +35,8 @@ function LanguageSelector() {
       {/* <button className="language-selector__button" onClick={toggleDropdown}>
         <img src={language} alt="Language" className="language-icon"/>
       </button> */}
-      	<button class="btn dropdown-toggle btn_icons" onClick={toggleDropdown} type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fa fa-language" aria-hidden="true"></i>
+      	<button className="btn dropdown-toggle btn_icons" onClick={toggleDropdown} type="button" id="dropdownMenu5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i className="fa fa-language " aria-hidden="true"></i>
 						</button>
       {isOpen && (
         <ul className="language-selector__dropdown">

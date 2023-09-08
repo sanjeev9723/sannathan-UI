@@ -2,8 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import sannathan2 from "../images/sannathan2.png";
-import leafHeader from "../images/leaf-header.png";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
 
 function SideNavAdmin() {
@@ -13,12 +12,21 @@ function SideNavAdmin() {
   };
   const [show, setShow] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const [subMenuVisible, setSubMenuVisible] = useState(null);
 
   const handleItemHover = (index) => {
     setActiveItem(index);
   };
 
-  const handleClose = () => setShow(false);
+  const handleSubMenuHover = (index) => {
+    setSubMenuVisible(index);
+  };
+
+  const handleClose = () => {
+    setShow(false);
+    setActiveItem(null);
+  };
+
   const handleShow = () => setShow(true);
 
   return (
@@ -34,74 +42,87 @@ function SideNavAdmin() {
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <img src={sannathan2} alt="My Image" className="sanatha-nav" />
-
-          <Offcanvas.Title>
-            {/* <img src={sannathan2} alt="My Image" className="img_dashboard" /> */}
-          </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {/* <div className="dash-nav dash-nav-dark">
-            <header>
-                <a href="index.html" className=""><img className="sanatha-nav" src={sannathan2} alt="Sanaathan Jeevan"/></a>
-            </header>
-			<nav className="dash-nav-list">
-                <a href="opdetails.html" className="dash-nav-item nav-link active"> 
-                    <i className="fa fa-th-list" aria-hidden="true"></i> OP Details</a>
-                <a href="appointment.html" className="dash-nav-item nav-link">
-                    <i className="fa fa-calendar-o" aria-hidden="true"></i> Appointment </a>
-                <a href="training.html" className="dash-nav-item nav-link">
-                    <i className="fa fa-user-o" aria-hidden="true"></i> Training Registrations </a>
-                <a href="reports.html" className="dash-nav-item nav-link">
-                    <i className="fa fa-clock-o" aria-hidden="true"></i> Reports </a>
-            </nav>
-			
-			
-        </div> */}
-          <div>
-            <nav className="dash-nav-list">
+          <nav className="dash-nav-list">
+            <a
+              onMouseEnter={() => {
+                handleItemHover(0);
+                setSubMenuVisible(null);
+              }}
+              className={`dash-nav-item nav-link ${
+                activeItem === 0 ? "active" : ""
+              }`}
+              onClick={() => {
+                gotoPage("adminpage");
+              }}
+            >
+              <i className="fa fa-th-list" aria-hidden="true"></i> OP Details
+            </a>
+            <a
+              onMouseEnter={() => {
+                handleItemHover(1);
+                setSubMenuVisible(null);
+              }}
+              className={`dash-nav-item nav-link ${
+                activeItem === 1 ? "active" : ""
+              }`}
+              onClick={() => {
+                gotoPage("adminacess");
+              }}
+            >
+              <i className="fa fa-calendar" aria-hidden="true"></i> Appointment
+            </a>
+            <div
+              className={`dropdown ${subMenuVisible === 2 ? "active" : ""}`}
+              onMouseEnter={() => handleSubMenuHover(2)}
+              onMouseLeave={() => handleSubMenuHover(null)}
+            >
               <a
-                href="opdetails.html"
-                className="dash-nav-item nav-link active"
+                onMouseEnter={() => handleItemHover(2)}
+                className={`dash-nav-item nav-link ${
+                  activeItem === 2 || subMenuVisible === 1 ? "active" : ""
+                }`}
               >
-                <i className="fa fa-th-list" aria-hidden="true"></i> OP Details
+                <i className="fa fa-clock-o" aria-hidden="true"></i>{" "}
+                Report
               </a>
-              <a href="appointment.html" className="dash-nav-item nav-link">
-                <i className="fa fa-calendar-o" aria-hidden="true"></i>{" "}
-                Appointment{" "}
-              </a>
-              <a href="training.html" className="dash-nav-item nav-link">
-                <i className="fa fa-user-o" aria-hidden="true"></i> Training
-                Registrations{" "}
-              </a>
-              <a href="reports.html" className="dash-nav-item nav-link">
-                <div class="dropdown open">
-                  <button
-                    class="btn dropdown-toggle btn_icons"
-                    type="button"
-                    id="dropdownMenu5"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i className="fa fa-clock-o" aria-hidden="true"></i> Reports
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#!">
-                      Profile
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#!">
-                      Setting
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#!">
-                      Logout
-                    </a>
-                  </div>
+              {subMenuVisible === 2 && (
+                <div className="dropdown-content">
+                  <a onClick={() => gotoPage("report")}>Patients Report</a>
+                  <a onClick={() => gotoPage("appointmentreport")}>
+                    Appointment Report
+                  </a>
                 </div>
+              )}
+            </div>
+            <div
+              className={`dropdown ${subMenuVisible === 3 ? "active" : ""}`}
+              onMouseEnter={() => handleSubMenuHover(3)}
+              onMouseLeave={() => handleSubMenuHover(null)}
+            >
+              <a
+                onMouseEnter={() => handleItemHover(3)}
+                className={`dash-nav-item nav-link ${
+                  activeItem === 3 || subMenuVisible === 2 ? "active" : ""
+                }`}
+              >
+                <i className="fa fa-user-o" aria-hidden="true"></i>{" "}
+              Administrator
               </a>
-            </nav>
-          </div>
+              {subMenuVisible === 3 && (
+                <div className="dropdown-content">
+                       <a onClick={() => { gotoPage("medicalcategory");}}> MedicalCategory</a>
+                  <a onClick={() => { gotoPage("diagnosis");}}> Diagnosis</a>
+                  <a onClick={() => { gotoPage("prescription");}}> Prescription</a>
+                  <a onClick={() => { gotoPage("suggestion");}}> Suggestion</a>
+                  <a onClick={() => { gotoPage("preference");}}> Preference</a>
+                </div>
+              )}
+            </div>
+
+           
+          </nav>
         </Offcanvas.Body>
       </Offcanvas>
     </>

@@ -92,7 +92,7 @@ const BookOrder = ({ selectedPatientData }) => {
     const fieldToDataMap = {
       date: "appointmentDate",
       address: "address",
-      name: "name",
+      patientName: "name",
       gender: "gender",
       age: "age",
       weight: "weight",
@@ -286,20 +286,20 @@ const BookOrder = ({ selectedPatientData }) => {
       });
       (async () => {
         try {
-          // Create the appointment object with the required data
-          let formData = patientData || {};
-          formData = { ...order, ...formData };
-          const appointmentData = {
-            address: formData.address || "",
-            patientName: formData.patientName || "",
-            date: "2023-07-29",
-            patientId: formData.patientId || 0,
-            age: formData.age || 0,
-            gender: formData.gender || "",
-            weight: formData.weight || 0,
-            contactNumber: formData.contactNumber || 0,
-          };
-
+            // Create the appointment object with the required data
+            const appointmentData = {
+              address: patientData?.address || "",
+              name: patientData?.patientName || "",
+              date: "2023-07-29",
+              patientId: patientData?.patientId || 0,
+              age: patientData?.age || 0,
+              gender: patientData?.gender || "",
+              weight: patientData?.weight || 0,
+              contactNumber: patientData?.contactnumber || 0,
+            };
+  
+            console.log("Appointment Data:", appointmentData); 
+  
           let response;
           // Make the API call
           if (patientData.patientId)

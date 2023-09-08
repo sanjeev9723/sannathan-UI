@@ -221,6 +221,7 @@ const AdminProfile = ({ selectedPatientData }) => {
       toast.error("Please enter a patient ID");
       return;
     }
+    setIsLoading(true);
 
     try {
       const { data } = await axiosInst.get(`/appointment/getPatientId`, {
@@ -304,7 +305,7 @@ const AdminProfile = ({ selectedPatientData }) => {
           // Create the appointment object with the required data
           const appointmentData = {
             address: patientData?.address || "",
-            name: patientData?.name || "",
+            name: patientData?.patientName || "",
             date: "2023-07-29",
             patientId: patientData?.patientId || 0,
             age: patientData?.age || 0,
@@ -313,7 +314,7 @@ const AdminProfile = ({ selectedPatientData }) => {
             contactNumber: patientData?.contactnumber || 0,
           };
 
-          console.log("Appointment Data:", appointmentData); // Add this line for debugging
+          console.log("Appointment Data:", appointmentData); 
 
           let response;
           // Make the API call
@@ -349,15 +350,16 @@ const AdminProfile = ({ selectedPatientData }) => {
       // resetForm();
     }
   };
+  console.log(patientData);
 
   return (
     <>
       <p className="mt-3 mb-4 fw-bold">Add Patient Details</p>
       {/* spinner for loading */}
       {isLoading && (
-        <div class="d-flex justify-content-end">
-          <div class="spinner-border text-info" role="status">
-            <span class="visually-hidden">Loading...</span>
+        <div className="d-flex justify-content-end">
+          <div className="spinner-border text-info" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
         </div>
       )}{" "}
@@ -413,7 +415,7 @@ const AdminProfile = ({ selectedPatientData }) => {
         show={printModalVisible}
         onHide={() => setPrintModalVisible(false)}
       />
-      <form class="row g-3">
+      <form className="row g-3">
         <Row>
           {bookingFields?.length > 0 &&
             bookingFields.map((ele, index) => {
