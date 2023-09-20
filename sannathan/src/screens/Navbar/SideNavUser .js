@@ -12,11 +12,14 @@ function SideNavUser() {
   };
   const [show, setShow] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const [subMenuVisible, setSubMenuVisible] = useState(null);
 
   const handleItemHover = (index) => {
     setActiveItem(index);
   };
-
+  const handleSubMenuHover = (index) => {
+    setSubMenuVisible(index);
+  };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -40,113 +43,57 @@ function SideNavUser() {
           <div>
             <nav className="dash-nav-list">
               <a
+                onMouseEnter={() => {
+                  handleItemHover(0);
+                  setSubMenuVisible(null);
+                }}
+                className={`dash-nav-item nav-link ${
+                  activeItem === 0 ? "active" : ""
+                }`}
                 onClick={() => {
                   gotoPage("appointments");
                 }}
-                className="dash-nav-item nav-link active"
               >
                 <i className="fa fa-th-list" aria-hidden="true"></i> OP Details
               </a>
               <a
+                onMouseEnter={() => {
+                  handleItemHover(1);
+                  setSubMenuVisible(null);
+                }}
+                className={`dash-nav-item nav-link ${
+                  activeItem === 1 ? "active" : ""
+                }`}
                 onClick={() => {
                   gotoPage("bookings");
                 }}
-                className="dash-nav-item nav-link"
               >
-                <i className="fa fa-calendar-o" aria-hidden="true"></i>{" "}
-                Appointment{" "}
+                <i className="fa fa-calendar" aria-hidden="true"></i>{" "}
+                Appointment
               </a>
-
-              <div class="dropdown">
-                <a class="dash-nav-item nav-link">
-                  <i class="fa fa-clock-o" aria-hidden="true"></i> Report
-                </a>
-                <div class="dropdown-content">
-                  <a
-                    onClick={() => {
-                      gotoPage("report");
-                    }}
-                  >
-                    Patients Report
-                  </a>
-                  <a
-                    onClick={() => {
-                      gotoPage("appointmentreport");
-                    }}
-                  >
-                    Appointment Report
-                  </a>
-                </div>
-              </div>
-              
-            </nav>
-            {/* <div className="nav-content ">
-              <ul className="nav">
-                <li
-                  className={`nav-item ${activeItem === 0 ? "active" : ""}`}
-                  onMouseEnter={() => handleItemHover(0)}
-                  onMouseLeave={() => handleItemHover(null)}
-                >
-                     <div
-                    className={`nav-item-content ${
-                      activeItem === 1 ? "active" : ""
-                    }`}
-                  >
-                    <div className="fa fa-th-list"></div>
-                    <Link to="/appointments" onClick={() => gotoPage("appointments")}>
-                    OP Details
-                  </Link>
-                  </div>
-                
-                </li>
-                <li
-                  className={` nav-item ${activeItem === 1 ? "active" : ""}`}
-                  onMouseEnter={() => handleItemHover(1)}
-                  onMouseLeave={() => handleItemHover(null)}
-                  onClick={() => gotoPage("bookings")}
-                >
-                    <div
-                    className={`nav-item-content ${
-                      activeItem === 1 ? "active" : ""
-                    }`}
-                  >
-                    <div className="fa fa-calendar"></div>
-                    <Link to="/bookings">Appointments</Link>
-                  </div>
-                 
-                </li>
-                <li
-                  className={`nav-item ${activeItem === 2 ? "active" : ""}`}
+              <div
+                className={`dropdown ${subMenuVisible === 2 ? "active" : ""}`}
+                onMouseEnter={() => handleSubMenuHover(2)}
+                onMouseLeave={() => handleSubMenuHover(null)}
+              >
+                <a
                   onMouseEnter={() => handleItemHover(2)}
-                  onMouseLeave={() => handleItemHover(null)}
+                  className={`dash-nav-item nav-link ${
+                    activeItem === 2 || subMenuVisible === 1 ? "active" : ""
+                  }`}
                 >
-                   <div
-                    className={`nav-item-content ${
-                      activeItem === 1 ? "active" : ""
-                    }`}
-                  >
-                    <div className="fa fa-clock-o"></div>
-                    <Link to="">Report</Link>
+                  <i className="fa fa-clock-o" aria-hidden="true"></i> Report
+                </a>
+                {subMenuVisible === 2 && (
+                  <div className="dropdown-content">
+                    <a onClick={() => gotoPage("report")}>Patients Report</a>
+                    <a onClick={() => gotoPage("appointmentreport")}>
+                      Appointment Report
+                    </a>
                   </div>
-                  
-                  {activeItem === 2 && (  
-                    <ul className="sub-nav">
-                      <li
-                      >
-                     <span className="bullet">➤</span>
-
-                        <Link to="/report">Patients Report</Link>
-                      </li>
-                      <li>
-                      <span className="bullet">➤</span>
-
-                        <Link to="/appointmentreport">Appointment Report</Link>
-                      </li>
-                    </ul>
-                  )}
-                </li>
-              </ul>
-            </div> */}
+                )}
+              </div>
+            </nav>
           </div>
         </Offcanvas.Body>
       </Offcanvas>

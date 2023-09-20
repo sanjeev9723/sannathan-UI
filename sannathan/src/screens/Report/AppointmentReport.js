@@ -1,16 +1,13 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { AgGridReact } from "ag-grid-react";
 import HeaderMenu from "../../components/HeaderMenu";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
-import { useReactToPrint } from "react-to-print";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BasicAccordion from "../../components/Accordion";
 import { Col, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { useReactToPrint } from "react-to-print";
 
 const AppointmentReport = () => {
   const navigate = useNavigate();
@@ -26,21 +23,9 @@ const AppointmentReport = () => {
 
   const [toDate, setToDate] = useState(() => {
     const today = new Date();
-
     return today;
   });
 
-  const CustomDatePickerInput = ({ value, onClick }) => (
-    <div className="input-with-icon">
-      <input
-        type="text"
-        value={value}
-        onClick={onClick}
-        placeholder="Select Date"
-      />
-      <FontAwesomeIcon icon={faCalendar} className="input-icon" />
-    </div>
-  );
   const [rowData, setRowData] = useState([
     { id: 1, name: "John Doe", age: 30, date: "2023-07-01" },
     { id: 2, name: "Jane Smith", age: 25, date: "2023-04-05" },
@@ -69,6 +54,7 @@ const AppointmentReport = () => {
     content: reactToPrintContent,
     documentTitle: "print doc",
   });
+
   const handleFromDateChange = (date) => {
     setFromDate(date);
   };
@@ -110,63 +96,84 @@ const AppointmentReport = () => {
   return (
     <div>
       <HeaderMenu />
-      <br />
-      <div className="container">
-        <div className="admin-content">
+      <div className="dash-content ">
+        <div className="container-fluid">
           <div className="patient-details">
             <BasicAccordion
               items={[
                 {
                   title: "Appointment Report",
                   content: (
-                    <form
-                      className="form-horizontal-details"
-                      method="post"
-                      action="#"
-                    >
-                      <Row>
-                        <Col md={3} className="form-group">
-                          <label htmlFor="fromDate">From Date:</label>
-                          <DatePicker
-                            selected={fromDate}
-                            onChange={handleFromDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            id="fromDate"
-                            name="fromDate"
-                            customInput={<CustomDatePickerInput />}
-                          />
-                        </Col>
+                    <form>
+                    <div class="row">
+                      <form class="row">
+                        <label
+                          for="date"
+                          class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 col-form-label"
+                        >
+                          From Date :
+                        </label>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                          <div class="input-group date" id="datepicker">
+                            <input
+                              type="date"
+                              class="form-control"
+                              id="date"
+                              value={fromDate.toISOString().split("T")[0]}
+                              onChange={handleFromDateChange}
+                            />
+                            {/* <span class="input-group-append">
+                              <span class="input-group-text bg-light d-block">
+                                <i class="fa fa-calendar"></i>
+                              </span>
+                            </span> */}
+                          </div>
+                        </div>
 
-                        <Col md={3} className="form-group">
-                          <label htmlFor="toDate">To Date:</label>
-                          <DatePicker
-                            selected={toDate}
-                            onChange={handleToDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            id="toDate"
-                            name="toDate"
-                            maxDate={new Date()}
-                            customInput={<CustomDatePickerInput />}
-                          />
-                        </Col>
-                        <Col className="d-flex justify-content-end">
-                          <button
-                            type="submit"
-                            className="btn btn-secondary rounded save-button px-5"
-                            onClick={handleSearch}
-                          >
-                            Search
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-secondary rounded clear px-5 ml-2"
-                            onClick={handleClear}
-                          >
-                            Clear
-                          </button>
-                        </Col>
-                      </Row>
-                    </form>
+                        <label
+                          for="date"
+                          class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 offset-xl-2  offset-lg-2 offset-md-2 offset-sm-2 col-form-label"
+                        >
+                          End Date :
+                        </label>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                          <div class="input-group date" id="datepicker">
+                            <input
+                              type="date"
+                              class="form-control"
+                              id="date"
+                              value={toDate.toISOString().split("T")[0]}
+                              onChange={handleToDateChange}
+                            />
+                            {/* <span class="input-group-append">
+                              <span class="input-group-text bg-light d-block">
+                                <i class="fa fa-calendar"></i>
+                              </span>
+                            </span> */}
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="row mt-4">
+                      <div class="form-group col-md-2 offset-md-8 mb-2">
+                        <button
+                          type="button"
+                          class="float-right search_width btn btn_clear"
+                        >
+                          Search
+                        </button>
+                      </div>
+                      <div class="form-group col-md-2 mb-2">
+                        <button
+                          type="button"
+                          class="float-right search_width btn btn_save"
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                   ),
                 },
               ]}
@@ -174,25 +181,42 @@ const AppointmentReport = () => {
           </div>
         </div>
       </div>
-  <br></br>
+      <br />
 
-      {/* AgGridReact component */}
-      <div className="d-flex justify-content-center">
-        <div
-          className="ag-theme-alpine"
-          style={{ height: 400, width: 810 }}
-          ref={componentRef}
-        >
-            <br></br>
-        <h4 className="hidden-element">SANNATHAN JEEVAN TRUST</h4>
-          <AgGridReact columnDefs={columnDefs} rowData={rowData} />
+      {/* Table */}
+      <div className="container">
+        <div class="row  table-responsive">
+          <table
+            className="table table-hover table-striped table-bordered"
+            ref={componentRef}
+          >
+
+            <thead class="table-dark">
+              <tr>
+                <th>Patient ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rowData.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
       <br />
       <div className="d-flex justify-content-center">
         <button
           type="submit"
-          className="btn btn-primary rounded save-button px-5 my-3"
+          className="btn btn-primary rounded save-button px-5"
           onClick={handlePrint}
         >
           print

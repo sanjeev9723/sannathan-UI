@@ -31,12 +31,12 @@ const BookingList = ({ onPatientClick }) => {
     setShowAllPatients(true); // Set filtering to show all patients
   };
 
-  const getNewServerDate = () => {
-    const d = new Date();
-    return `${d.getFullYear()}-${
-      d.getMonth() > 8 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1)
-    }-${d.getDate() > 9 ? d.getDate() : "0" + d.getDate()}`;
-  };
+    const getNewServerDate = () => {
+      const d = new Date();
+      return `${d.getFullYear()}-${
+        d.getMonth() > 8 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1)
+      }-${d.getDate() > 9 ? d.getDate() : "0" + d.getDate()}`;
+    };
 
   // Function to fetch appointments data
   const fetchAppointments = async () => {
@@ -90,7 +90,8 @@ const BookingList = ({ onPatientClick }) => {
         {/* <h4 className="op-detail">OP Details</h4> */}
         
 
-        <p className="mt-3 mb-4 font-weight-bold patient_size">Patient Orders</p>
+        <p className="mt-3 mb-4 fw-bold patient_size">Patient Orders</p>
+
         <div className="row">
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
             <div>

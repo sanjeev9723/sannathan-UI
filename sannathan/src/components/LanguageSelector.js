@@ -31,6 +31,7 @@ function LanguageSelector() {
   }, []);
 
   return (
+    
     <div className="language-selector" ref={dropdownRef}>
       {/* <button className="language-selector__button" onClick={toggleDropdown}>
         <img src={language} alt="Language" className="language-icon"/>
@@ -40,11 +41,11 @@ function LanguageSelector() {
 						</button>
       {isOpen && (
         <ul className="language-selector__dropdown">
-          <a onClick={() => handleLanguageSelect('English')}>English</a>
+          <li onClick={() => handleLanguageSelect('English')}>English</li>
           <div className="dropdown-divider"></div>
-          <a onClick={() => handleLanguageSelect('Telugu')}>Telugu</a>
+          <li onClick={() => handleLanguageSelect('Telugu')}>Telugu</li>
           <div className="dropdown-divider"></div>
-          <a onClick={() => handleLanguageSelect('Hindi')}>Hindi</a>
+          <li onClick={() => handleLanguageSelect('Hindi')}>Hindi</li>
           {/* Add more language options as needed */}
         </ul>
       )}

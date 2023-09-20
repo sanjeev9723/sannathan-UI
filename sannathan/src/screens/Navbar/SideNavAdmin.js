@@ -81,7 +81,7 @@ function SideNavAdmin() {
               <a
                 onMouseEnter={() => handleItemHover(2)}
                 className={`dash-nav-item nav-link ${
-                  activeItem === 2 || subMenuVisible === 1 ? "active" : ""
+                  activeItem === 2 || subMenuVisible === 2 ? "active" : ""
                 }`}
               >
                 <i className="fa fa-clock-o" aria-hidden="true"></i>{" "}
@@ -104,7 +104,7 @@ function SideNavAdmin() {
               <a
                 onMouseEnter={() => handleItemHover(3)}
                 className={`dash-nav-item nav-link ${
-                  activeItem === 3 || subMenuVisible === 2 ? "active" : ""
+                  activeItem === 3 || subMenuVisible === 3 ? "active" : ""
                 }`}
               >
                 <i className="fa fa-user-o" aria-hidden="true"></i>{" "}

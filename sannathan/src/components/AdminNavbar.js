@@ -1,5 +1,5 @@
-import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import React from "react";
+import { Navbar, Nav } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const AdminNavbar = () => {
@@ -32,26 +32,68 @@ const AdminNavbar = () => {
     //   </Navbar.Collapse>
     // </Navbar>
     <div>
-      <ul class="nav nav-tabs  fw-bold" role="tablist">
-						<li class="nav-items">
-						  <a class="nav-link active" data-toggle="tab" onClick={() => gotoPage("adminpage")}>OP Details</a>
-						</li>
-						<li class="nav-items">
-						  <a class="nav-link" data-toggle="tab" onClick={() => gotoPage("medicalcategory")}>Medical Category</a>
-						</li>
-						<li class="nav-items">
-						  <a class="nav-link" data-toggle="tab" onClick={() => gotoPage("diagnosis")}>Diagnosis</a>
-						</li>
-						<li class="nav-items">
-						  <a class="nav-link" data-toggle="tab" onClick={() => gotoPage("prescription")}>Prescription</a>
-						</li>
-						<li class="nav-items">
-						  <a class="nav-link" data-toggle="tab" onClick={() => gotoPage("suggestion")}>Suggestion</a>
-						</li>
-						<li class="nav-items">
-						  <a class="nav-link " data-toggle="tab" onClick={() => gotoPage("preference")}>Preference</a>
-						</li>
-					  </ul>
+      <ul className="nav nav-tabs  fw-bold" role="tablist">
+        <li className="nav-item">
+          <Nav.Link
+            className={`nav-link ${
+              currentPath === "adminpage" ? "active" : ""
+            }`}
+            onClick={() => gotoPage("adminpage")}
+          >
+            OP Details
+          </Nav.Link>{" "}
+        </li>
+        <li className="nav-item">
+          <Nav.Link
+            className={`nav-link ${
+              currentPath === "medicalcategory" ? "active" : ""
+            }`}
+            onClick={() => gotoPage("medicalcategory")}
+          >
+            Medical Category
+          </Nav.Link>{" "}
+        </li>
+        <li className="nav-item">
+          <Nav.Link
+            className={`nav-link ${
+              currentPath === "diagnosis" ? "active" : ""
+            }`}
+            onClick={() => gotoPage("diagnosis")}
+          >
+            Diagnosis
+          </Nav.Link>
+        </li>
+        <li className="nav-item">
+          <Nav.Link
+            className={`nav-link ${
+              currentPath === "prescription" ? "active" : ""
+            }`}
+            onClick={() => gotoPage("prescription")}
+          >
+            Prescription
+          </Nav.Link>
+        </li>
+        <li className="nav-item">
+          <Nav.Link
+            className={`nav-link ${
+              currentPath === "suggestion" ? "active" : ""
+            }`}
+            onClick={() => gotoPage("suggestion")}
+          >
+            Suggestion
+          </Nav.Link>
+        </li>
+        <li className="nav-item">
+          <Nav.Link
+            className={`nav-link ${
+              currentPath === "preference" ? "active" : ""
+            }`}
+            onClick={() => gotoPage("preference")}
+          >
+            Preference
+          </Nav.Link>
+        </li>
+      </ul>
     </div>
   );
 };

@@ -33,57 +33,46 @@ const Report = () => {
     return today;
   });
 
-  const CustomDatePickerInput = ({ value, onClick }) => (
-    <div className="input-with-icon">
-      <input
-        type="text"
-        value={value}
-        onClick={onClick}
-        placeholder="Select Date"
-      />
-      <FontAwesomeIcon icon={faCalendar} className="input-icon" />
-    </div>
-  );
   const [rowData, setRowData] = useState();
 
-  const columnDefs = [
-    {
-      headerName: "Appointment Date",
-      field: "appointmentDate",
-      cellRenderer: (params) => {
-        const date = new Date(params.value);
-        return date.toLocaleDateString();
-      },
-    },
-    // { headerName: "Email", field: "email" },
-    // { headerName: "ID", field: "id" },
-    { headerName: "Message", field: "message" },
-    {
-      headerName: "Name",
-      field: "name",
-      cellStyle: {
-        whiteSpace: "nowrap",
-        overflow: "visible",
-        width: "auto",
-      },
-      minWidth: 200,
-    },
-    { headerName: "Phone Number", field: "phoneNumber" },
-    {
-      headerName: "City",
-      field: "city",
-      cellStyle: {
-        whiteSpace: "nowrap",
-        overflow: "visible",
-        width: "auto",
-      },
-      minWidth: 150,
-    },
+  // const columnDefs = [
+  //   {
+  //     headerName: "Appointment Date",
+  //     field: "appointmentDate",
+  //     cellRenderer: (params) => {
+  //       const date = new Date(params.value);
+  //       return date.toLocaleDateString();
+  //     },
+  //   },
+  //   // { headerName: "Email", field: "email" },
+  //   // { headerName: "ID", field: "id" },
+  //   { headerName: "Message", field: "message" },
+  //   {
+  //     headerName: "Name",
+  //     field: "name",
+  //     cellStyle: {
+  //       whiteSpace: "nowrap",
+  //       overflow: "visible",
+  //       width: 100,
+  //     },
+  //     minWidth: 0,
+  //   },
+  //   { headerName: "Phone Number", field: "phoneNumber" },
+  //   {
+  //     headerName: "City",
+  //     field: "city",
+  //     cellStyle: {
+  //       whiteSpace: "nowrap",
+  //       overflow: "visible",
+  //       width: "auto",
+  //     },
+  //     minWidth: 150,
+  //   },
 
-    // { headerName: "Slot", field: "slot" },
-    // { headerName: "Status", field: "status" },
-    // { headerName: "Total Patients", field: "totalPatients" },
-  ];
+  //   // { headerName: "Slot", field: "slot" },
+  //   // { headerName: "Status", field: "status" },
+  //   // { headerName: "Total Patients", field: "totalPatients" },
+  // ];
 
   const componentRef = useRef(null);
 
@@ -150,105 +139,83 @@ const Report = () => {
   return (
     <div>
       <HeaderMenu />
-      <br />
-      <div className="container">
-        <div className="admin-content">
+      <div className="dash-content ">
+        <div className="container-fluid">
           <div className="patient-details">
             <BasicAccordion
               items={[
                 {
                   title: "Patients Report",
                   content: (
-                    <form
-                      className="form-horizontal-details"
-                      method="post"
-                      action="#"
-                    >
-                      <Row>
-                        <div class="row mb-3 text-center">
-                        <div class="col-md-6 d-flex">
+                    <form>
+                      <div class="row">
+                        <form class="row">
                           <label
-                            for="inputEmail3"
-                            class="col-sm-2 col-form-label"
+                            for="date"
+                            class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 col-form-label"
                           >
-                           From Date:
+                            From Date :
                           </label>
-                          <div class="col-sm-6">
-                          <input
-                            type="date"
-                            name="Startdate"
-                            class="form-control"
-                            id="inputDate"
-                            placeholder="Full Name"
-                            value={fromDate.toISOString().split("T")[0]}
-                            onChange={handleFromDateChange}
-                          />
+                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="input-group date" id="datepicker">
+                              <input
+                                type="date"
+                                class="form-control"
+                                id="date"
+                                value={fromDate.toISOString().split("T")[0]}
+                                onChange={handleFromDateChange}
+                              />
+                              {/* <span class="input-group-append">
+                              <span class="input-group-text bg-light d-block">
+                                <i class="fa fa-calendar"></i>
+                              </span>
+                            </span> */}
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-6 d-flex">
-                          <label
-                            for="inputEmail3"
-                            class="col-sm-2 col-form-label"
-                          >
-                           To Date:
-                          </label>
-                          <div class="col-sm-6">
-                          <input
-                            type="date"
-                            name="todate"
-                            class="form-control"
-                            id="inputDate"
-                            placeholder="Full Name"
-                            value={toDate.toISOString().split("T")[0]}
-                            onChange={handleToDateChange}
-                          />
-                          </div>
-                        </div>
-                        </div>
-                        {/* <Col md={4} className="form-group">
-                          <label htmlFor="fromDate">From Date:</label>
-                          <input
-                            type="date"
-                            name="Startdate"
-                            class="form-control"
-                            id="inputDate"
-                            placeholder="Full Name"
-                            value={fromDate.toISOString().split("T")[0]}
-                            onChange={handleFromDateChange}
-                          />
-                        </Col>
 
-                        <Col md={4} className="form-group">
-                          <label htmlFor="toDate">To Date:</label>
-                          <DatePicker
-                            selected={toDate}
-                            onChange={handleToDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            id="toDate"
-                            name="toDate"
-                            maxDate={new Date()}
-                            customInput={<CustomDatePickerInput />}
-                          />
-                        </Col> */}
-                        <Col className="d-flex justify-content-center">
+                          <label
+                            for="date"
+                            class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 offset-xl-2  offset-lg-2 offset-md-2 offset-sm-2 col-form-label"
+                          >
+                            End Date :
+                          </label>
+                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="input-group date" id="datepicker">
+                              <input
+                                type="date"
+                                class="form-control"
+                                id="date"
+                                value={toDate.toISOString().split("T")[0]}
+                                onChange={handleToDateChange}
+                              />
+                              {/* <span class="input-group-append">
+                              <span class="input-group-text bg-light d-block">
+                                <i class="fa fa-calendar"></i>
+                              </span>
+                            </span> */}
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="row mt-4">
+                        <div class="form-group col-md-2 offset-md-8 mb-2">
                           <button
-                            type="submit"
-                            className="btn btn-primary rounded save-button px-5 me-4"
-                            onClick={handleSearch}
+                            type="button"
+                            class="float-right search_width btn btn_clear"
                           >
                             Search
                           </button>
-                          {/* </Col >
-                          <Col md={2} > */}
+                        </div>
+                        <div class="form-group col-md-2 mb-2">
                           <button
                             type="button"
-                            className="btn btn-primary rounded clear px-5 ml-2"
-                            onClick={handleClear}
+                            class="float-right search_width btn btn_save"
                           >
                             Clear
                           </button>
-                        </Col>
-                      </Row>
+                        </div>
+                      </div>
                     </form>
                   ),
                 },
@@ -261,19 +228,51 @@ const Report = () => {
 
       {/* AgGridReact component */}
       <div className="d-flex justify-content-center">
-        <div
-          className="ag-theme-alpine"
-          style={{ height: 400, width: 810 }}
-          ref={componentRef}
-        >
-          <h3 className="hidden-element">Sanathan Jeevan Trust</h3>
+        <div className="container">
+          <div class="row  table-responsive" >
+            <h3 className="hidden-element">Sanathan Jeevan Trust</h3>
 
-          <AgGridReact
-            ref={gridRef} // Ref for accessing Grid's API
-            columnDefs={columnDefs}
-            rowData={rowData}
-            onGridReady={onGridReady}
-          />
+            {/* Conditional rendering of the table based on rowData */}
+            {rowData ? (
+              <table className="table table-hover table-striped table-bordered print-table" ref={componentRef}>
+                 <style>
+              {`
+                @media print {
+                  body {
+                    margin: 1cm 1cm ;
+                    padding: 0;
+                  }
+                
+                }
+                `}
+            </style>
+                <thead class="table-dark">
+                  <tr>
+                    <th>Appointment Date</th>
+                    <th>Message</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>City</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rowData.map((row, index) => (
+                    <tr key={index}>
+                      <td>
+                        {new Date(row.appointmentDate).toLocaleDateString()}
+                      </td>
+                      <td>{row.message}</td>
+                      <td>{row.name}</td>
+                      <td>{row.phoneNumber}</td>
+                      <td>{row.city}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No data available</p>
+            )}
+          </div>
         </div>
       </div>
       <br />

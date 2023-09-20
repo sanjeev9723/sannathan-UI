@@ -177,7 +177,7 @@ function Preference() {
                         </button>
                       </div> */}
                           <div class="form-row">
-                            <div class="form-group col-md-2 offset-md-10 mb-1">
+                          <div class="form-group col-md-3  float-end mb-1">
                               <button
                                 type="button"
                                 class="btn btn_save search_width"

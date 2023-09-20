@@ -4,6 +4,8 @@ import Select from "../../components/Select.js";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../images/logo.png";
+import logo1 from "../images/logo-1.png";
+import logo2 from "../images/logo-2.png";
 import leaf from "../images/leaf.png";
 import flowers from "../images/flowers.png";
 import bowl from "../images/bowl.png";
@@ -100,11 +102,29 @@ const Register = ({ onTextChange }) => {
         <div className="row">
           <div className="col-md-6">
             <div className="imgbox text-center">
-              <img
-                className="center-fit small_images card-img-top"
-                src={logo}
-                alt="Background"
-              />
+              <Carousel>
+                <Carousel.Item>
+                  <img
+                    className="center-fit small_images card-img-top"
+                    src={logo}
+                    alt="Background"
+                  />{" "}
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="center-fit small_images card-img-top"
+                    src={logo1}
+                    alt="Background"
+                  />{" "}
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="center-fit small_images card-img-top"
+                    src={logo2}
+                    alt="Background"
+                  />{" "}
+                </Carousel.Item>
+              </Carousel>
             </div>
           </div>
           {/* <!-- form --> */}

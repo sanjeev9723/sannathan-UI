@@ -354,7 +354,7 @@ const AdminProfile = ({ selectedPatientData }) => {
 
   return (
     <>
-      <p className="mt-3 mb-4 fw-bold">Add Patient Details</p>
+      <p className="mt-3 mb-4 fw-bold patient_size">Add Patient Details</p>
       {/* spinner for loading */}
       {isLoading && (
         <div className="d-flex justify-content-end">
