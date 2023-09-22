@@ -53,7 +53,9 @@ function MedicalRecords({ prescriptionData, patientData }) {
   const [diagnosisList, setDiagnosisList] = useState([]);
   const [selectedDiagnosisData, setSelectedDiagnosisData] = useState([]);
   const [selectedDiagnosisName, setSelectedDiagnosisName] = useState([]);
-
+  const [diagnosisSearchResults, setDiagnosisSearchResults] = useState(
+    []
+  );
   const [medicalCategoryModalShow, setMedicalCategoryModalShow] =
     useState(false);
   const [selectedMedicalCategories, setSelectedMedicalCategories] = useState(
@@ -64,7 +66,9 @@ function MedicalRecords({ prescriptionData, patientData }) {
     useState([]);
   const [selectedMedicalCategoriesName, setSelectedMedicalCategoriesName] =
     useState([]);
-
+    const [medicalCategorySearchResults, setMedicalCategorySearchResults] = useState(
+      []
+    );
   const selectedPrescription = prescriptionList.find(
     (prescription) =>
       prescription.prescriptionTitle === selectedPrescriptionUsage
@@ -435,7 +439,7 @@ function MedicalRecords({ prescriptionData, patientData }) {
       >
         <div className="modal-height">
           <div className="main-login main-center">
-            <div className="">
+            <div className="mb-2">
               <div class="input-group">
                 <input
                   label="select"
@@ -528,10 +532,12 @@ function MedicalRecords({ prescriptionData, patientData }) {
         show={diagnosisModalShow}
         onHide={() => setDiagnosisModalShow(false)}
         onSave={onSaveDiagnosis}
+        title="Diagnosis"
+
       >
         <div className="modal-height-lg">
           <div className="main-login main-center">
-            <div className="">
+            <div className="mb-2">
               <div class="input-group">
                 <input
                   label="select"
@@ -541,8 +547,22 @@ function MedicalRecords({ prescriptionData, patientData }) {
                   name="q"
                   placeholder="Search"
                   aria-label="Search through site content"
-                  value={selectedDiagnosisName}
-                  onChange={(e) => setVal(e.target.value)}
+                  // value={selectedDiagnosisName}
+                  // onChange={(e) => setVal(e.target.value)}
+                  value={val}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.toUpperCase(); // Convert input to uppercase
+                    setVal(e.target.value);
+
+                    // Update the Diagnosis list based on the input value
+                    const filteredDiagnosis = diagnosisList.filter(
+                      (diagnosis) =>
+                      diagnosis.diagnosisName
+                          .toUpperCase()
+                          .includes(inputValue)
+                    );
+                    setDiagnosisSearchResults(filteredDiagnosis);
+                  }}
                 />
                 <div class="input-group-append">
                   <button
@@ -561,11 +581,13 @@ function MedicalRecords({ prescriptionData, patientData }) {
             <div className="table-container">
               <table className="table">
                 <tbody>
-                  {Array(Math.ceil(diagnosisList.length / 5))
+                  {Array(Math.ceil((diagnosisSearchResults.length || diagnosisList.length) / 5))
                     .fill()
                     .map((_, rowIndex) => (
                       <tr key={rowIndex}>
-                        {diagnosisList
+                        {(diagnosisSearchResults.length 
+                        ? diagnosisSearchResults
+                        : diagnosisList)
                           .slice(rowIndex * 5, rowIndex * 5 + 5)
                           .map((diagnosis, colIndex) => (
                             <td key={colIndex}>
@@ -709,12 +731,14 @@ function MedicalRecords({ prescriptionData, patientData }) {
       <InputModal
         show={medicalCategoryModalShow}
         onHide={() => setMedicalCategoryModalShow(false)}
-        // onSave={onSaveDiagnosis}
+        onSave={onSaveDiagnosis}
         // title="Current Medical Category"
+        title="Current Medical Category"
+
       >
         <div className="modal-height-lg">
           <div className="">
-            <div className="">
+            <div className="mb-2">
               <div class="input-group">
                 <input
                   label="select"
@@ -724,8 +748,21 @@ function MedicalRecords({ prescriptionData, patientData }) {
                   name="q"
                   placeholder="Search"
                   aria-label="Search through site content"
-                  value={selectedMedicalCategoriesName}
-                  onChange={(e) => setVal(e.target.value)}
+                  value={val}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.toUpperCase(); // Convert input to uppercase
+                    setVal(e.target.value);
+
+                    // Update the MEDICALCATEGORY list based on the input value
+                    const filteredMedicalCategory = medicalCategoryList.filter(
+                      (medicalcategory) =>
+                      medicalcategory.medicalCategoryName
+                          .toUpperCase()
+                          .includes(inputValue)
+                    );
+                    setMedicalCategorySearchResults(filteredMedicalCategory);
+                  }}
+                  // onChange={(e) => setVal(e.target.value)}
                 />
                 <div class="input-group-append">
                   <button
@@ -744,11 +781,13 @@ function MedicalRecords({ prescriptionData, patientData }) {
             <div className="table-container">
               <table className="table">
                 <tbody>
-                  {Array(Math.ceil(medicalCategoryList.length / 4))
+                  {Array(Math.ceil((medicalCategorySearchResults.length || medicalCategoryList.length) / 4))
                     .fill()
                     .map((_, rowIndex) => (
                       <tr key={rowIndex}>
-                        {medicalCategoryList
+                        {(medicalCategorySearchResults.length
+                          ? medicalCategorySearchResults
+                          : medicalCategoryList)
                           .slice(rowIndex * 4, rowIndex * 4 + 4)
                           .map((medicalcategory, colIndex) => (
                             <td key={colIndex}>

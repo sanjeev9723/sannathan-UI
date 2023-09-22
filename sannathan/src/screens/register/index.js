@@ -70,10 +70,9 @@ const Register = ({ onTextChange }) => {
           name: userName,
           email: email,
           password: newPassword,
-          isDoctor: "true",
-          id: 0,
+          isDoctor: selectUser === "Junior Doctor" ? "1" : "0",
           isActive: "1",
-          contactnumber: 0,
+          contactnumber:mobile ,
         };
         console.log(user);
         // Perform API call to create user
