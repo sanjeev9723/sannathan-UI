@@ -41,7 +41,8 @@ function NotificationDropdown() {
       </button> */}
       <button href="#!" className="btn tools-item btn_icons">
 							<i className="fa fa-bell-o" aria-hidden="true"></i>
-							<i className="tools-item-count">4</i>
+              {/* notification number */}
+							{/* <i className="tools-item-count">4</i> */}
 						</button>
       {isOpen && (
         <ul className="notification-dropdown__list">

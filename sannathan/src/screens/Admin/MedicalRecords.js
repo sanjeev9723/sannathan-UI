@@ -53,9 +53,7 @@ function MedicalRecords({ prescriptionData, patientData }) {
   const [diagnosisList, setDiagnosisList] = useState([]);
   const [selectedDiagnosisData, setSelectedDiagnosisData] = useState([]);
   const [selectedDiagnosisName, setSelectedDiagnosisName] = useState([]);
-  const [diagnosisSearchResults, setDiagnosisSearchResults] = useState(
-    []
-  );
+  const [diagnosisSearchResults, setDiagnosisSearchResults] = useState([]);
   const [medicalCategoryModalShow, setMedicalCategoryModalShow] =
     useState(false);
   const [selectedMedicalCategories, setSelectedMedicalCategories] = useState(
@@ -66,9 +64,8 @@ function MedicalRecords({ prescriptionData, patientData }) {
     useState([]);
   const [selectedMedicalCategoriesName, setSelectedMedicalCategoriesName] =
     useState([]);
-    const [medicalCategorySearchResults, setMedicalCategorySearchResults] = useState(
-      []
-    );
+  const [medicalCategorySearchResults, setMedicalCategorySearchResults] =
+    useState([]);
   const selectedPrescription = prescriptionList.find(
     (prescription) =>
       prescription.prescriptionTitle === selectedPrescriptionUsage
@@ -148,14 +145,14 @@ function MedicalRecords({ prescriptionData, patientData }) {
           setDiagnosisList(response.data.data);
 
           // Set initial selected diagnoses based on fetched data
-          const initialSelectedDiagnoses = response.data.data
+          const initialSelectedDiagnosis = response.data.data
             .filter((diagnosis) =>
               // Check if the diagnosis should be pre-selected based on the data
               patientData[0]?.diagnosis?.includes(diagnosis.diagnosisName)
             )
             .map((diagnosis) => diagnosis.diagnosisName);
 
-          setSelectedDiagnosisName(initialSelectedDiagnoses);
+          setSelectedDiagnosisName(initialSelectedDiagnosis);
         } else {
           console.error("Invalid API response:", response.data);
         }
@@ -533,7 +530,6 @@ function MedicalRecords({ prescriptionData, patientData }) {
         onHide={() => setDiagnosisModalShow(false)}
         onSave={onSaveDiagnosis}
         title="Diagnosis"
-
       >
         <div className="modal-height-lg">
           <div className="main-login main-center">
@@ -557,7 +553,7 @@ function MedicalRecords({ prescriptionData, patientData }) {
                     // Update the Diagnosis list based on the input value
                     const filteredDiagnosis = diagnosisList.filter(
                       (diagnosis) =>
-                      diagnosis.diagnosisName
+                        diagnosis.diagnosisName
                           .toUpperCase()
                           .includes(inputValue)
                     );
@@ -581,13 +577,19 @@ function MedicalRecords({ prescriptionData, patientData }) {
             <div className="table-container">
               <table className="table">
                 <tbody>
-                  {Array(Math.ceil((diagnosisSearchResults.length || diagnosisList.length) / 5))
+                  {Array(
+                    Math.ceil(
+                      (diagnosisSearchResults.length || diagnosisList.length) /
+                        5
+                    )
+                  )
                     .fill()
                     .map((_, rowIndex) => (
                       <tr key={rowIndex}>
-                        {(diagnosisSearchResults.length 
-                        ? diagnosisSearchResults
-                        : diagnosisList)
+                        {(diagnosisSearchResults.length
+                          ? diagnosisSearchResults
+                          : diagnosisList
+                        )
                           .slice(rowIndex * 5, rowIndex * 5 + 5)
                           .map((diagnosis, colIndex) => (
                             <td key={colIndex}>
@@ -734,7 +736,6 @@ function MedicalRecords({ prescriptionData, patientData }) {
         onSave={onSaveDiagnosis}
         // title="Current Medical Category"
         title="Current Medical Category"
-
       >
         <div className="modal-height-lg">
           <div className="">
@@ -756,7 +757,7 @@ function MedicalRecords({ prescriptionData, patientData }) {
                     // Update the MEDICALCATEGORY list based on the input value
                     const filteredMedicalCategory = medicalCategoryList.filter(
                       (medicalcategory) =>
-                      medicalcategory.medicalCategoryName
+                        medicalcategory.medicalCategoryName
                           .toUpperCase()
                           .includes(inputValue)
                     );
@@ -781,13 +782,19 @@ function MedicalRecords({ prescriptionData, patientData }) {
             <div className="table-container">
               <table className="table">
                 <tbody>
-                  {Array(Math.ceil((medicalCategorySearchResults.length || medicalCategoryList.length) / 4))
+                  {Array(
+                    Math.ceil(
+                      (medicalCategorySearchResults.length ||
+                        medicalCategoryList.length) / 4
+                    )
+                  )
                     .fill()
                     .map((_, rowIndex) => (
                       <tr key={rowIndex}>
                         {(medicalCategorySearchResults.length
                           ? medicalCategorySearchResults
-                          : medicalCategoryList)
+                          : medicalCategoryList
+                        )
                           .slice(rowIndex * 4, rowIndex * 4 + 4)
                           .map((medicalcategory, colIndex) => (
                             <td key={colIndex}>
@@ -803,11 +810,11 @@ function MedicalRecords({ prescriptionData, patientData }) {
                                   //   )
                                   // }
                                   checked={selectedMedicalCategoriesName.includes(
-                                    medicalcategory.medicalCategoryId.toString()
+                                    medicalcategory.medicalCategoryId
                                   )}
                                   onChange={() =>
                                     handleToggleMedicalCategory(
-                                      medicalcategory.medicalCategoryId.toString()
+                                      medicalcategory.medicalCategoryId
                                     )
                                   }
                                 />
