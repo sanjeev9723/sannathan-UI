@@ -5,31 +5,26 @@ import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import sannathan from "../images/sannathan.png";
 
-function MyVerticallyCenteredModal(props) {
-  const { data} = props; // Destructure props
-
-  // console.log(data);
+function RePrint(props) {
   const componentRef = useRef(null);
+  const { printData } = props;
 
+  console.log(printData);
+  // Specify the keys you want to display in the modal
   const keysToDisplay = [
-    { label: "Date", key: "appointmentDate" },
-    { label: "Patient ID", key: "message" },
-    { label: " ID", key: "id" },
+    
+    { label: "Patient ID", key: "patientId" },
     { label: "Patient Name", key: "name" },
-    { label: "Slot", key: "slot" },
-    // { label: "Age", key: "age" },
-    // { label: "Gender", key: "gender" },
-    { label: "Contact Number", key: "phoneNumber" },
-    // { label: "Address", key: "city" },
-    // { label: "Status", key: "status" },
-    // { label: "Email", key: "email" },
-    // { label: "Food", key: "reqFoodFor" },
+    // { label: "No Of Consultations", key: "displayNoOfConsultations" },
+    { label: "Age", key: "age" },
+    { label: "Gender", key: "gender" },
+    { label: "Contact Number", key: "contactNumber" },
+    { label: "Address", key: "address" },
     // { label: "Prescription", key: "prescription" },
-    // { label: "Mode", key: "mode" },
-    // { label: "Total Patients", key: "totalPatients" },
 
     // Add more keys as needed
   ];
+
   const reactToPrintContent = React.useCallback(() => {
     return componentRef.current;
   });
@@ -39,18 +34,6 @@ function MyVerticallyCenteredModal(props) {
     documentTitle: "print doc",
     removeAfterPrint: true,
   });
-
-  const keys = Object.keys(props?.data);
-  const { TokenNumber } = props?.data; // Extract the TokenNumber from the data object
-
-  // Remove the unnecessary fields from the keys array
-  const filteredKeys = keys.filter(
-    (key) =>
-      key !== "TokenNumber" &&
-      key !== "Mobile Number" &&
-      key !== "Whatsapp Number" &&
-      key !== "Prescription"
-  );
 
   return (
     <div>
@@ -64,14 +47,14 @@ function MyVerticallyCenteredModal(props) {
           <div className="col-lg-12 details" ref={componentRef}>
             <style>
               {`
-               @media print {
-                body {
-                  margin: 0cm 1cm ;
-                  padding: 0;
+                @media print {
+                  body {
+                    margin: 1cm 1cm ;
+                    padding: 0;
+                  }
+                
                 }
-              
-              }
-              `}
+                `}
             </style>
             <div className="d-flex justify-content-between print-form">
               <div className="bg-logo head">
@@ -81,27 +64,27 @@ function MyVerticallyCenteredModal(props) {
                   className="my-image-print"
                 />
               </div>
-              <div>
-                {/* <h5 className="reg">Reg.slip</h5> */}
-              </div>
+              <div>{/* <h5 className="reg">Reg.slip</h5> */}</div>
               <div>
                 {/* <h4 className="reg-head">SANNATHAN JEEVAN TRUST</h4> */}
                 <div className="sana-print">SANNATHAN JEEVAN TRUST</div>
                 <div>ILTD Colony, AR Nagar, Chirala.</div>
                 {/* <div> Chirala 523157</div> */}
                 {/* <div>example@example.com</div>
-<div>www.example.com</div> */}
+  <div>www.example.com</div> */}
                 <div>PH : 083339 37666</div>
               </div>
             </div>
+
             <Table striped="columns">
-            <tbody>
-                {keysToDisplay.map(({ label, key }) => (
-                  <tr key={key}>
-                    <td>{label}</td>
-                    <td>{data[key]}</td>
-                  </tr>
-                ))}
+              <tbody>
+                {printData &&
+                  keysToDisplay.map(({ label, key }) => (
+                    <tr key={key}>
+                      <td>{label}</td>
+                      <td>{printData[0] ? printData[0][key] : ""}</td>
+                    </tr>
+                  ))}
               </tbody>
             </Table>
           </div>
@@ -115,4 +98,4 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-export default MyVerticallyCenteredModal;
+export default RePrint;

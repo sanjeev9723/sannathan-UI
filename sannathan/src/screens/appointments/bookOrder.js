@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Modal, Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import Print from "./print";
+import RePrint from "./RePrint";
 
 const BookOrder = ({ selectedPatientData }) => {
   console.log(selectedPatientData);
@@ -86,43 +87,61 @@ const BookOrder = ({ selectedPatientData }) => {
 
   useEffect(() => {
     console.log(selectedPatientData);
-    setPatientId(selectedPatientData.message || "");
-
-    // Create a mapping object to map field names in bookingFields to selectedPatientData keys
-    const fieldToDataMap = {
-      date: "appointmentDate",
-      address: "address",
-      patientName: "name",
-      gender: "gender",
-      age: "age",
-      weight: "weight",
-      contactNumber: "phoneNumber",
-    };
-
-    // Check if selectedPatientData is not null or undefined
     if (
       selectedPatientData &&
-      !Array.isArray(selectedPatientData) &&
-      bookingFields.length > 0
+      selectedPatientData.data &&
+      selectedPatientData.data.length > 0
     ) {
-      const updatedBookingFields = bookingFields.map((field) => {
-        if (fieldToDataMap.hasOwnProperty(field.field)) {
-          const dataField = fieldToDataMap[field.field];
-          if (selectedPatientData.hasOwnProperty(dataField)) {
-            return { ...field, value: selectedPatientData[dataField] };
-          }
+      setPatientId(selectedPatientData.data[0].patientId || "");
+
+      // Create a mapping object to map field names in bookingFields to selectedPatientData keys
+      const fieldToDataMap = {
+        date: "appointmentDate",
+        address: "address",
+        patientName: "name",
+        gender: "gender",
+        age: "age",
+        weight: "weight",
+        contactnumber: "contactNumber",
+      };
+      // set the selePatientData for gender so it will easy for reset
+      if (selectedPatientData.data && selectedPatientData.data.length > 0) {
+        const genderValue = selectedPatientData.data[0].gender;
+        if (genderValue) {
+          setGender(genderValue);
         }
-        return field;
-      });
+      }
+      // Check if selectedPatientData is not null or undefined
+      if (
+        selectedPatientData.data[0] &&
+        !Array.isArray(selectedPatientData.data[0]) &&
+        bookingFields.length > 0
+      ) {
+        const updatedBookingFields = bookingFields.map((field) => {
+          if (fieldToDataMap.hasOwnProperty(field.field)) {
+            const dataField = fieldToDataMap[field.field];
+            if (selectedPatientData.data[0].hasOwnProperty(dataField)) {
+              return {
+                ...field,
+                value: selectedPatientData.data[0][dataField],
+              };
+            }
+          }
+          return field;
+        });
 
-      console.log("updatedBookingFields:", updatedBookingFields);
-      setBookingOrder(updatedBookingFields);
+        // console.log("updatedBookingFields:", updatedBookingFields);
+        setBookingOrder(updatedBookingFields);
 
-      // When selectedPatientData is updated and it has data, show the Print button
-      setIsPrintButtonVisible(true);
+        // When selectedPatientData.data[0] is updated and it has data, show the Print button
+        setIsPrintButtonVisible(true);
+      } else {
+        // Hide the Print button when selectedPatientData is not available or doesn't have data
+        setIsPrintButtonVisible(false);
+      }
     } else {
-      // Hide the Print button when selectedPatientData is not available or doesn't have data
-      setIsPrintButtonVisible(false);
+      // Handle the case when selectedPatientData or selectedPatientData.data is undefined
+      // You may want to set default values or handle this situation as needed.
     }
   }, [selectedPatientData, bookingFields]);
 
@@ -255,7 +274,6 @@ const BookOrder = ({ selectedPatientData }) => {
       console.log("Updated bookingOrder:", updatedOrder);
 
       setBookingOrder(updatedOrder);
-      
     } catch (error) {
       setIsLoading(false);
       toast.error("No patient details found.");
@@ -286,20 +304,32 @@ const BookOrder = ({ selectedPatientData }) => {
       });
       (async () => {
         try {
-            // Create the appointment object with the required data
-            const appointmentData = {
-              address: patientData?.address || "",
-              name: patientData?.patientName || "",
-              date: "2023-07-29",
-              patientId: patientData?.patientId || 0,
-              age: patientData?.age || 0,
-              gender: patientData?.gender || "",
-              weight: patientData?.weight || 0,
-              contactNumber: patientData?.contactnumber || 0,
-            };
-  
-            console.log("Appointment Data:", appointmentData); 
-  
+          // Create the appointment object with the required data
+          const appointmentData = {
+            address: patientData?.address || "",
+            city: patientData?.address || "",
+            name: patientData?.patientName || "",
+            date: "2023-07-29",
+            patientId: patientData?.patientId || 0,
+            age: patientData?.age || 0,
+            gender: patientData?.gender || "",
+            weight: patientData?.weight || 0,
+            contactNumber: patientData?.contactnumber || 0,
+          };
+          // Create Registration
+          const orderData = {
+            address: order?.address || "",
+            name: order?.patientName || "",
+            date: "2023-07-29",
+            patientId: order?.patientId || 0,
+            age: order?.age || 0,
+            gender: order?.gender || "",
+            weight: order?.weight || 0,
+            contactNumber: order?.contactnumber || 0,
+          };
+
+          console.log("Appointment Data:", appointmentData);
+
           let response;
           // Make the API call
           if (patientData.patientId)
@@ -310,7 +340,7 @@ const BookOrder = ({ selectedPatientData }) => {
           else
             response = await axiosInst.post(
               "/appointment/createRegisteration",
-              appointmentData
+              orderData
             );
 
           //     // Handle the response if needed
@@ -382,12 +412,20 @@ const BookOrder = ({ selectedPatientData }) => {
         data={modalData}
         onHide={() => setModalShow(false)}
       />
-      <Print
+      <RePrint
+        printData={selectedPatientData.data || {}}
+        show={printModalVisible}
+        onHide={() => {
+          setPrintModalVisible(false);
+          resetForm(); // reset the form so the save will be avoided
+        }}
+      />
+      {/* <Print
         bookingOrder={bookingOrder}
         selectedSingleData={selectedSingleData}
         show={printModalVisible}
         onHide={() => setPrintModalVisible(false)}
-      />
+      /> */}
       <form className="row g-3">
         <Row>
           {bookingFields?.length > 0 &&
@@ -428,7 +466,13 @@ const BookOrder = ({ selectedPatientData }) => {
                       disabled={ele.disabled}
                       placeholder={ele.placeholder}
                       required={ele.required}
-                      value={ele.value || patientData[ele.field] || ""}
+                      value={
+                        ele.value ||
+                        patientData?.[ele.field] ||
+                        selectedSingleData[ele.field] ||
+                        ""
+                      }
+                      // value={ele.value || patientData[ele.field] || ""}
                       // value={
                       //   ele.value ||
                       //   patientData?.[patientDataProperty] ||

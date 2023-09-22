@@ -3,6 +3,8 @@ import { Table, Modal } from "react-bootstrap";
 import countpng from "../images/count.png";
 import { useReactToPrint } from "react-to-print";
 import Button from "react-bootstrap/Button";
+import useAxiosPost from "../../api/useAxiosPost";
+
 
 const UserTable = ({
   orders,
@@ -12,8 +14,11 @@ const UserTable = ({
   searchTerm,
   onPatientClick,
 }) => {
+  const axiosInst = useAxiosPost();
+
   const componentRef = useRef(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [patientDetails, setPatientDetails] = useState(null); 
 
   const reactToPrintContent = React.useCallback(() => {
     return componentRef.current;
@@ -23,10 +28,47 @@ const UserTable = ({
     content: reactToPrintContent,
     documentTitle: "print doc",
   });
-  const handleRowClick = (order) => {
-    setSelectedOrder(order);
-    onPatientClick(order); // Call onPatientClick function and pass the order as an argument
+  // Function to fetch patient details using Axios
+  const fetchPatientDetails = async (patientId) => {
+    try {
+      const response = await axiosInst.get("/admin/getPatientDetails", {
+        params: {
+          patientId: patientId,
+        },
+      });
+
+      const patientDetails = response.data; // Assuming the response contains patient details
+      console.log( response.data);
+      return patientDetails;
+      console.log(patientDetails);
+    } catch (error) {
+      console.error("Error fetching patient details:", error);
+      return null;
+    }
   };
+
+  const handleRowClick = async (order) => {
+    setSelectedOrder(order);
+
+    // Fetch patient details using the patient ID from the clicked order
+    const patientDetails = await fetchPatientDetails(order.message);
+
+    if (patientDetails) {
+      // Handle the patient details, e.g., display them in a modal
+      setPatientDetails(patientDetails);
+      onPatientClick(patientDetails); // Call onPatientClick function and pass the order as an argument
+
+      // You can open a modal and display the patient details here
+      // Example: set a state to show a modal and pass patientDetails as props to the modal component
+    } else {
+      // Handle the case when patient details are not available
+      console.error("Patient details not found.");
+    }
+  };
+
+  useEffect(() => {
+    // console.log("Fetched Orders:", orders);
+  }, [orders]);
   // console.log(onPatientClick);
   // const handleRowClick = (order, index) => {
   //   setSelectedOrder({ ...order, index });
@@ -111,14 +153,15 @@ const UserTable = ({
       return visitedStatus;
     }
   });
-  console.log(orders);
+  // console.log(orders);
+  console.log(patientDetails);
 
   return (
     <div className="overflow-auto">
       <div className="user-table ">
       {filteredOrders.map((order) => (
           // <div className="card mb-2 hover-card" key={order.PatientId}>
-          <div className="card mb-2 hover-card" key={order.name}>
+          <div className="card mb-2 hover-card" key={order.message}>
             <div className="card-body">
               <div className="media-box">
                 <img className="idimages" src={countpng} alt="Logo" />
