@@ -8,9 +8,10 @@ import sannathan from "../images/sannathan.png";
 function Print(props) {
   const componentRef = useRef(null);
   const { printData } = props;
+  console.log(props);
   const patientData = printData?.patientData || {};
   const medicalRecords = printData?.medicalRecords || [];
-  console.log(patientData);
+  console.log(medicalRecords);
   // Specify the keys you want to display in the modal
   const keysToDisplay = [
     { label: "Patient ID", key: "patientId" },
@@ -24,16 +25,23 @@ function Print(props) {
     // { label: "Usage", key: "usage" },
     {
       label: "Suggestion",
-      key: medicalRecords.length === 0 ? "suggestions" : "suggestion",
+      key:
+        medicalRecords.length === 0 || medicalRecords[0].suggestion == ""
+          ? "suggestions"
+          : "suggestion",
     },
     // { label: "Description", key: "suggestionDesc" },
     {
       label: "Diagnosis",
-      key: medicalRecords.length === 0 ? "diagnosis" : "diagnosisName",
+      key:
+        medicalRecords.length === 0 || medicalRecords[0].diagnosis == ""
+          ? "diagnosis"
+          : "diagnosisName",
     },
 
     // Add more keys as needed
   ];
+  console.log(medicalRecords);
 
   const reactToPrintContent = React.useCallback(() => {
     return componentRef.current;
@@ -45,7 +53,6 @@ function Print(props) {
     removeAfterPrint: true,
   });
   const innerPrescription = (data, attrib1, attrib2) => {
-    console.log(data);
     try {
       if (data[attrib1] && data[attrib2]) {
         const usage = data[attrib2].split(",");
@@ -70,7 +77,6 @@ function Print(props) {
     return "";
   };
   const innerSuggestion = (data, attrib1, attrib2) => {
-    console.log(data);
     try {
       if (data[attrib1] && data[attrib2]) {
         const suggestionDesc = data[attrib2].split(",");
@@ -147,7 +153,8 @@ function Print(props) {
                       key === "suggestion" ||
                       key === "suggestionDesc" ||
                       key === "diagnosisName" ? (
-                        medicalRecords.length === 0 ? (
+                        medicalRecords.length === 0 ||
+                        medicalRecords[0][key] == "" ? (
                           // Print patientData[key] if medicalRecords are empty
                           patientData[key]
                         ) : (

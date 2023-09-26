@@ -116,12 +116,8 @@ function Prescription() {
               <h3 className="text-center patient-id">Prescription </h3>
               <div class="mt-2 form-group has-search mb-3">
                 <span class="fa fa-search form-control-feedback"></span>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search for Patient"
-                  onSearch={handleSearch}
-                />
+                <SearchBar onSearch={handleSearch} />
+
               </div>
               <div style={{ maxHeight: "450px", overflow: "auto" }}>
                 <Table>
@@ -136,7 +132,7 @@ function Prescription() {
                   </thead>
                   <tbody>
                     {filteredPrescription.map((item) => (
-                      <tr key={item.value}>
+                      <tr key={item.label}>
                         <td className="fw-bold">{rowNumber++}</td>
                         <td>{item.label}</td>
                         <td>{item.usage}</td>{" "}

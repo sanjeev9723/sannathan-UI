@@ -337,11 +337,12 @@ function MedicalRecords({ prescriptionData, patientData }) {
         .join(", ");
 
       // Make an Axios POST request to update diagnosis data on the server
-      await axiosInst.post(
+      const response =await axiosInst.post(
         `/appointment/updateDiagnosis?patientId=${patientId}&diagnosis=${encodeURIComponent(
           diagnosisText
         )}`
       );
+      console.log("Server response:", response.data);
 
       console.log("Diagnosis data updated on the server.");
 
