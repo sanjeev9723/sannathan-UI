@@ -111,6 +111,29 @@ const [searchContact, setSearchContact] = useState(""); // Contact Number
     setSearchInput("");
     setMultiplePatients([]);
   };
+  const handleMessageClick = async (patientId) => {
+    if (!patientId) {
+      toast.error("Please enter a patient ID");
+      return;
+    }
+
+    try {
+      const { data } = await axiosInst.get(`/admin/getPatientDetails`, {
+        params: {
+          patientId: patientId,
+        },
+      });
+
+      navigate(`/adminpage`, {
+        state: {
+          patientData: data.data,
+        },
+      });
+    } catch (error) {
+      toast.error("Error fetching complete patient details.");
+      console.error("Error fetching data:", error);
+    }
+  };
   return (
     <div>
       <HeaderMenu />
@@ -228,6 +251,8 @@ const [searchContact, setSearchContact] = useState(""); // Contact Number
                   <th>Patient Name</th>
                   <th>Contact Number</th>
                   <th>Location</th>
+                  <th>Update</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -243,6 +268,15 @@ const [searchContact, setSearchContact] = useState(""); // Contact Number
                     <td>{patient.patientName}</td>
                     <td>{patient.contactnumber}</td>
                     <td>{patient.address}</td>
+                    <td>
+                        <button
+                          type="button"
+                          className="floar-end btn btn_save"
+                          onClick={() => handleMessageClick(patient.patientId)} // Pass patientId or any unique identifier
+                        >
+                          Update
+                        </button>
+                      </td>
                   </tr>
                 ))}
               </tbody>
