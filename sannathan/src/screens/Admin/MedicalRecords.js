@@ -113,7 +113,7 @@ function MedicalRecords({ prescriptionData, patientData }) {
   useEffect(() => {
     const fetchSuggestionData = async () => {
       try {
-        const response = await axiosInst.get("/master/suggestion");
+        const response = await axiosInst.get("/master/suggestions");
         if (Array.isArray(response.data.data)) {
           setSuggestionList(response.data.data);
 
@@ -434,6 +434,8 @@ function MedicalRecords({ prescriptionData, patientData }) {
         onHide={() => setSuggestionModalShow(false)}
         onSave={onSaveSuggestions}
         dialogClassName="fullscreen-modal"
+        title="Suggestions"
+
       >
         <div className="modal-height">
           <div className="main-login main-center">

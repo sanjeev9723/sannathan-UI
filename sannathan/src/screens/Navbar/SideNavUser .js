@@ -65,7 +65,7 @@ function SideNavUser() {
                   activeItem === 1 ? "active" : ""
                 }`}
                 onClick={() => {
-                  gotoPage("bookings");
+                  // gotoPage("bookings");
                 }}
               >
                 <i className="fa fa-calendar" aria-hidden="true"></i>{" "}
@@ -87,9 +87,9 @@ function SideNavUser() {
                 {subMenuVisible === 2 && (
                   <div className="dropdown-content">
                     <a onClick={() => gotoPage("report")}>Patients Report</a>
-                    <a onClick={() => gotoPage("appointmentreport")}>
+                    {/* <a onClick={() => gotoPage("appointmentreport")}>
                       Appointment Report
-                    </a>
+                    </a> */}
                   </div>
                 )}
               </div>

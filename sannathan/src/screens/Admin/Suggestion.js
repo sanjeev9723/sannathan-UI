@@ -21,6 +21,7 @@ function Suggestion() {
     const fetchSuggestionData = async () => {
       try {
         const response = await axiosInst.get("/master/suggestion");
+        
         if (Array.isArray(response.data.data)) {
           const formattedData = response.data.data.map((item) => ({
             label: item.suggestionCode, // Make sure this property matches the API response
@@ -39,7 +40,7 @@ function Suggestion() {
           console.error("Invalid API response:", response.data);
         }
       } catch (error) {
-        console.error("Error fetching diagnosis data:", error);
+        console.error("Error fetching suggestion data:", error);
       }
     };
 

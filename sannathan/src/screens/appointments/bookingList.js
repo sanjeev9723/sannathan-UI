@@ -108,7 +108,7 @@ const BookingList = ({ onPatientClick }) => {
             </div>
             {/* <div style='margin-left:60px;'> */}
             <div style={{ marginLeft: 60 }}>
-              <h2 className="mb-0">568</h2>
+              <h2 className="mb-0">0</h2>
               <p>Checked Count</p>
             </div>
           </div>

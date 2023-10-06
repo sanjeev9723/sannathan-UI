@@ -22,6 +22,7 @@ import { Modal, Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import Print from "../appointments/print";
 import RePrint from "../appointments/RePrint";
+import StyledModal from "../../components/ReusableModal";
 
 const AdminProfile = ({ selectedPatientData }) => {
   const axiosInst = useAxiosPost();
@@ -52,12 +53,16 @@ const AdminProfile = ({ selectedPatientData }) => {
   const [isPrintButtonVisible, setIsPrintButtonVisible] = useState(false);
   const [printModalVisible, setPrintModalVisible] = useState(false);
   const [isUpdateVisible, setIsUpdateVisible] = useState(false);
+  const [multiplePatients, setMultiplePatients] = useState([]);
+  const [selectedCheckbox, setSelectedCheckbox] = useState(null); //  used for slecting checkbox
 
   // const [ selectedSingleData, setSelectedSingleData]= useState({})
   const selectedSingleData = {};
 
   // const [patientId, setPatientID] = useState("");
   const [mobileNo, setMobileNo] = useState("");
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
+
   const dispatch = useDispatch();
   const bookingFields =
     useSelector((state) => state.appointments.appointmentFields) || [];
@@ -93,7 +98,7 @@ const AdminProfile = ({ selectedPatientData }) => {
       selectedPatientData.data &&
       selectedPatientData.data.length > 0
     ) {
-      setPatientId(selectedPatientData.data[0].patientId || "");
+      setSearchInput(selectedPatientData.data[0].patientId || "");
 
       // Create a mapping object to map field names in bookingFields to selectedPatientData keys
       const fieldToDataMap = {
@@ -236,11 +241,103 @@ const AdminProfile = ({ selectedPatientData }) => {
   };
 
   const onSearch = async () => {
-    if (!patientId) {
-      toast.error("Please enter a patient ID");
-      return;
-    }
+    setSelectedCheckbox(null); // to prevent of getting previous values and chekbox
     setIsLoading(true);
+    try {
+      let params = {};
+
+      // Check if the search input is not empty
+      if (searchInput) {
+        // Determine which parameter to set based on the input
+        if (/^\d{1,9}$/.test(searchInput)) {
+          // If the input is a number with 1 to 9 digits, set pID (patientId)
+          params = { pID: searchInput };
+        } else if (/^\+?\d+$/.test(searchInput)) {
+          // If the input is a phone number, set pContact (phoneNumber)
+          params = { pContact: searchInput };
+        } else {
+          // Otherwise, assume it's a name and set pName (patientName)
+          params = { pName: searchInput };
+        }
+      }
+
+      const { data } = await axiosInst.get(`/appointment/getPatientId`, {
+        params,
+      });
+
+      setIsLoading(false);
+
+      if (data.data.length > 1) {
+        // If there are multiple patients, filter out duplicates based on patientId
+        const uniquePatients = data.data.filter((patient, index, self) => {
+          return (
+            self.findIndex((p) => p.patientId === patient.patientId) === index
+          );
+        });
+
+        console.log(uniquePatients);
+
+        if (params.pID) {
+          // If the search was performed with a patient ID, and there are multiple records,
+          // display the first record directly in the fields
+          setPatientData(uniquePatients[0]);
+          setGender(uniquePatients[0].gender || "");
+          setSearchInput(uniquePatients[0].patientId);
+
+          // Update the bookingOrder state with fetched data
+          const updatedOrder = bookingOrder.map((order) => {
+            if (uniquePatients[0].hasOwnProperty(order.field)) {
+              return { ...order, value: uniquePatients[0][order.field] };
+            }
+            return order;
+          });
+          setBookingOrder(updatedOrder);
+
+          // If patient data is found, set the selectedPatient state with the fetched data
+          // and show the "Update" button
+          setSelectedPatient(uniquePatients[0]);
+          setIsUpdateVisible(true);
+        } else {
+          // If the search was performed with a different parameter, show the modal with multiple records
+          setMultiplePatients(uniquePatients);
+          setSearchModalVisible(true);
+        }
+      } else if (data.data.length === 1) {
+        // If only one patient is found, set the patient data and update the state
+        setPatientData(data.data[0]);
+        setGender(data.data[0].gender || "");
+        setSearchInput(data.data[0].patientId);
+        console.log(data.data);
+        // Update the bookingOrder state with fetched data
+        const updatedOrder = bookingOrder.map((order) => {
+          if (data.data[0].hasOwnProperty(order.field)) {
+            return { ...order, value: data.data[0][order.field] };
+          }
+          return order;
+        });
+        setBookingOrder(updatedOrder);
+
+        // If patient data is found, set the selectedPatient state with the fetched data
+        // and show the "Update" button
+        setSelectedPatient(data.data[0]);
+        setIsUpdateVisible(true);
+        // ...rest of your code
+      } else {
+        // No patient found
+        toast.error("No patient details found.");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      // setMultiplePatientsFound(false); // Reset the state in case of an error
+      toast.error("Error fetching data.");
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  //  search onclicking the pID in modal
+  const handleSearch = async (patientId) => {
+    setIsLoading(true);
+    setSearchModalVisible(false);
 
     try {
       const { data } = await axiosInst.get(`/appointment/getPatientId`, {
@@ -252,6 +349,7 @@ const AdminProfile = ({ selectedPatientData }) => {
       setIsLoading(false);
       setPatientData(data.data[0]);
       setGender(data.data[0].gender || "");
+      setSearchInput(data.data[0].patientId);
       console.log(data.data);
       // Update the bookingOrder state with fetched data
       const updatedOrder = bookingOrder.map((order) => {
@@ -275,6 +373,8 @@ const AdminProfile = ({ selectedPatientData }) => {
   };
 
   const onUpdate = async () => {
+    const { patientId } = selectedPatient; // need to extracrt coz patientID is not applying due to search
+
     if (!patientId) {
       toast.error("Please enter a patient ID");
       return;
@@ -382,7 +482,29 @@ const AdminProfile = ({ selectedPatientData }) => {
       // resetForm();
     }
   };
-  console.log(patientData);
+
+  const handleCheckboxChange = (patientId) => {
+    setSelectedCheckbox(patientId);
+  };
+
+  // console.log(patientData);
+  const buttonComponent = (
+    <>
+      <Button
+        onClick={() => {
+          if (selectedCheckbox !== null) {
+            handleSearch(selectedCheckbox);
+          } else {
+            toast.error("Please select a patient.");
+          }
+        }}
+        style={{ marginRight: "10px" }}
+        disabled={selectedCheckbox === null}
+      >
+        Get
+      </Button>
+    </>
+  );
 
   return (
     <>
@@ -406,12 +528,13 @@ const AdminProfile = ({ selectedPatientData }) => {
               className="form-control mr-sm-2"
               type="search"
               name="searchInput"
-              value={patientId}
-              onChange={(e) => setPatientId(e.target.value)}
-              placeholder="Patient Id"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Search For Patient"
               aria-label="Search"
             />
           </div>
+
           <div className=" col-md-3">
             {/* Update button visibility is controlled by isUpdateVisible state */}
             {!isUpdateVisible && (
@@ -423,6 +546,7 @@ const AdminProfile = ({ selectedPatientData }) => {
                 Search
               </button>
             )}
+
             {isUpdateVisible && (
               <button
                 className="btn btn-success search_width my-2 my-sm-0"
@@ -435,6 +559,54 @@ const AdminProfile = ({ selectedPatientData }) => {
           </div>
         </div>
       </div>
+      <StyledModal
+        show={searchModalVisible}
+        onHide={() => {
+          setSearchModalVisible(false);
+          resetForm();
+        }}
+        title="Patient Details"
+        buttonComponent={buttonComponent}
+      >
+        <div className="modal-sm">
+          <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+            <table className="table">
+              <thead
+                style={{ position: "sticky", top: 0, background: "white" }}
+              >
+                <tr>
+                  <th>Patient ID</th>
+                  <th>Select</th>
+                  <th>Patient Name</th>
+                  <th>Contact Number</th>
+                  <th>Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                {multiplePatients.map((patient) => (
+                  <tr key={patient.patientId}>
+                    <th>{patient.patientId}</th>
+                    <td>
+                      <input
+                        type="radio"
+                        id={`patientRadio${patient.patientId}`}
+                        name="patientRadioGroup"
+                        label={patient.patientName}
+                        value={patient.patientId}
+                        checked={selectedCheckbox === patient.patientId}
+                        onChange={() => handleCheckboxChange(patient.patientId)}
+                      />
+                    </td>
+                    <td>{patient.patientName}</td>
+                    <td>{patient.contactnumber}</td>
+                    <td>{patient.address}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </StyledModal>
       {/* <hr /> */}
       <MyVerticallyCenteredModal
         show={modalShow}

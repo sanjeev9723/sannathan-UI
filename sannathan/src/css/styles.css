@@ -645,6 +645,13 @@ img.sanatha-nav {
 .search_width {
   width: 100%;
 }
+.search_database{
+  text-align: center;
+}
+.save_button {
+  margin-left: -10px;
+  width: 100%;
+}
 
 .btn_clear {
   background: #fff;

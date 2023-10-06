@@ -5,9 +5,18 @@ import AdminProfile from "./AdminProfile";
 // import Footer from "../../components/Footer";
 import HeaderMenu from "../../components/HeaderMenu";
 // import SideNav from "../Navbar";
+import { useLocation } from "react-router-dom";
+
 
 const AdminAcess = () => {
-  const [selectedPatientData, setSelectedPatientData] = useState([]);
+  const location = useLocation();
+  const initialSelectedPatientData = location.state
+    ? location.state.selectedPatientData
+    : [];
+
+  const [selectedPatientData, setSelectedPatientData] = useState(
+    initialSelectedPatientData
+  )
 
   // Callback function to update selectedPatientData when a patient detail is clicked
   const handlePatientClick = (patientData) => {
