@@ -14,7 +14,7 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPost from "../../api/useAxiosPost";
 import { ToastContainer, toast } from "react-toastify";
 
-const Report = () => {
+const Report = ({userRole}) => {
   const gridRef = useRef(); // Optional - for accessing Grid's API
 
   const axiosInst = useAxiosPost();
@@ -124,11 +124,17 @@ const [searchContact, setSearchContact] = useState(""); // Contact Number
         },
       });
 
-      navigate(`/adminpage`, {
-        state: {
-          patientData: data.data,
-        },
-      });
+      if (userRole === 'admin') {
+        // If the user is an admin, navigate to admin page
+        navigate(`/adminpage`, {
+          state: {
+            patientData: data.data,
+          },
+        });
+      } else {
+        // If the user is not an admin, you can show a message or handle it as needed
+        toast.info("You do not have permission to update.");
+      }
     } catch (error) {
       toast.error("Error fetching complete patient details.");
       console.error("Error fetching data:", error);

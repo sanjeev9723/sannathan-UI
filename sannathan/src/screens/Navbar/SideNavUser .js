@@ -87,9 +87,9 @@ function SideNavUser() {
                 {subMenuVisible === 2 && (
                   <div className="dropdown-content">
                     <a onClick={() => gotoPage("report")}>Patients Report</a>
-                    {/* <a onClick={() => gotoPage("appointmentreport")}>
+                    <a onClick={() => gotoPage("appointmentreport")}>
                       Appointment Report
-                    </a> */}
+                    </a>
                   </div>
                 )}
               </div>

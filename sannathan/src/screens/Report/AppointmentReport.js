@@ -11,7 +11,7 @@ import { useReactToPrint } from "react-to-print";
 import useAxiosPost from "../../api/useAxiosPost";
 import { ToastContainer, toast } from "react-toastify";
 
-const AppointmentReport = () => {
+const AppointmentReport = ({userRole}) => {
   const gridRef = useRef(); // Optional - for accessing Grid's API
 
   const axiosInst = useAxiosPost();
@@ -213,11 +213,22 @@ const AppointmentReport = () => {
         },
       });
 
-      navigate(`/adminpage`, {
-        state: {
-          patientData: data.data,
-        },
-      });
+      // navigate(`/adminpage`, {
+      //   state: {
+      //     patientData: data.data,
+      //   },
+      // });
+      if (userRole === 'admin') {
+        // If the user is an admin, navigate to admin page
+        navigate(`/adminpage`, {
+          state: {
+            patientData: data.data,
+          },
+        });
+      } else {
+        // If the user is not an admin, you can show a message or handle it as needed
+        toast.info("You do not have permission to update.");
+      }
     } catch (error) {
       toast.error("Error fetching complete patient details.");
       console.error("Error fetching data:", error);
@@ -229,6 +240,10 @@ const AppointmentReport = () => {
       <HeaderMenu />
       <div className="dash-content ">
         <div className="container-fluid">
+             {/* toaster notification */}
+             <div>
+            <ToastContainer position="top-center" />
+          </div>
           <div className="patient-details">
             <BasicAccordion
               items={[
